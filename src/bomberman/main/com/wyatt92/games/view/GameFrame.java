@@ -3,11 +3,10 @@ package com.wyatt92.games.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameFrame extends JFrame {
-    private JPanel contentPane;
+class GameFrame extends JFrame {
 
-    public GameFrame() {
-        contentPane = (JPanel) this.getContentPane();
+    GameFrame() {
+        JPanel contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BorderLayout());
     }
 }

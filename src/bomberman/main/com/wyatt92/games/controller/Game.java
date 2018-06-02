@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Game {
 
-    private Dimension DIM = new Dimension(GameBoard.getColCount() * GameBoard.getSquareLength(),
+    private static final Dimension DIM = new Dimension(GameBoard.getColCount() * GameBoard.getSquareLength(),
             GameBoard.getRowCount() * GameBoard.getSquareLength());
 
     public Game() {
