@@ -1,6 +1,7 @@
 package com.wyatt92.games.view;
 
 import com.wyatt92.games.model.ImageLoader;
+import com.wyatt92.games.model.SpriteSheet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class GamePanel extends JPanel {
     private int frameHeight;
 
     BufferedImage testImage;
+    SpriteSheet sheet;
 
     /**
      * Constructor
@@ -35,8 +37,8 @@ public class GamePanel extends JPanel {
         configureGameFrame();
         configureGamePanel();
 
-        testImage = ImageLoader.loadImage("./src/bomberman/resources/test.png");
-
+        testImage = ImageLoader.loadImage("bomberman.png");
+        sheet = new SpriteSheet(testImage);
     }
 
     private void configureGameFrame() {
@@ -81,8 +83,8 @@ public class GamePanel extends JPanel {
         gOff.setColor(Color.RED);
         gOff.drawRect(50,50,100,100);
 
-        g.drawImage(testImage, 20, 20, null);
-        g.drawImage(imgOff, 0, 0, this);
+        g.drawImage(sheet.crop(1,1,28,31), 5, 5, null);
+//        g.drawImage(imgOff, 0, 0, this);
     }
 
 
