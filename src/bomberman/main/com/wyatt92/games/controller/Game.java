@@ -1,10 +1,12 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.GameBoard;
+import com.wyatt92.games.model.Pawn;
 import com.wyatt92.games.model.Player;
 import com.wyatt92.games.view.GamePanel;
 
 import java.awt.*;
+import java.io.IOException;
 
 
 public class Game implements Runnable{
@@ -19,6 +21,8 @@ public class Game implements Runnable{
     private GamePanel gamePanel;
     private Player player;
 
+    private KeyManager keyManager;
+
     Game() {
         init();
         run();
@@ -29,7 +33,8 @@ public class Game implements Runnable{
     private void init() {
         gamePanel = new GamePanel(TITLE, WIDTH, HEIGHT);
         player = new Player(100, 100);
-
+        keyManager = new KeyManager();
+        gamePanel.addKeyListener(keyManager);
     }
 
     public void run() {
@@ -60,7 +65,7 @@ public class Game implements Runnable{
 
             // reset Timer
             if(timer >= 1000000000) {
-                System.out.println("Ticks and Frames: " + ticks); // shows FPS
+//                System.out.println("Ticks and Frames: " + ticks); // shows FPS
                 ticks = 0;
                 timer = 0;
             }
@@ -85,20 +90,28 @@ public class Game implements Runnable{
         }
     }
 
-
-
     private void tick() {
 
     }
 
     private void update(){
+        keyManager.update();
         gamePanel.update();
-        player.update();
+        if(keyManager.UP){
+            player.move("up");
+        } else if (keyManager.DOWN) {
+            player.move("down");
+        } else if(keyManager.LEFT) {
+            player.move("left");
+        } else if(keyManager.RIGHT) {
+            player.move("right");
+        }
+
     }
 
     private void render(Graphics g){
+        gamePanel.draw(g);
         player.draw(g);
-//        gamePanel.draw(g);
     }
 
 

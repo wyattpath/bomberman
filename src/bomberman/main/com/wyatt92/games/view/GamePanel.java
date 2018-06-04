@@ -87,10 +87,10 @@ public class GamePanel extends JPanel {
         }
 
         // Fill in background with black
-        gOff.setColor(Color.BLACK);
-        gOff.fillRect(0, 0, frameWidth, frameHeight);
-        gOff.setColor(Color.RED);
-        gOff.drawRect(50,50,100,100);
+//        gOff.setColor(Color.BLACK);
+//        gOff.fillRect(0, 0, frameWidth, frameHeight);
+//        gOff.setColor(Color.RED);
+//        gOff.drawRect(50,50,100,100);
 //        gOff.drawImage(Assets.dirt, x , 10, null);
 
 //        imgOff.getGraphics();
@@ -100,6 +100,7 @@ public class GamePanel extends JPanel {
 
 
     // GETTERS AND SETTERS
+
     public GamePanel getGamePanel() {
         return this;
     }
