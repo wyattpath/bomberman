@@ -20,6 +20,7 @@ public class GamePanel extends JPanel {
     private String title;
     private int frameWidth;
     private int frameHeight;
+    private int x;
 
 
     /**
@@ -40,16 +41,13 @@ public class GamePanel extends JPanel {
     }
 
     private void init() {
-        gmf = new GameFrame();
-        Graphics g = getGraphics();
+        this.gmf = new GameFrame();
         Assets.init();
     }
 
     private void configureGameFrame() {
-
         gmf.getContentPane().add(this);
         gmf.pack();
-
         gmf.setSize(frameWidth, frameHeight);
         gmf.setTitle(title);
         gmf.setResizable(false);
@@ -72,13 +70,19 @@ public class GamePanel extends JPanel {
 
     // METHODS
 
-    public void update(Graphics g) {
+    public void update() {
+        x++;
+    }
 
+
+
+    public void render(Graphics g) {
         // create graphics if null
         if (gOff == null || frameWidth != dimOff.width || frameHeight != dimOff.height) {
             dimOff = new Dimension(frameWidth, frameHeight);
             imgOff = createImage(frameWidth, frameHeight);
             gOff = imgOff.getGraphics();
+            return;
         }
 
         // Fill in background with black
@@ -86,15 +90,11 @@ public class GamePanel extends JPanel {
         gOff.fillRect(0, 0, frameWidth, frameHeight);
         gOff.setColor(Color.RED);
         gOff.drawRect(50,50,100,100);
+        gOff.drawImage(Assets.dirt, x , 10, null);
 
-        g.drawImage(Assets.dirt, 10 , 10, this);
-        g.drawImage(imgOff, 0, 0, this);
-    }
-
-
-
-    public void render(Graphics g) {
-
+//        imgOff.getGraphics();
+        g.drawImage(imgOff,0,0,null);
+//        g.drawImage(imgOff, 0, 0, this);
     }
 
 
