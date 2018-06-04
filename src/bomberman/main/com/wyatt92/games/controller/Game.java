@@ -1,8 +1,10 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.GameBoard;
+import com.wyatt92.games.model.Player;
 import com.wyatt92.games.view.GamePanel;
 
+import java.awt.*;
 
 
 public class Game implements Runnable{
@@ -15,7 +17,7 @@ public class Game implements Runnable{
     private Thread thread1;
 
     private GamePanel gamePanel;
-
+    private Player player;
 
     Game() {
         init();
@@ -26,6 +28,8 @@ public class Game implements Runnable{
 
     private void init() {
         gamePanel = new GamePanel(TITLE, WIDTH, HEIGHT);
+        player = new Player(100, 100);
+
     }
 
     public void run() {
@@ -49,7 +53,7 @@ public class Game implements Runnable{
 
             if(delta >= 1) {
                 update();
-                render();
+                render(gamePanel.getGraphics());
                 ticks++;
                 delta--;
             }
@@ -89,10 +93,12 @@ public class Game implements Runnable{
 
     private void update(){
         gamePanel.update();
+        player.update();
     }
 
-    private void render(){
-        gamePanel.render(gamePanel.getGraphics());
+    private void render(Graphics g){
+        player.draw(g);
+//        gamePanel.draw(g);
     }
 
 

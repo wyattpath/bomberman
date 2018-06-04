@@ -2,6 +2,7 @@ package com.wyatt92.games.view;
 
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.ImageLoader;
+import com.wyatt92.games.model.Player;
 import com.wyatt92.games.model.SpriteSheet;
 
 import javax.swing.*;
@@ -76,7 +77,7 @@ public class GamePanel extends JPanel {
 
 
 
-    public void render(Graphics g) {
+    public void draw(Graphics g) {
         // create graphics if null
         if (gOff == null || frameWidth != dimOff.width || frameHeight != dimOff.height) {
             dimOff = new Dimension(frameWidth, frameHeight);
@@ -90,7 +91,7 @@ public class GamePanel extends JPanel {
         gOff.fillRect(0, 0, frameWidth, frameHeight);
         gOff.setColor(Color.RED);
         gOff.drawRect(50,50,100,100);
-        gOff.drawImage(Assets.dirt, x , 10, null);
+//        gOff.drawImage(Assets.dirt, x , 10, null);
 
 //        imgOff.getGraphics();
         g.drawImage(imgOff,0,0,null);
