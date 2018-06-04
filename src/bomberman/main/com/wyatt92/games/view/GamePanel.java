@@ -1,5 +1,6 @@
 package com.wyatt92.games.view;
 
+import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.ImageLoader;
 import com.wyatt92.games.model.SpriteSheet;
 
@@ -20,8 +21,6 @@ public class GamePanel extends JPanel {
     private int frameWidth;
     private int frameHeight;
 
-    BufferedImage testImage;
-    SpriteSheet sheet;
 
     /**
      * Constructor
@@ -34,18 +33,23 @@ public class GamePanel extends JPanel {
         this.title = title;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
+        init();
         configureGameFrame();
         configureGamePanel();
 
-        testImage = ImageLoader.loadImage("bomberman.png");
-        sheet = new SpriteSheet(testImage);
+    }
+
+    private void init() {
+        gmf = new GameFrame();
+        Graphics g = getGraphics();
+        Assets.init();
     }
 
     private void configureGameFrame() {
-        gmf = new GameFrame();
+
         gmf.getContentPane().add(this);
         gmf.pack();
-        Graphics g = getGraphics();
+
         gmf.setSize(frameWidth, frameHeight);
         gmf.setTitle(title);
         gmf.setResizable(false);
@@ -83,8 +87,8 @@ public class GamePanel extends JPanel {
         gOff.setColor(Color.RED);
         gOff.drawRect(50,50,100,100);
 
-        g.drawImage(sheet.crop(1,1,28,31), 5, 5, null);
-//        g.drawImage(imgOff, 0, 0, this);
+        g.drawImage(Assets.dirt, 10 , 10, this);
+        g.drawImage(imgOff, 0, 0, this);
     }
 
 
