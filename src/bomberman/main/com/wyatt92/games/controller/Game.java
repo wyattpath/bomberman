@@ -3,8 +3,6 @@ package com.wyatt92.games.controller;
 import com.wyatt92.games.model.GameBoard;
 import com.wyatt92.games.view.GamePanel;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 
 public class Game implements Runnable{
@@ -17,6 +15,7 @@ public class Game implements Runnable{
     private Thread thread1;
 
     private GamePanel gamePanel;
+
 
     Game() {
         init();

@@ -1,5 +1,7 @@
 package com.wyatt92.games.view;
 
+import com.wyatt92.games.model.ImageLoader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,27 +18,24 @@ public class GamePanel extends JPanel {
     private String title;
     private int frameWidth;
     private int frameHeight;
-    private int panelHeight;
-    private final int menuBarHeight = 20;
 
+    BufferedImage testImage;
 
     /**
      * Constructor
      *
-     * @param title
-     * @param frameWidth
-     * @param frameHeight
+     * @param title game title
+     * @param frameWidth width of frame
+     * @param frameHeight height of frame
      */
     public GamePanel(String title, int frameWidth, int frameHeight) {
         this.title = title;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
-        this.panelHeight = frameHeight - menuBarHeight;
-
         configureGameFrame();
         configureGamePanel();
-        makeVisible();
-        this.setFocusable(true);
+
+        testImage = ImageLoader.loadImage("./src/bomberman/resources/test.png");
 
     }
 
@@ -54,24 +53,18 @@ public class GamePanel extends JPanel {
         gmf.setVisible(true);
     }
 
-    // METHODS
 
     private void configureGamePanel() {
-
         // Set a LayoutManager
         this.setBackground(Color.WHITE);
         this.setOpaque(true);
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         this.setMaximumSize(new Dimension(frameWidth, frameHeight));
         this.setMinimumSize(new Dimension(frameWidth, frameHeight));
-
-
+        this.setFocusable(true);
     }
 
-    private void makeVisible() {
-
-
-    }
+    // METHODS
 
     public void update(Graphics g) {
 
@@ -87,8 +80,12 @@ public class GamePanel extends JPanel {
         gOff.fillRect(0, 0, frameWidth, frameHeight);
         gOff.setColor(Color.RED);
         gOff.drawRect(50,50,100,100);
+
+        g.drawImage(testImage, 20, 20, null);
         g.drawImage(imgOff, 0, 0, this);
     }
+
+
 
     public void render(Graphics g) {
 
