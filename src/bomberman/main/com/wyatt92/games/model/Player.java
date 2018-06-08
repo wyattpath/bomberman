@@ -1,41 +1,29 @@
 package com.wyatt92.games.model;
 
+import com.wyatt92.games.controller.Game;
+
 import java.awt.*;
 
 public class Player extends Pawn {
 
-    private boolean isMoving = false;
+//    private boolean isMoving = false;
+    private Game game;
 
-    public Player(float x, float y) {
+    public Player(Game game,  float x, float y) {
         super(x, y);
+        this.game = game;
 
     }
 
+    @Override
     public void update() {
-
+        if(game.getKeyManager().UP) y--;
+        if(game.getKeyManager().DOWN) y++;
+        if(game.getKeyManager().LEFT) x--;
+        if(game.getKeyManager().RIGHT) x++;
     }
 
-
-    public void move(String direction) {
-        if(!isMoving){
-            isMoving =true;
-            if ("up".equals(direction)) {
-                y--;
-
-            } else if ("down".equals(direction)) {
-                y++;
-
-            } else if ("left".equals(direction)) {
-                x--;
-
-            } else if ("right".equals(direction)) {
-                x++;
-
-            }
-        }
-        isMoving = false;
-    }
-
+    @Override
     public void draw(Graphics g) {
         g.drawImage(Assets.player, (int) x ,(int) y, null);
     }
