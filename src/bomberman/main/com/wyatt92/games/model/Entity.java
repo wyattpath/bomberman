@@ -6,7 +6,7 @@ import java.awt.*;
  * An Actor is any object that can be placed into a level.
  * Actors can be created (spawned) and destroyed through gameplay code
  */
-public abstract class Entity
+public abstract class Entity implements Model
 {
     protected float x,y;
     protected int width, height;
@@ -18,12 +18,13 @@ public abstract class Entity
         this.height = height;
     }
 
+    @Override
     public abstract void update();
 
+    @Override
     public abstract void draw(Graphics g);
 
     // GETTERS AND SETTERS
-
 
     public float getX()
     {
