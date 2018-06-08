@@ -1,11 +1,11 @@
 package com.wyatt92.games.controller;
 
-import com.wyatt92.games.model.GameBoard;
-import com.wyatt92.games.model.Pawn;
-import com.wyatt92.games.model.Player;
+import com.wyatt92.games.model.*;
 import com.wyatt92.games.view.GamePanel;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.IOException;
 
 
@@ -19,9 +19,14 @@ public class Game implements Runnable{
     private Thread thread1;
 
     private GamePanel gamePanel;
-    private Player player;
+
 
     private KeyManager keyManager;
+
+    private Graphics g;
+
+    // STATES
+    private State gameState;
 
     Game() {
         init();
@@ -32,9 +37,12 @@ public class Game implements Runnable{
 
     private void init() {
         gamePanel = new GamePanel(TITLE, WIDTH, HEIGHT);
-        player = new Player(100, 100);
         keyManager = new KeyManager();
         gamePanel.addKeyListener(keyManager);
+//        gamePanel.setDoubleBuffered(true);
+
+        gameState = new GameState(this);
+        State.setCurrentState(gameState);
     }
 
     public void run() {
@@ -58,7 +66,7 @@ public class Game implements Runnable{
 
             if(delta >= 1) {
                 update();
-                render(gamePanel.getGraphics());
+                gamePanel.draw(gamePanel.getGraphics());
                 ticks++;
                 delta--;
             }
@@ -90,29 +98,51 @@ public class Game implements Runnable{
         }
     }
 
-    private void tick() {
-
-    }
 
     private void update(){
         keyManager.update();
-        gamePanel.update();
-        if(keyManager.UP){
-            player.move("up");
-        } else if (keyManager.DOWN) {
-            player.move("down");
-        } else if(keyManager.LEFT) {
-            player.move("left");
-        } else if(keyManager.RIGHT) {
-            player.move("right");
+        if(State.getCurrentState() != null)
+        {
+            State.getCurrentState().update();
         }
 
+
+        gamePanel.update();
+//        if(keyManager.UP){
+//            player.move("up");
+//        } else if (keyManager.DOWN) {
+//            player.move("down");
+//        } else if(keyManager.LEFT) {
+//            player.move("left");
+//        } else if(keyManager.RIGHT) {
+//            player.move("right");
+//        }
+
     }
 
-    private void render(Graphics g){
-        gamePanel.draw(g);
-        player.draw(g);
+    private void render()
+    {
+//        bImg = gamePanel.getBufferedImage();
+//        if (bImg == null)
+//        {
+//            gamePanel.createBufferedImage();
+//            return;
+//        }
+//        g = bImg.getGraphics();
+
+//        gamePanel.draw(g);
+//        g.setColor(Color.YELLOW);
+//        g.fillRect(0,0,WIDTH,HEIGHT);
+//        g.clearRect(0,0,WIDTH,HEIGHT);
+//        g.drawImage(Assets.player,0,0,null);
+//        g.dispose();
+//        gamePanel.draw(g);
+//        player.draw(g);
+
     }
 
-
+    public KeyManager getKeyManager()
+    {
+        return keyManager;
+    }
 }

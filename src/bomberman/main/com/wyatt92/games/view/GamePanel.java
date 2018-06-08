@@ -1,19 +1,17 @@
 package com.wyatt92.games.view;
 
-import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.ImageLoader;
-import com.wyatt92.games.model.Player;
-import com.wyatt92.games.model.SpriteSheet;
+import com.wyatt92.games.model.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel {
 
     // The following "off" vars are used for the off-screen double-buffered image.
     private Dimension dimOff;
-    private Image imgOff;
+    private BufferedImage imgOff;
     private Graphics gOff;
 
     private GameFrame gmf;
@@ -21,7 +19,8 @@ public class GamePanel extends JPanel {
     private String title;
     private int frameWidth;
     private int frameHeight;
-    private int x;
+
+
 
 
     /**
@@ -38,11 +37,10 @@ public class GamePanel extends JPanel {
         init();
         configureGameFrame();
         configureGamePanel();
-
     }
 
     private void init() {
-        this.gmf = new GameFrame();
+        this.gmf = new GameFrame(title, frameWidth, frameHeight);
         Assets.init();
     }
 
@@ -67,46 +65,60 @@ public class GamePanel extends JPanel {
         this.setMaximumSize(new Dimension(frameWidth, frameHeight));
         this.setMinimumSize(new Dimension(frameWidth, frameHeight));
         this.setFocusable(true);
+        this.setDoubleBuffered(true);
+        requestFocus();
     }
 
     // METHODS
 
     public void update() {
-        x++;
+
     }
 
 
 
     public void draw(Graphics g) {
-        // create graphics if null
-        if (gOff == null || frameWidth != dimOff.width || frameHeight != dimOff.height) {
-            dimOff = new Dimension(frameWidth, frameHeight);
-            imgOff = createImage(frameWidth, frameHeight);
-            gOff = imgOff.getGraphics();
+//         create graphics if null
+//        if (gOff == null) {
+//            dimOff = new Dimension(frameWidth, frameHeight);
+//            imgOff = createImage(frameWidth, frameHeight);
+//            gOff = imgOff.getGraphics();
+//            return;
+        if(g == null)
+        {
+            createImage(WIDTH, HEIGHT);
             return;
         }
-
-        // Fill in background with black
-//        gOff.setColor(Color.BLACK);
-//        gOff.fillRect(0, 0, frameWidth, frameHeight);
+        repaint();
+                    // Fill in background with black
+//        g.setColor(Color.BLACK);
+//        g.fillRect(0, 0, frameWidth, frameHeight);
 //        gOff.setColor(Color.RED);
 //        gOff.drawRect(50,50,100,100);
-//        gOff.drawImage(Assets.dirt, x , 10, null);
-
+//        gOff.drawImage(Assets.dirt, 0 , 10, null);
+//        if(State.getCurrentState() != null){
+//
+//            State.getCurrentState().draw(gOff);
+//        }
+//        g.drawImage(imgOff,0,0,null);
 //        imgOff.getGraphics();
-        g.drawImage(imgOff,0,0,null);
 //        g.drawImage(imgOff, 0, 0, this);
+
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponents(g);
 
-    // GETTERS AND SETTERS
+        Graphics2D g2d = (Graphics2D) g.create();
+        if(State.getCurrentState() != null){
+            g2d.clearRect(0,0,frameWidth,frameHeight);
+            State.getCurrentState().draw(g2d);
+        }
 
-    public GamePanel getGamePanel() {
-        return this;
-    }
-
-    public Image getBufferedImage() {
-        return imgOff;
+//        g2d.setColor(Color.YELLOW);
+//        g2d.fillRect(0,0,WIDTH,HEIGHT);
+        g2d.dispose();
     }
 
 
