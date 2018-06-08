@@ -4,24 +4,39 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
-class GameFrame extends JFrame {
+public class GameFrame extends JFrame {
 
-    private JPanel contentPane;
+//    private JPanel contentPane;
     private BorderLayout borderLayout1 = new BorderLayout();
+    private String title;
+    private int width, height;
 
-    public GameFrame() {
+    public GameFrame(String title, int width, int height) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+        this.setTitle(title);
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         try {
-            initialize();
+            initGameFrame();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //Component initialization
-    private void initialize() throws Exception {
-        contentPane = (JPanel) this.getContentPane();
-        contentPane.setLayout(borderLayout1);
+    private void initGameFrame() throws Exception {
+//        contentPane = (JPanel) this.getContentPane();
+//        contentPane.setLayout(borderLayout1);
+//        this.getContentPane().add(this);
+        this.pack();
+        this.setSize(width, height);
+        this.setTitle(title);
+        this.setResizable(false);
+        this.setPreferredSize(new Dimension(width, height));
+        this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     @Override
