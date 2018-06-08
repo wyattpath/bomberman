@@ -4,27 +4,42 @@ import com.wyatt92.games.controller.Game;
 
 import java.awt.*;
 
-public class Player extends Pawn {
+public class Player extends Character
+{
 
 //    private boolean isMoving = false;
     private Game game;
 
     public Player(Game game,  float x, float y) {
-        super(x, y);
+        super(x, y, Character.DEFAULT_CHARACTER_WIDTH, Character.DEFAULT_CHARACTER_HEIGHT);
         this.game = game;
 
     }
 
     @Override
-    public void update() {
-        if(game.getKeyManager().UP) y--;
-        if(game.getKeyManager().DOWN) y++;
-        if(game.getKeyManager().LEFT) x--;
-        if(game.getKeyManager().RIGHT) x++;
+    public void update()
+    {
+        getInput();
+        move();
+    }
+    private void getInput(){
+        xMove = 0;
+        yMove = 0;
+
+        if(game.getKeyManager().UP)
+            yMove = -speed;
+        if(game.getKeyManager().DOWN)
+            yMove = speed;
+        if(game.getKeyManager().LEFT)
+            xMove = -speed;
+        if(game.getKeyManager().RIGHT)
+            xMove = speed;
+
+
     }
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(Assets.player, (int) x ,(int) y, null);
+        g.drawImage(Assets.player, (int) x ,(int) y, width, height,null);
     }
 }
