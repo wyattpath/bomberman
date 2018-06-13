@@ -2,8 +2,6 @@ package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.controller.Handler;
 
-import java.awt.*;
-
 public abstract class StaticEntity extends Entity
 {
     public StaticEntity(Handler handler, float x, float y, int width, int height) {

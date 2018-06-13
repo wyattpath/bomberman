@@ -44,7 +44,6 @@ public class GamePanel extends JPanel {
 
     private void init() {
         this.gmf = new GameFrame(title, frameWidth, frameHeight);
-        Assets.init();
     }
 
     private void configureGameFrame() {
@@ -116,7 +115,7 @@ public class GamePanel extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g.create();
         if(State.getCurrentState() != null){
-            g2d.clearRect(0,0,frameWidth,frameHeight);
+//            g2d.clearRect(0,0,frameWidth,frameHeight);
             State.getCurrentState().draw(g2d);
         }
 

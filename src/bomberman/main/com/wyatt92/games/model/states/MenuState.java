@@ -14,12 +14,19 @@ public class MenuState extends State
     @Override
     public void update()
     {
-
+        if(handler.getMouseManager().isLeftPressed()){
+            State.setCurrentState(handler.getGameState());
+        }
     }
 
     @Override
     public void draw(Graphics g)
     {
-
+        g.setColor(Color.RED);
+        g.fillRect(
+                handler.getMouseManager().getMouseX(),
+                handler.getMouseManager().getMouseY(),
+                8,
+                8);
     }
 }

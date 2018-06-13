@@ -1,9 +1,7 @@
 package com.wyatt92.games.model.states;
 
 import com.wyatt92.games.controller.Handler;
-import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.model.World;
-import com.wyatt92.games.model.entities.Stone;
 
 import java.awt.*;
 

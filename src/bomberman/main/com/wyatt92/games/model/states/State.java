@@ -1,6 +1,5 @@
 package com.wyatt92.games.model.states;
 
-import com.wyatt92.games.controller.Game;
 import com.wyatt92.games.controller.Handler;
 
 import java.awt.*;

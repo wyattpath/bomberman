@@ -1,6 +1,8 @@
 package com.wyatt92.games.controller;
 
+
 import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.states.State;
 
 public class Handler
 {
@@ -15,6 +17,13 @@ public class Handler
         return game.getKeyManager();
     }
 
+    public MouseManager getMouseManager() {
+        return game.getMouseManager();
+    }
+
+    public State getGameState() {
+        return game.getGameState();
+    }
     public int getWidth(){
         return game.getWidth();
     }

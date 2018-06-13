@@ -1,5 +1,6 @@
 package com.wyatt92.games.controller;
 
+import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
@@ -27,11 +28,14 @@ public class Game implements Runnable{
 
     // Input
     private KeyManager keyManager;
+    private MouseManager mouseManager;
 
     // Handler
     private Handler handler;
 
     Game() {
+        keyManager = new KeyManager();
+        mouseManager = new MouseManager();
         init();
         run();
     }
@@ -40,13 +44,16 @@ public class Game implements Runnable{
 
     private void init() {
         gamePanel = new GamePanel(TITLE, WIDTH, HEIGHT);
-        keyManager = new KeyManager();
         gamePanel.addKeyListener(keyManager);
+        gamePanel.addMouseListener(mouseManager);
+        gamePanel.addMouseMotionListener(mouseManager);
+        Assets.init();
 //        gamePanel.setDoubleBuffered(true);
+
         handler = new Handler(this);
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
-        State.setCurrentState(gameState);
+        State.setCurrentState(menuState);
     }
 
     public void run() {
@@ -120,9 +127,18 @@ public class Game implements Runnable{
 
     }
 
+    State getGameState() {
+        return gameState;
+    }
+
     public KeyManager getKeyManager()
     {
         return keyManager;
+    }
+
+    public MouseManager getMouseManager()
+    {
+        return mouseManager;
     }
 
     public int getWidth() {
