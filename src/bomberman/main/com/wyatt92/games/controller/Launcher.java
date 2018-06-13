@@ -1,9 +1,5 @@
 package com.wyatt92.games.controller;
 
-import com.wyatt92.games.model.Entity;
-import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.Player;
-
 import java.awt.*;
 
 public class Launcher {

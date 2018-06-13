@@ -2,11 +2,11 @@ package com.wyatt92.games.model.tiles;
 
 import com.wyatt92.games.model.Assets;
 
-public class RockTile extends Tile
+public class WallTile extends Tile
 {
-    public RockTile(int id)
+    public WallTile(int id)
     {
-        super(Assets.stone, id);
+        super(Assets.wall, id);
     }
 
     @Override

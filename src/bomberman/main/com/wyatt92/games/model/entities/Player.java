@@ -1,7 +1,7 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Game;
 import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.model.Assets;
 
 import java.awt.*;
 

@@ -1,6 +1,9 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.model.entities.EntityManager;
+import com.wyatt92.games.model.entities.Player;
+import com.wyatt92.games.model.entities.Stone;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -12,12 +15,21 @@ public class World
     private int playerSpawnX,playerSpawnY;
     private int[][] tiles;
 
+    //Entities
+    private EntityManager entityManager;
+
     public World(Handler handler, String path) {
         this.handler = handler;
+        entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+        entityManager.addEntity(new Stone(handler, 100, 250));
         loadWorld(path);
+
+        entityManager.getPlayer().setX(playerSpawnX);
+        entityManager.getPlayer().setY(playerSpawnY);
     }
 
     public void update() {
+        entityManager.update();
     }
 
 
@@ -28,6 +40,9 @@ public class World
                 getTile(x, y).draw(g, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
             }
         }
+
+        //entities
+        entityManager.draw(g);
     }
 
     public Tile getTile(int x, int y)
