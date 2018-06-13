@@ -28,6 +28,9 @@ public class Game implements Runnable{
     // Input
     private KeyManager keyManager;
 
+    // Handler
+    private Handler handler;
+
     Game() {
         init();
         run();
@@ -40,9 +43,9 @@ public class Game implements Runnable{
         keyManager = new KeyManager();
         gamePanel.addKeyListener(keyManager);
 //        gamePanel.setDoubleBuffered(true);
-
-        gameState = new GameState(this);
-        menuState = new MenuState();
+        handler = new Handler(this);
+        gameState = new GameState(handler);
+        menuState = new MenuState(handler);
         State.setCurrentState(gameState);
     }
 
@@ -126,5 +129,10 @@ public class Game implements Runnable{
 
     public int getWidth() {
         return WIDTH;
+    }
+
+    public int getHeight()
+    {
+        return HEIGHT;
     }
 }

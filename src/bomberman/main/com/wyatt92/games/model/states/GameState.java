@@ -1,6 +1,7 @@
 package com.wyatt92.games.model.states;
 
 import com.wyatt92.games.controller.Game;
+import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Player;
 import com.wyatt92.games.model.World;
 
@@ -11,9 +12,11 @@ public class GameState extends State
     private Player player;
     private World world;
 
-    public GameState(Game game) {
-        player = new Player(game, 100, 100);
-        world = new World("world1.txt");
+    public GameState(Handler handler) {
+        super(handler);
+        world = new World(handler, "world1.txt");
+        handler.setWorld(world);
+        player = new Player(handler, 100, 100);
     }
 
     @Override

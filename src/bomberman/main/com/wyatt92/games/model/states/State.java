@@ -1,10 +1,19 @@
 package com.wyatt92.games.model.states;
 
+import com.wyatt92.games.controller.Game;
+import com.wyatt92.games.controller.Handler;
+
 import java.awt.*;
 
 public abstract class State
 {
     private static State currentState = null;
+
+    protected Handler handler;
+
+    public State(Handler handler) {
+        this.handler = handler;
+    }
 
     public static State getCurrentState()
     {

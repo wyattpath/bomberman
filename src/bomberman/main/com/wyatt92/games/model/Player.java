@@ -1,6 +1,7 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.controller.Game;
+import com.wyatt92.games.controller.Handler;
 
 import java.awt.*;
 
@@ -8,12 +9,9 @@ public class Player extends Creature
 {
 
 //    private boolean isMoving = false;
-    private Game game;
 
-    public Player(Game game,  float x, float y) {
-        super(x, y, Creature.DEFAULT_CHARACTER_WIDTH, Creature.DEFAULT_CHARACTER_HEIGHT);
-        this.game = game;
-
+    public Player(Handler handler, float x, float y) {
+        super(handler, x, y, Creature.DEFAULT_CHARACTER_WIDTH, Creature.DEFAULT_CHARACTER_HEIGHT);
     }
 
     @Override
@@ -26,13 +24,13 @@ public class Player extends Creature
         xMove = 0;
         yMove = 0;
 
-        if(game.getKeyManager().UP)
+        if(handler.getKeyManager().UP)
             yMove = -speed;
-        if(game.getKeyManager().DOWN)
+        if(handler.getKeyManager().DOWN)
             yMove = speed;
-        if(game.getKeyManager().LEFT)
+        if(handler.getKeyManager().LEFT)
             xMove = -speed;
-        if(game.getKeyManager().RIGHT)
+        if(handler.getKeyManager().RIGHT)
             xMove = speed;
 
 

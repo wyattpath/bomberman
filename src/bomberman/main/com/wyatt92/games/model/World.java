@@ -1,16 +1,19 @@
 package com.wyatt92.games.model;
 
+import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
 
 public class World
 {
+    private Handler handler;
     private int width, height;
     private int playerSpawnX,playerSpawnY;
     private int[][] tiles;
 
-    public World(String path) {
+    public World(Handler handler, String path) {
+        this.handler = handler;
         loadWorld(path);
     }
 

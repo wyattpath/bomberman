@@ -13,7 +13,6 @@ public class Launcher {
             public void run() {
                 try {
                     Game game = new Game();
-                    Player player = new Player(game, 100,100);
                     game.start();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -1,5 +1,7 @@
 package com.wyatt92.games.model;
 
+import com.wyatt92.games.controller.Handler;
+
 /**
  * The Pawn is the physical representation of a player or an AI within the world.
  *
@@ -18,8 +20,8 @@ public abstract class Creature extends Entity
     private enum Direction {UP, DOWN, LEFT, RIGHT};
     private Direction mDirection;
 
-    public Creature(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    public Creature(Handler handler, float x, float y, int width, int height) {
+        super(handler, x, y, width, height);
         health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
     }
