@@ -5,9 +5,9 @@ public class GameBoard {
     // FIELDS
 
     // constants for size of game board
-    private static final int ROW_COUNT = 13;
-    private static final int COL_COUNT = 15;
-    private static final int SQUARE_LENGTH = 40;
+    private static final int ROW_COUNT = 14;
+    private static final int COL_COUNT = 14;
+    private static final int SQUARE_LENGTH = 64;
 
 
     // GETTERS AND SETTERS

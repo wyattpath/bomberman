@@ -1,5 +1,9 @@
 package com.wyatt92.games.controller;
 
+import com.wyatt92.games.model.Entity;
+import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.Player;
+
 import java.awt.*;
 
 public class Launcher {
@@ -9,6 +13,7 @@ public class Launcher {
             public void run() {
                 try {
                     Game game = new Game();
+                    Player player = new Player(game, 100,100);
                     game.start();
                 } catch (Exception e) {
                     e.printStackTrace();

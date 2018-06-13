@@ -4,7 +4,7 @@ package com.wyatt92.games.model;
  * The Pawn is the physical representation of a player or an AI within the world.
  *
  */
-public abstract class Character extends Entity
+public abstract class Creature extends Entity
 {
     public static final int DEFAULT_HEALTH = 10;
     public static final float DEFAULT_SPEED = 3.0f;
@@ -18,7 +18,7 @@ public abstract class Character extends Entity
     private enum Direction {UP, DOWN, LEFT, RIGHT};
     private Direction mDirection;
 
-    public Character(float x, float y, int width, int height) {
+    public Creature(float x, float y, int width, int height) {
         super(x, y, width, height);
         health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;

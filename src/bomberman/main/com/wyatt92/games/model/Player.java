@@ -4,14 +4,14 @@ import com.wyatt92.games.controller.Game;
 
 import java.awt.*;
 
-public class Player extends Character
+public class Player extends Creature
 {
 
 //    private boolean isMoving = false;
     private Game game;
 
     public Player(Game game,  float x, float y) {
-        super(x, y, Character.DEFAULT_CHARACTER_WIDTH, Character.DEFAULT_CHARACTER_HEIGHT);
+        super(x, y, Creature.DEFAULT_CHARACTER_WIDTH, Creature.DEFAULT_CHARACTER_HEIGHT);
         this.game = game;
 
     }
@@ -42,4 +42,5 @@ public class Player extends Character
     public void draw(Graphics g) {
         g.drawImage(Assets.player, (int) x ,(int) y, width, height,null);
     }
+
 }

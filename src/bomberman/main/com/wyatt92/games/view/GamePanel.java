@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
 
 public class GamePanel extends JPanel {
 
@@ -61,6 +63,7 @@ public class GamePanel extends JPanel {
         // Set a LayoutManager
         this.setBackground(Color.WHITE);
         this.setOpaque(true);
+        this.setSize(frameWidth, frameHeight);
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         this.setMaximumSize(new Dimension(frameWidth, frameHeight));
         this.setMinimumSize(new Dimension(frameWidth, frameHeight));
@@ -120,6 +123,4 @@ public class GamePanel extends JPanel {
 //        g2d.fillRect(0,0,WIDTH,HEIGHT);
         g2d.dispose();
     }
-
-
 }
