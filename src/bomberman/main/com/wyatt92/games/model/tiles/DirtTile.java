@@ -1,6 +1,6 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.tiles;
 
-import java.awt.image.BufferedImage;
+import com.wyatt92.games.model.Assets;
 
 public class DirtTile extends Tile
 {

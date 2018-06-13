@@ -1,4 +1,4 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.tiles;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

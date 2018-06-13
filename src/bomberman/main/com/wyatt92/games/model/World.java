@@ -1,5 +1,7 @@
 package com.wyatt92.games.model;
 
+import com.wyatt92.games.model.tiles.Tile;
+
 import java.awt.*;
 
 public class World
