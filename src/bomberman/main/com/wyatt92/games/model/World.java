@@ -75,6 +75,18 @@ public class World
             }
         }
     }
+
+    // GETTERS and SETTERS
+
+    public EntityManager getEntityManager()
+    {
+        return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager)
+    {
+        this.entityManager = entityManager;
+    }
 }
 
 

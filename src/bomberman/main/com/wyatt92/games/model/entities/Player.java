@@ -5,13 +5,13 @@ import com.wyatt92.games.model.Assets;
 
 import java.awt.*;
 
-public class Player extends Creature
+public class Player extends DynamicEntity
 {
 
 //    private boolean isMoving = false;
 
     public Player(Handler handler, float x, float y) {
-        super(handler, x, y, Creature.DEFAULT_CHARACTER_WIDTH, Creature.DEFAULT_CHARACTER_HEIGHT);
+        super(handler, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
 
         bounds.x = 16;
         bounds.y = 32;

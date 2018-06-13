@@ -7,7 +7,7 @@ import com.wyatt92.games.model.tiles.Tile;
  * The Pawn is the physical representation of a player or an AI within the world.
  *
  */
-public abstract class Creature extends Entity
+public abstract class DynamicEntity extends Entity
 {
     public static final int DEFAULT_HEALTH = 10;
     public static final float DEFAULT_SPEED = 3.0f;
@@ -21,15 +21,19 @@ public abstract class Creature extends Entity
     private enum Direction {UP, DOWN, LEFT, RIGHT};
     private Direction mDirection;
 
-    public Creature(Handler handler, float x, float y, int width, int height) {
+    public DynamicEntity(Handler handler, float x, float y, int width, int height) {
         super(handler, x, y, width, height);
         health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
     }
 
     public void move() {
-        moveX();
-        moveY();
+        if(!checkEntityCollisions(xMove, 0f)) {
+            moveX();
+        }
+        if(!checkEntityCollisions(0f, yMove)) {
+            moveY();
+        }
     }
     public void moveX() {
         if(xMove > 0){ //moving right
