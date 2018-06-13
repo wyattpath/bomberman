@@ -1,7 +1,6 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.states;
 
 import java.awt.*;
-import java.util.Observer;
 
 public abstract class State
 {

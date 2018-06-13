@@ -1,6 +1,7 @@
 package com.wyatt92.games.view;
 
 import com.wyatt92.games.model.*;
+import com.wyatt92.games.model.states.State;
 
 import javax.swing.*;
 import java.awt.*;

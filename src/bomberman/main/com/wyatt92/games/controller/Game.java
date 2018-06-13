@@ -1,18 +1,17 @@
 package com.wyatt92.games.controller;
 
-import com.wyatt92.games.model.*;
+import com.wyatt92.games.model.states.GameState;
+import com.wyatt92.games.model.states.MenuState;
+import com.wyatt92.games.model.states.State;
 import com.wyatt92.games.view.GamePanel;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.IOException;
 
 
 public class Game implements Runnable{
 
-    private static final int WIDTH = GameBoard.getColCount() * GameBoard.getSquareLength();
-    private static final int HEIGHT = GameBoard.getRowCount() * GameBoard.getSquareLength();
+    private static final int WIDTH = 832;
+    private static final int HEIGHT = 832;
     private static final String TITLE = "Bomberman";
 
     private boolean running = false;
@@ -20,13 +19,14 @@ public class Game implements Runnable{
 
     private GamePanel gamePanel;
 
-
-    private KeyManager keyManager;
-
     private Graphics g;
 
-    // STATES
+    // States
     private State gameState;
+    private State menuState;
+
+    // Input
+    private KeyManager keyManager;
 
     Game() {
         init();
@@ -42,6 +42,7 @@ public class Game implements Runnable{
 //        gamePanel.setDoubleBuffered(true);
 
         gameState = new GameState(this);
+        menuState = new MenuState();
         State.setCurrentState(gameState);
     }
 
@@ -74,6 +75,9 @@ public class Game implements Runnable{
             // reset Timer
             if(timer >= 1000000000) {
 //                System.out.println("Ticks and Frames: " + ticks); // shows FPS
+                System.out.println("Width: " + WIDTH);
+                System.out.println("Height: " + HEIGHT);
+
                 ticks = 0;
                 timer = 0;
             }
@@ -108,41 +112,19 @@ public class Game implements Runnable{
 
 
         gamePanel.update();
-//        if(keyManager.UP){
-//            player.move("up");
-//        } else if (keyManager.DOWN) {
-//            player.move("down");
-//        } else if(keyManager.LEFT) {
-//            player.move("left");
-//        } else if(keyManager.RIGHT) {
-//            player.move("right");
-//        }
-
     }
 
     private void render()
     {
-//        bImg = gamePanel.getBufferedImage();
-//        if (bImg == null)
-//        {
-//            gamePanel.createBufferedImage();
-//            return;
-//        }
-//        g = bImg.getGraphics();
-
-//        gamePanel.draw(g);
-//        g.setColor(Color.YELLOW);
-//        g.fillRect(0,0,WIDTH,HEIGHT);
-//        g.clearRect(0,0,WIDTH,HEIGHT);
-//        g.drawImage(Assets.player,0,0,null);
-//        g.dispose();
-//        gamePanel.draw(g);
-//        player.draw(g);
 
     }
 
     public KeyManager getKeyManager()
     {
         return keyManager;
+    }
+
+    public int getWidth() {
+        return WIDTH;
     }
 }
