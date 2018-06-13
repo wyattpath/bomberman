@@ -10,8 +10,8 @@ import java.awt.*;
 
 public class Game implements Runnable{
 
-    private static final int WIDTH = 832;
-    private static final int HEIGHT = 832;
+    private static final int WIDTH = 1080;
+    private static final int HEIGHT = 1080;
     private static final String TITLE = "Bomberman";
 
     private boolean running = false;

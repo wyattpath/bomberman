@@ -3,7 +3,7 @@ package com.wyatt92.games.model.tiles;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Tile
+public abstract class Tile
 {
     public static Tile[] tiles = new Tile[256];
     public static Tile grassTile = new GrassTile(0);

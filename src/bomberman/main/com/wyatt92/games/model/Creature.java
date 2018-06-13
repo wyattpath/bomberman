@@ -1,6 +1,7 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.model.tiles.Tile;
 
 /**
  * The Pawn is the physical representation of a player or an AI within the world.
@@ -27,8 +28,40 @@ public abstract class Creature extends Entity
     }
 
     public void move() {
-        x += xMove;
-        y += yMove;
+        moveX();
+        moveY();
+    }
+    public void moveX() {
+        if(xMove > 0){ //moving right
+            int tx = (int) ((x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH);
+            if(!collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILEHEIGHT)){
+                x += xMove;
+            }
+        } else if(xMove < 0) {//moving left
+            int tx = (int) ((x + xMove + bounds.x) / Tile.TILEWIDTH);
+            if(!collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILEHEIGHT)){
+                x += xMove;
+            }
+        }
+    }
+    public void moveY() {
+        if(yMove < 0){ //Up
+            int ty = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+            if(!collisionWithTile((int)(x + bounds.x)/ Tile.TILEWIDTH, ty) &&
+                    !collisionWithTile((int)(x + bounds.x + bounds.width)/ Tile.TILEWIDTH, ty)){
+                y += yMove;
+            }
+        }else if(yMove > 0) {//Down
+            int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+            if(!collisionWithTile((int)(x + bounds.x)/ Tile.TILEWIDTH, ty) &&
+                    !collisionWithTile((int)(x + bounds.x + bounds.width)/ Tile.TILEWIDTH, ty)){
+                y += yMove;
+            }
+        }
+    }
+
+    protected boolean collisionWithTile(int x, int y) {
+        return handler.getWorld().getTile(x,y).isSolid();
     }
 
     // GETTERS and SETTERS
