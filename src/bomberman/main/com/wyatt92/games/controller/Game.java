@@ -78,8 +78,6 @@ public class Game implements Runnable{
             // reset Timer
             if(timer >= 1000000000) {
 //                System.out.println("Ticks and Frames: " + ticks); // shows FPS
-                System.out.println("Width: " + WIDTH);
-                System.out.println("Height: " + HEIGHT);
 
                 ticks = 0;
                 timer = 0;

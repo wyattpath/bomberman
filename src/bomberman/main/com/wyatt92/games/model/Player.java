@@ -45,8 +45,8 @@ public class Player extends Creature
     public void draw(Graphics g) {
         g.drawImage(Assets.player, (int) x ,(int) y, width, height,null);
 
-        g.setColor(Color.red);
-        g.fillRect((int)(x + bounds.x),(int)(y + bounds.y), bounds.width, bounds.height);
+//        g.setColor(Color.red);
+//        g.fillRect((int)(x + bounds.x),(int)(y + bounds.y), bounds.width, bounds.height);
     }
 
 }
