@@ -10,6 +10,8 @@ public class Player extends DynamicEntity
 
 //    private boolean isMoving = false;
 
+    // AttackTimer
+    private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
 
@@ -30,6 +32,13 @@ public class Player extends DynamicEntity
 
     private void checkAttacks()
     {
+        // attack cooldown
+        attackTimer += System.currentTimeMillis() - lastAttackTimer;
+        lastAttackTimer = System.currentTimeMillis();
+        if(attackTimer < attackCooldown)
+            return;
+
+
 
         Rectangle cb = getCollisionBounds(0,0); // collision bounds
         Rectangle ar = new Rectangle(); // attack rectangle
@@ -54,6 +63,8 @@ public class Player extends DynamicEntity
         } else {
             return;
         }
+
+        attackTimer = 0;
 
         for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if(e.equals(this))
