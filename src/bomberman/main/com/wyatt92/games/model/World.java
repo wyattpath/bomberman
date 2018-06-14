@@ -17,10 +17,15 @@ public class World
 
     //Entities
     private EntityManager entityManager;
+    // Item
+    private ItemManager itemManager;
 
     public World(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Player(handler, 64, 64));
+        itemManager = new ItemManager(handler);
+
+        // Temporary entity code!
         entityManager.addEntity(new Stone(handler, 128, 64));
         loadWorld(path);
 
@@ -28,6 +33,7 @@ public class World
     }
 
     public void update() {
+        itemManager.update();
         entityManager.update();
     }
 
@@ -40,6 +46,8 @@ public class World
             }
         }
 
+        // Items
+        itemManager.draw(g);
         //entities
         entityManager.draw(g);
     }
@@ -88,6 +96,16 @@ public class World
     public void setEntityManager(EntityManager entityManager)
     {
         this.entityManager = entityManager;
+    }
+
+    public ItemManager getItemManager()
+    {
+        return itemManager;
+    }
+
+    public void setItemManager(ItemManager itemManager)
+    {
+        this.itemManager = itemManager;
     }
 }
 

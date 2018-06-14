@@ -7,7 +7,7 @@ public class Assets {
 
     private static final int width = 32, height = 32;
 
-    public static BufferedImage player, dirt, grass, wall, tree, stone, bomb;
+    public static BufferedImage player, dirt, grass, wall, tree, stone, bomb, powerup;
     public static BufferedImage[] btn_start;
     public static BufferedImage blast;
 
@@ -28,6 +28,8 @@ public class Assets {
         btn_start[1] = sheet.crop(width * 6, height * 5, width * 2, height);
 
         blast = blastSheet.crop(0,0,width,height);
+        powerup = sheet.crop(width, height, width, height);
+
 
     }
 }
