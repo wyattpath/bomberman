@@ -73,7 +73,6 @@ public class GamePanel extends JPanel {
     }
 
     // METHODS
-
     public void update() {
 
     }
@@ -81,32 +80,12 @@ public class GamePanel extends JPanel {
 
 
     public void draw(Graphics g) {
-//         create graphics if null
-//        if (gOff == null) {
-//            dimOff = new Dimension(frameWidth, frameHeight);
-//            imgOff = createImage(frameWidth, frameHeight);
-//            gOff = imgOff.getGraphics();
-//            return;
         if(g == null)
         {
             createImage(WIDTH, HEIGHT);
             return;
         }
         repaint();
-                    // Fill in background with black
-//        g.setColor(Color.BLACK);
-//        g.fillRect(0, 0, frameWidth, frameHeight);
-//        gOff.setColor(Color.RED);
-//        gOff.drawRect(50,50,100,100);
-//        gOff.drawImage(Assets.dirt, 0 , 10, null);
-//        if(State.getCurrentState() != null){
-//
-//            State.getCurrentState().draw(gOff);
-//        }
-//        g.drawImage(imgOff,0,0,null);
-//        imgOff.getGraphics();
-//        g.drawImage(imgOff, 0, 0, this);
-
     }
 
     @Override
@@ -115,12 +94,9 @@ public class GamePanel extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g.create();
         if(State.getCurrentState() != null){
-//            g2d.clearRect(0,0,frameWidth,frameHeight);
             State.getCurrentState().draw(g2d);
         }
 
-//        g2d.setColor(Color.YELLOW);
-//        g2d.fillRect(0,0,WIDTH,HEIGHT);
         g2d.dispose();
     }
 }

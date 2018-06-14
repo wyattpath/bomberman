@@ -20,4 +20,10 @@ public class Stone extends StaticEntity {
     public void draw(Graphics g) {
         g.drawImage(Assets.stone, (int) x, (int) y, width, height, null);
     }
+
+    @Override
+    protected void destroy()
+    {
+
+    }
 }

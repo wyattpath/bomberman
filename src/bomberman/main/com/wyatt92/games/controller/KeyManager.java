@@ -7,6 +7,7 @@ public class KeyManager implements KeyListener {
 
     private boolean[] keys;
     public boolean UP, DOWN, LEFT, RIGHT;
+    public boolean SPACE;
 
     public KeyManager() {
         keys = new boolean[256];
@@ -17,6 +18,7 @@ public class KeyManager implements KeyListener {
         DOWN = keys[KeyEvent.VK_S];
         LEFT = keys[KeyEvent.VK_A];
         RIGHT = keys[KeyEvent.VK_D];
+        SPACE = keys[KeyEvent.VK_SPACE];
     }
 
     public void keyTyped(KeyEvent e) {

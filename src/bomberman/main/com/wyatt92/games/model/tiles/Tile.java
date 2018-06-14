@@ -1,5 +1,7 @@
 package com.wyatt92.games.model.tiles;
 
+import com.wyatt92.games.model.Model;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -18,6 +20,7 @@ public abstract class Tile
 
 
     public Tile(BufferedImage texture, int id) {
+
         this.texture = texture;
         this.id = id;
 
@@ -28,12 +31,9 @@ public abstract class Tile
 
     }
 
-    public void draw(Graphics g, int x, int y){
+    public void draw(Graphics g,int x , int y ){
+
         g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
-    }
-
-    public void draw(){
-
     }
 
     public boolean isSolid() {

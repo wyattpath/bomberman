@@ -6,14 +6,17 @@ import com.wyatt92.games.model.Model;
 import java.awt.*;
 
 /**
- * An Actor is any object that can be placed into a level.
- * Actors can be created (spawned) and destroyed through gameplay code
+ * An Entity is any object that can be placed into a level.
+ * Entities can be created (spawned) and destroyed through gameplay code
  */
 public abstract class Entity implements Model
 {
+    public static final int DEFAULT_HEALTH = 3;
     protected Handler handler;
     protected float x,y;
     protected int width, height;
+    protected int health;
+    protected boolean active = true;
     protected Rectangle bounds;
 
     public Entity(Handler handler, float x, float y, int width, int height) {
@@ -22,6 +25,7 @@ public abstract class Entity implements Model
         this.y = y;
         this.width = width;
         this.height = height;
+        health = DEFAULT_HEALTH;
 
         bounds = new Rectangle(0,0, width, height);
     }
@@ -31,6 +35,16 @@ public abstract class Entity implements Model
 
     @Override
     public abstract void draw(Graphics g);
+
+    public void hurt(int amount) {
+        health -= amount;
+        if(health <= 0) {
+            active = false;
+            destroy();
+        }
+    }
+
+    protected abstract void destroy();
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
         for(Entity e : handler.getWorld().getEntityManager().getEntities()){
@@ -88,5 +102,24 @@ public abstract class Entity implements Model
     public void setHeight(int height)
     {
         this.height = height;
+    }
+
+    public static int getDefaultHealth()
+    {
+        return DEFAULT_HEALTH;
+    }
+
+    public boolean isActive()
+    {
+        return active;
+    }
+
+    public void setActive(boolean active)
+    {
+        this.active = active;
+    }
+
+    public Point getTileCenter(){
+        return new Point((int)  x + width/2, (int) y + height/2 );
     }
 }

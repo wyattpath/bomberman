@@ -24,7 +24,17 @@ public class Player extends DynamicEntity
     {
         getInput();
         move();
+        
+
     }
+
+    private void placeBomb()
+    {
+        //TODO
+//        BombBlast blast = new BombBlast(handler,x,y,width, height);
+
+    }
+
     private void getInput(){
         xMove = 0;
         yMove = 0;
@@ -37,6 +47,9 @@ public class Player extends DynamicEntity
             xMove = -speed;
         if(handler.getKeyManager().RIGHT)
             xMove = speed;
+        if(handler.getKeyManager().SPACE){
+            placeBomb();
+        }
 
 
     }
@@ -47,6 +60,12 @@ public class Player extends DynamicEntity
 
 //        g.setColor(Color.red);
 //        g.fillRect((int)(x + bounds.x),(int)(y + bounds.y), bounds.width, bounds.height);
+    }
+
+    @Override
+    protected void destroy()
+    {
+        System.out.println("You lose!");
     }
 
 }

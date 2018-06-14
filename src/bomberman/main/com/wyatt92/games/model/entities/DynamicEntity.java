@@ -4,17 +4,15 @@ import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.tiles.Tile;
 
 /**
- * The Pawn is the physical representation of a player or an AI within the world.
+ * The Dynamic Entity is an entity that can be moved around the world.
  *
  */
 public abstract class DynamicEntity extends Entity
 {
-    public static final int DEFAULT_HEALTH = 10;
     public static final float DEFAULT_SPEED = 3.0f;
     public static final int DEFAULT_CHARACTER_WIDTH = 64;
     public static final int DEFAULT_CHARACTER_HEIGHT = 64;
 
-    protected int health;
     protected float speed;
     protected float xMove, yMove;
 
@@ -23,7 +21,6 @@ public abstract class DynamicEntity extends Entity
 
     public DynamicEntity(Handler handler, float x, float y, int width, int height) {
         super(handler, x, y, width, height);
-        health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
     }
 
@@ -47,7 +44,8 @@ public abstract class DynamicEntity extends Entity
             }
         } else if(xMove < 0) {//moving left
             int tx = (int) ((x + xMove + bounds.x) / Tile.TILEWIDTH);
-            if(!collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILEHEIGHT)){
+            if(!collisionWithTile(tx, (int)(y + bounds.y) / Tile.TILEHEIGHT) &&
+                    !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT)){
                 x += xMove;
             } else {
                 x = tx * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
