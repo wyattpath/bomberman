@@ -10,6 +10,8 @@ public class Player extends DynamicEntity
 
 //    private boolean isMoving = false;
 
+    private int bombCount = 1;
+
     // AttackTimer
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
     public Player(Handler handler, float x, float y) {
@@ -28,6 +30,11 @@ public class Player extends DynamicEntity
         move();
         checkAttacks();
 
+    }
+
+    public void addBombCount(){
+        bombCount++;
+        System.out.println("You can now deploy " + bombCount + " bombs at the same time.");
     }
 
     private void checkAttacks()

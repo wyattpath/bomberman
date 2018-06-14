@@ -23,7 +23,7 @@ public class ItemManager implements Model
         while(it.hasNext()) {
             Item i = it.next();
             i.update();
-            if(i.getCount() == Item.PICKED_UP) {
+            if(i.isPickedUp()) {
                 it.remove();
             }
         }

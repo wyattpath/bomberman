@@ -25,6 +25,6 @@ public class Stone extends StaticEntity {
     @Override
     protected void destroy()
     {
-        handler.getWorld().getItemManager().addItem(Item.powerupItem.createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
+        handler.getWorld().getItemManager().addItem(Item.powerUpItem.createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
     }
 }

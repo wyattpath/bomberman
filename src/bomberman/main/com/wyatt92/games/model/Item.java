@@ -5,19 +5,22 @@ import com.wyatt92.games.controller.Handler;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Item implements Model
+public abstract class Item implements Model
 {
     public static Item[] items = new Item[256];
-    public static Item powerupItem = new Item(Assets.powerup, "Powerup", 0);
+    public static Item powerUpItem = new PowerUpItem(0);
 
-    public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32, PICKED_UP = -1;
+    public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 
     protected Handler handler;
     protected BufferedImage texture;
     protected String name;
     protected final int id;
 
+    protected Rectangle bounds;
+
     protected int x, y, count;
+    protected boolean pickedUp = false;
 
     public Item(BufferedImage texture, String name, int id){
         this.texture = texture;
@@ -25,12 +28,20 @@ public class Item implements Model
         this.id = id;
         count = 1;
 
+        bounds = new Rectangle(x,y, ITEMWIDTH, ITEMHEIGHT);
+
         items[id] = this;
     }
 
+    @Override
     public void update() {
-
+        if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)){
+            pickedUp = true;
+            addEffect();
+        }
     }
+
+
 
     @Override
     public void draw(Graphics g){
@@ -43,14 +54,18 @@ public class Item implements Model
         g.drawImage(texture,x, y, ITEMWIDTH, ITEMHEIGHT, null);
     }
 
-    public Item createNew(int x, int y){
-        Item i = new Item(texture, name, id);
-        i.setPosition(x,y);
-        return i;
-    }
+    public abstract Item createNew(int x, int y);
+
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
+        bounds.x = x;
+        bounds.y = y;
+    }
+
+
+    protected void addEffect()
+    {
     }
 
     // GETTERS and SETTERS
@@ -118,5 +133,10 @@ public class Item implements Model
     public void setCount(int count)
     {
         this.count = count;
+    }
+
+    public boolean isPickedUp()
+    {
+        return pickedUp;
     }
 }
