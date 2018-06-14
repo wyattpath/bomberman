@@ -1,5 +1,6 @@
 package com.wyatt92.games.controller;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -28,6 +29,10 @@ public class MouseManager implements MouseListener, MouseMotionListener
 
     public int getMouseY() {
         return mouseY;
+    }
+
+    public Point getMousePosition() {
+        return new Point(mouseX, mouseY);
     }
     // Implemented methods
 

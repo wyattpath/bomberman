@@ -149,4 +149,9 @@ public class Game implements Runnable{
     {
         return HEIGHT;
     }
+
+    public State getMenuState()
+    {
+        return menuState;
+    }
 }

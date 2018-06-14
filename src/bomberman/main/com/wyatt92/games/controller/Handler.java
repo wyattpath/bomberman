@@ -25,6 +25,7 @@ public class Handler
     public State getGameState() {
         return game.getGameState();
     }
+    public State getMenuState() { return game.getMenuState();}
     public int getWidth(){
         return game.getWidth();
     }
