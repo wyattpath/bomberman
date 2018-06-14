@@ -2,6 +2,7 @@ package com.wyatt92.games.controller;
 
 
 import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.model.states.State;
 
 public class Handler

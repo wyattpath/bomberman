@@ -24,9 +24,47 @@ public class Player extends DynamicEntity
     {
         getInput();
         move();
-        
+        checkAttacks();
 
     }
+
+    private void checkAttacks()
+    {
+
+        Rectangle cb = getCollisionBounds(0,0); // collision bounds
+        Rectangle ar = new Rectangle(); // attack rectangle
+        int arSize = 20;
+        ar.width = arSize;
+        ar.height = arSize;
+
+        if(handler.getKeyManager().aUP) {
+            ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y - arSize;
+        }else if(handler.getKeyManager().aDOWN) {
+            ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y -+ cb.height;
+        }
+        else if(handler.getKeyManager().aLEFT) {
+            ar.x = cb.x - arSize;
+            ar.y = cb.y + cb.height - arSize / 2;
+        }
+        else if(handler.getKeyManager().aRIGHT) {
+            ar.x = cb.x + cb.width;
+            ar.y = cb.y + cb.height / 2 - arSize / 2;
+        } else {
+            return;
+        }
+
+        for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+            if(e.equals(this))
+                continue;
+            if(e.getCollisionBounds(0,0).intersects(ar)){
+                e.hurt(1);
+                return;
+            }
+        }
+
+;    }
 
     private void placeBomb()
     {

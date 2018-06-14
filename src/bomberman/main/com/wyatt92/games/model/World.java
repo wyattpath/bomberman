@@ -20,12 +20,11 @@ public class World
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-//        entityManager.addEntity(new Stone(handler, 100, 250));
+        entityManager = new EntityManager(handler, new Player(handler, 64, 64));
+        entityManager.addEntity(new Stone(handler, 128, 64));
         loadWorld(path);
 
-        entityManager.getPlayer().setX(playerSpawnX);
-        entityManager.getPlayer().setY(playerSpawnY);
+
     }
 
     public void update() {
@@ -65,6 +64,9 @@ public class World
         height = Utils.parseInt(tokens[1]);
         playerSpawnX = Utils.parseInt(tokens[2]);
         playerSpawnY = Utils.parseInt(tokens[3]);
+
+        entityManager.getPlayer().setX(playerSpawnX);
+        entityManager.getPlayer().setY(playerSpawnY);
 
         tiles = new int[width][height];
         for (int y = 0; y < height; y++)
