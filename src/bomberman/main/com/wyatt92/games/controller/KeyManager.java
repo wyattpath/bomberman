@@ -42,9 +42,10 @@ public class KeyManager implements KeyListener {
     }
 
     public boolean keyJustPressed(int keyCode){
-        if(keyCode >= 0 && keyCode < keys.length)
-            return false;
-        return justPressed[keyCode];
+        if(keyCode >= 0 && keyCode < keys.length){
+            return justPressed[keyCode];
+        }
+        return false;
     }
 
     public void keyTyped(KeyEvent e) {
