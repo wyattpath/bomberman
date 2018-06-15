@@ -5,6 +5,8 @@ import com.wyatt92.games.model.Assets;
 
 import java.awt.*;
 
+import static com.wyatt92.games.model.entities.Bomb.bomb;
+
 public class Player extends DynamicEntity
 {
 
@@ -28,7 +30,7 @@ public class Player extends DynamicEntity
     {
         getInput();
         move();
-        checkAttacks();
+        placeBomb();
 
     }
 
@@ -87,7 +89,56 @@ public class Player extends DynamicEntity
     private void placeBomb()
     {
         //TODO
-//        BombBlast blast = new BombBlast(handler,x,y,width, height);
+        // attack cooldown
+        attackTimer += System.currentTimeMillis() - lastAttackTimer;
+        lastAttackTimer = System.currentTimeMillis();
+        if(attackTimer < attackCooldown)
+            return;
+
+
+
+        Rectangle cb = getCollisionBounds(0,0); // collision bounds
+        Rectangle ar = new Rectangle(); // attack rectangle
+        int arSize = 20;
+        ar.width = arSize;
+        ar.height = arSize;
+
+        if(handler.getKeyManager().aUP) {
+            ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y - arSize;
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+        }else if(handler.getKeyManager().aDOWN) {
+            ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.y = cb.y -+ cb.height;
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+
+
+        }
+        else if(handler.getKeyManager().aLEFT) {
+            ar.x = cb.x - arSize;
+            ar.y = cb.y + cb.height - arSize / 2;
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+
+        }
+        else if(handler.getKeyManager().aRIGHT) {
+            ar.x = cb.x + cb.width;
+            ar.y = cb.y + cb.height / 2 - arSize / 2;
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+
+        } else {
+            return;
+        }
+
+        attackTimer = 0;
+
+//        for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+//            if(e.equals(this))
+//                continue;
+//            if(e.getCollisionBounds(0,0).intersects(ar)){
+//                e.hurt(1);
+//                return;
+//            }
+//        }
 
     }
 

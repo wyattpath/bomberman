@@ -68,7 +68,7 @@ public class GamePanel extends JPanel {
         this.setMaximumSize(new Dimension(frameWidth, frameHeight));
         this.setMinimumSize(new Dimension(frameWidth, frameHeight));
         this.setFocusable(true);
-        this.setDoubleBuffered(true);
+//        this.setDoubleBuffered(true);
         requestFocus();
     }
 

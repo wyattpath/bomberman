@@ -1,6 +1,7 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.model.entities.BombManager;
 import com.wyatt92.games.model.entities.EntityManager;
 import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.model.entities.Stone;
@@ -19,11 +20,14 @@ public class World
     private EntityManager entityManager;
     // Item
     private ItemManager itemManager;
+    // Bombs
+    private BombManager bombManager;
 
     public World(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Player(handler, 64, 64));
         itemManager = new ItemManager(handler);
+        bombManager = new BombManager(handler);
 
         // Temporary entity code!
         entityManager.addEntity(new Stone(handler, 128, 64));
@@ -33,6 +37,7 @@ public class World
     }
 
     public void update() {
+        bombManager.update();
         itemManager.update();
         entityManager.update();
     }
@@ -46,6 +51,8 @@ public class World
             }
         }
 
+        // Bombs
+        bombManager.draw(g);
         // Items
         itemManager.draw(g);
         //entities
@@ -106,6 +113,11 @@ public class World
     public void setItemManager(ItemManager itemManager)
     {
         this.itemManager = itemManager;
+    }
+
+    public BombManager getBombManager()
+    {
+        return bombManager;
     }
 }
 

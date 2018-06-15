@@ -14,6 +14,7 @@ public class Assets {
     public static void init() {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("sheet.png"));
         SpriteSheet blastSheet = new SpriteSheet((ImageLoader.loadImage("blast.png")));
+        SpriteSheet bombSheet = new SpriteSheet((ImageLoader.loadImage("bomb.png")));
 
         player = sheet.crop(width * 5,0, width, height);
         dirt = sheet.crop(width, 0, width, height);
@@ -21,7 +22,7 @@ public class Assets {
         wall = sheet.crop(width * 3, 0, width, height);
         tree = sheet.crop(0, height, width, height);
         stone = sheet.crop(0, width * 2, width, height);
-        bomb = sheet.crop(width, width, width, height);
+        bomb = bombSheet.crop(0, 0, width*2, height*2);
 
         btn_start = new BufferedImage[2];
         btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height);
