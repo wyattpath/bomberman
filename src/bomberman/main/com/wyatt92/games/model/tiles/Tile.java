@@ -5,7 +5,7 @@ import com.wyatt92.games.model.Model;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class Tile
+public abstract class Tile implements Model
 {
     public static Tile[] tiles = new Tile[256];
     public static Tile grassTile = new GrassTile(0);
@@ -18,6 +18,8 @@ public abstract class Tile
     protected BufferedImage texture;
     protected final int id;
 
+    private int x, y;
+
 
     public Tile(BufferedImage texture, int id) {
 
@@ -27,22 +29,35 @@ public abstract class Tile
         tiles[id] = this;
     }
 
+    @Override
     public void update(){
 
     }
 
-    public void draw(Graphics g,int x , int y ){
+    @Override
+    public void draw(Graphics g){
 
         g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
     }
+
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
+
+    }
+    // GETTERS and SETTERS
+    public int getID() {
+        return id;
+    }
+
 
     public boolean isSolid() {
         return false;
     }
 
-    // GETTERS and SETTERS
 
-    public int getID() {
-        return id;
+    public Point getCenter(){
+        return new Point(x,y);
     }
+
 }

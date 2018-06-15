@@ -8,4 +8,5 @@ public interface Model
     public void update();
 
     public void draw(Graphics g);
+
 }

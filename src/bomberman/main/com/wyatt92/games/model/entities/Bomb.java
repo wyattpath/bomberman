@@ -11,14 +11,13 @@ import java.nio.Buffer;
 import java.util.Timer;
 
 
-public class Bomb
-{
+public class Bomb extends StaticEntity{
     private long startTime;
     private float countdown;
-    public static Bomb bomb = new Bomb(Assets.bomb);
+    public static Bomb bomb;
     private boolean destroyed = false;
 
-    protected Handler handler;
+    protected static Handler handler;
     protected static BufferedImage texture;
 
     public static final int BOMBWIDTH = 32, BOMBHEIGHT = 32;
@@ -26,9 +25,11 @@ public class Bomb
     protected Rectangle bounds;
     protected int x, y;
 
-    public Bomb(BufferedImage texture)
+    public Bomb(Handler handler, float x, float y, int width, int height)
     {
-        this.texture = texture;
+        super(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
+//        bomb = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
+//        this.texture = texture;
         bounds = new Rectangle((int) x,(int) y, BOMBWIDTH, BOMBHEIGHT);
         startTime = System.currentTimeMillis();
         countdown = 2f;
@@ -51,7 +52,7 @@ public class Bomb
     }
 
     public static Bomb createNew(int x, int y){
-        Bomb b = new Bomb(texture);
+        Bomb b = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
         b.setPosition(x, y);
         return b;
     }

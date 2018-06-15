@@ -119,7 +119,7 @@ public abstract class Entity implements Model
         this.active = active;
     }
 
-    public Point getTileCenter(){
+    public Point getCenter(){
         return new Point((int)  x + width/2, (int) y + height/2 );
     }
 }

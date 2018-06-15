@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class BombManager implements Model
+public class BombManager
 {
     private Handler handler;
     private ArrayList<Bomb> bombs;
@@ -17,7 +17,6 @@ public class BombManager implements Model
         bombs = new ArrayList<>();
     }
 
-    @Override
     public void update()
     {
         Iterator<Bomb> it = bombs.iterator();
@@ -30,7 +29,6 @@ public class BombManager implements Model
         }
     }
 
-    @Override
     public void draw(Graphics g)
     {
         for(Bomb i : bombs)

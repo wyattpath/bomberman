@@ -47,7 +47,8 @@ public class World
     {
         for (int y = 0; y < height; y++){
             for (int x = 0; x < width; x++){
-                getTile(x, y).draw(g, x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
+                getTile(x,y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
+                getTile(x, y).draw(g);
             }
         }
 

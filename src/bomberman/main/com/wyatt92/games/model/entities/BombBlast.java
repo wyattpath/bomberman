@@ -50,6 +50,7 @@ public class BombBlast extends StaticEntity
         System.out.println("drawing");
     }
 
+
     @Override
     protected void destroy()
     {

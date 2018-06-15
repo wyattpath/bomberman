@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ItemManager implements Model
+public class ItemManager
 {
     private Handler handler;
     private ArrayList<Item> items;
@@ -16,7 +16,7 @@ public class ItemManager implements Model
         items = new ArrayList<>();
     }
 
-    @Override
+
     public void update()
     {
         Iterator<Item> it = items.iterator();
@@ -29,7 +29,7 @@ public class ItemManager implements Model
         }
     }
 
-    @Override
+
     public void draw(Graphics g)
     {
         for(Item i : items)
