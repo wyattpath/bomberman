@@ -34,7 +34,6 @@ public class MenuState extends State
                 handler.getMouseManager().getMouseY(),
                 8,
                 8);
-        System.out.println("drawing on menustate");
     }
 
 

@@ -2,10 +2,9 @@ package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
-
-import static com.wyatt92.games.model.entities.Bomb.bomb;
 
 public class Player extends DynamicEntity
 {
@@ -18,7 +17,6 @@ public class Player extends DynamicEntity
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
     public Player(Handler handler, float x, float y) {
         super(handler, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
-
         bounds.x = 16;
         bounds.y = 32;
         bounds.width = 32;
@@ -46,8 +44,6 @@ public class Player extends DynamicEntity
         lastAttackTimer = System.currentTimeMillis();
         if(attackTimer < attackCooldown)
             return;
-
-
 
         Rectangle cb = getCollisionBounds(0,0); // collision bounds
         Rectangle ar = new Rectangle(); // attack rectangle
@@ -106,17 +102,16 @@ public class Player extends DynamicEntity
         if(handler.getKeyManager().aUP) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
+//            Point point = handler.getWorld().getTileCenter(ar.x,ar.y);
             handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
         }else if(handler.getKeyManager().aDOWN) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
-            ar.y = cb.y -+ cb.height;
+            ar.y = cb.y + cb.height;
             handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
-
-
         }
         else if(handler.getKeyManager().aLEFT) {
             ar.x = cb.x - arSize;
-            ar.y = cb.y + cb.height - arSize / 2;
+            ar.y = cb.y + cb.height / 2- arSize / 2;
             handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
 
         }
@@ -125,7 +120,14 @@ public class Player extends DynamicEntity
             ar.y = cb.y + cb.height / 2 - arSize / 2;
             handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
 
-        } else {
+        } else if(handler.getKeyManager().SPACE) {
+            ar.x = (int)x;
+            ar.y = (int)y;
+            Point point = handler.getWorld().getTileCenter((int)super.x+32,(int)super.y+32);
+                handler.getWorld().getBombManager().addBomb(Bomb.createNew(point.x, point.y));
+
+
+        }else {
             return;
         }
 
@@ -141,6 +143,21 @@ public class Player extends DynamicEntity
 //        }
 
     }
+
+    private Point getTilePosition(int x, int y)
+    {
+        Point point = new Point();
+        for (int tx = 0; tx < handler.getWorld().getWidth();tx++){
+            for(int ty = 0; ty < handler.getWorld().getHeight();ty++) {
+                Point tilePos = handler.getWorld().getTile(tx,ty).getPosition();
+                if(x >= tilePos.x && x < tilePos.x + Tile.TILEWIDTH && y >= tilePos.y && y < tilePos.y + Tile.TILEHEIGHT){
+                    point = new Point (tx,ty);
+                }
+            }
+        }
+        return point;
+    }
+
 
     private void getInput(){
         xMove = 0;
@@ -165,8 +182,21 @@ public class Player extends DynamicEntity
     public void draw(Graphics g) {
         g.drawImage(Assets.player, (int) x ,(int) y, width, height,null);
 
-//        g.setColor(Color.red);
+        g.setColor(Color.red);
 //        g.fillRect((int)(x + bounds.x),(int)(y + bounds.y), bounds.width, bounds.height);
+        Point point = new Point();
+
+                Point tilePos = handler.getWorld().getTileCenter((int)super.x+32,(int)super.y+32);
+//                if(
+//                        super.x+1 >= tilePos.x &&
+//                        super.x+1 < tilePos.x + Tile.TILEWIDTH &&
+//                        super.y+1 >= tilePos.y &&
+//                                super.y+1 < tilePos.y + Tile.TILEHEIGHT){
+                    point = new Point (tilePos.x,tilePos.y);
+//                }
+
+
+        g.fillRect(point.x,point.y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
     }
 
     @Override
@@ -174,5 +204,6 @@ public class Player extends DynamicEntity
     {
         System.out.println("You lose!");
     }
+
 
 }

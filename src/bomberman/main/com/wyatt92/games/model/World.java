@@ -1,10 +1,7 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.controller.Handler;
-import com.wyatt92.games.model.entities.BombManager;
-import com.wyatt92.games.model.entities.EntityManager;
-import com.wyatt92.games.model.entities.Player;
-import com.wyatt92.games.model.entities.Stone;
+import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -15,6 +12,8 @@ public class World
     private int width, height;
     private int playerSpawnX,playerSpawnY;
     private int[][] tiles;
+    private int xCenter;
+    private int yCenter;
 
     //Entities
     private EntityManager entityManager;
@@ -30,8 +29,9 @@ public class World
         bombManager = new BombManager(handler);
 
         // Temporary entity code!
-        entityManager.addEntity(new Stone(handler, 128, 64));
+//        entityManager.addEntity(new Stone(handler, 128, 64));
         loadWorld(path);
+
 
 
     }
@@ -40,6 +40,7 @@ public class World
         bombManager.update();
         itemManager.update();
         entityManager.update();
+
     }
 
 
@@ -70,6 +71,40 @@ public class World
             return Tile.dirtTile;
         }
         return t;
+    }
+
+    public Point getTileCenter(int x, int y){
+
+        for (int ty = 0; ty < height; ty++)
+        {
+            if(y >= ty*Tile.TILEHEIGHT && y < ty*Tile.TILEHEIGHT + Tile.TILEHEIGHT)
+            {
+                yCenter = ty * Tile.TILEHEIGHT ;
+            }
+        }
+        for (int tx = 0; tx < width; tx++)
+        {
+            if(x >= tx*Tile.TILEWIDTH && y < tx*Tile.TILEWIDTH + Tile.TILEWIDTH)
+            {
+                xCenter = tx * Tile.TILEWIDTH;
+            }
+        }
+        return new Point(xCenter,yCenter);
+    }
+
+    public Point getTilePosition(int x, int y) {
+        Point point = new Point();
+        for(int ty = 0; ty < height; ty++)
+            for(int tx = 0; tx < width; tx++){
+            if(
+                    x+1 >= tx &&
+                        x+1 < tx + Tile.TILEWIDTH &&
+                        y+1 >= ty &&
+                                y+1 < ty + Tile.TILEHEIGHT){
+                point = new Point(tx,ty);
+            }
+            }
+            return point;
     }
 
     private void loadWorld(String path)
@@ -119,6 +154,21 @@ public class World
     public BombManager getBombManager()
     {
         return bombManager;
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public int[][] getTiles()
+    {
+        return tiles;
     }
 }
 

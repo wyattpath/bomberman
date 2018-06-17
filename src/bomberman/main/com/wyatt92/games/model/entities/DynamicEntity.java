@@ -3,6 +3,8 @@ package com.wyatt92.games.model.entities;
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.tiles.Tile;
 
+import java.awt.*;
+
 /**
  * The Dynamic Entity is an entity that can be moved around the world.
  *
@@ -27,10 +29,12 @@ public abstract class DynamicEntity extends Entity
     public void move() {
         if(!checkEntityCollisions(xMove, 0f)) {
             moveX();
+
         }
         if(!checkEntityCollisions(0f, yMove)) {
             moveY();
         }
+
     }
     public void moveX() {
         if(xMove > 0){ //moving right
@@ -75,6 +79,8 @@ public abstract class DynamicEntity extends Entity
     protected boolean collisionWithTile(int x, int y) {
         return handler.getWorld().getTile(x,y).isSolid();
     }
+
+
 
     // GETTERS and SETTERS
     public float getxMove()

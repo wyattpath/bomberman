@@ -2,6 +2,7 @@ package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
 
@@ -18,6 +19,7 @@ public abstract class Entity implements Model
     protected int health;
     protected boolean active = true;
     protected Rectangle bounds;
+    protected Point centerPoint;
 
     public Entity(Handler handler, float x, float y, int width, int height) {
         this.handler = handler;
@@ -26,6 +28,7 @@ public abstract class Entity implements Model
         this.width = width;
         this.height = height;
         health = DEFAULT_HEALTH;
+        centerPoint = new Point((int)x,(int) y);
 
         bounds = new Rectangle(0,0, width, height);
     }
@@ -119,7 +122,8 @@ public abstract class Entity implements Model
         this.active = active;
     }
 
-    public Point getCenter(){
-        return new Point((int)  x + width/2, (int) y + height/2 );
+
+    public Point getCenterPoint(){
+        return centerPoint;
     }
 }

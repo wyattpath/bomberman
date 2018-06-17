@@ -2,13 +2,8 @@ package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.entities.StaticEntity;
-import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
-import java.util.Timer;
 
 
 public class Bomb extends StaticEntity{
@@ -18,14 +13,13 @@ public class Bomb extends StaticEntity{
     private boolean destroyed = false;
 
     protected static Handler handler;
-    protected static BufferedImage texture;
 
     public static final int BOMBWIDTH = 32, BOMBHEIGHT = 32;
 
     protected Rectangle bounds;
     protected int x, y;
 
-    public Bomb(Handler handler, float x, float y, int width, int height)
+    public Bomb(Handler handler, float x, float y)
     {
         super(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
 //        bomb = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
@@ -52,7 +46,7 @@ public class Bomb extends StaticEntity{
     }
 
     public static Bomb createNew(int x, int y){
-        Bomb b = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
+        Bomb b = new Bomb(handler, x, y);
         b.setPosition(x, y);
         return b;
     }

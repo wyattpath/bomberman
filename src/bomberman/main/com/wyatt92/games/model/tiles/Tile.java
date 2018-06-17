@@ -21,11 +21,20 @@ public abstract class Tile implements Model
     private int x, y;
 
 
-    public Tile(BufferedImage texture, int id) {
+    public Tile(BufferedImage texture, int id, int x, int y) {
 
         this.texture = texture;
         this.id = id;
+        this.x = x;
+        this.y = y;
 
+        tiles[id] = this;
+    }
+
+    public Tile(BufferedImage texture, int id)
+    {
+        this.texture = texture;
+        this.id = id;
         tiles[id] = this;
     }
 
@@ -43,21 +52,17 @@ public abstract class Tile implements Model
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
-
     }
     // GETTERS and SETTERS
     public int getID() {
         return id;
     }
 
-
     public boolean isSolid() {
         return false;
     }
 
-
-    public Point getCenter(){
-        return new Point(x,y);
+    public Point getPosition(){
+        return new Point(x, y);
     }
-
 }
