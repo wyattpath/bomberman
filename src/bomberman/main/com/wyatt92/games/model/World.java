@@ -2,6 +2,7 @@ package com.wyatt92.games.model;
 
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.entities.*;
+import com.wyatt92.games.model.items.ItemManager;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;

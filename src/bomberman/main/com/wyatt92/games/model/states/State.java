@@ -24,7 +24,9 @@ public abstract class State implements Model
         currentState = state;
     }
 
+    @Override
     public abstract void update();
 
+    @Override
     public abstract void draw(Graphics g);
 }

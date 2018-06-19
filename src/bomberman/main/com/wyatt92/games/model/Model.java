@@ -5,8 +5,8 @@ import java.util.Observer;
 
 public interface Model
 {
-    public void update();
+    void update();
 
-    public void draw(Graphics g);
+    void draw(Graphics g);
 
 }

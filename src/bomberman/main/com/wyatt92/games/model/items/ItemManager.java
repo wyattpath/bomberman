@@ -1,4 +1,4 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.controller.Handler;
 

@@ -68,7 +68,7 @@ public class GamePanel extends JPanel {
         this.setMaximumSize(new Dimension(frameWidth, frameHeight));
         this.setMinimumSize(new Dimension(frameWidth, frameHeight));
         this.setFocusable(true);
-//        this.setDoubleBuffered(true);
+        this.setDoubleBuffered(true);
         requestFocus();
     }
 
@@ -92,11 +92,12 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2d = (Graphics2D) g.create();
+//        Graphics2D g2d = (Graphics2D) g.create();
+//        g.create();
         if(State.getCurrentState() != null){
-            State.getCurrentState().draw(g2d);
+            State.getCurrentState().draw(g);
         }
 
-        g2d.dispose();
+        g.dispose();
     }
 }

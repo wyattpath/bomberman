@@ -1,4 +1,6 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.items;
+
+import com.wyatt92.games.model.Assets;
 
 public class PowerUpItem extends Item
 {
