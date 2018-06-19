@@ -4,6 +4,7 @@ import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
+import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.view.GamePanel;
 
 import java.awt.*;
@@ -11,8 +12,8 @@ import java.awt.*;
 
 public class Game implements Runnable{
 
-    private static final int WIDTH = 1080;
-    private static final int HEIGHT = 1080;
+    private static final int WIDTH = 15 * 64;
+    private static final int HEIGHT = 15 * 64 + 32;
     private static final String TITLE = "Bomberman";
 
     private boolean running = false;
@@ -77,7 +78,8 @@ public class Game implements Runnable{
 
             if(delta >= 1) {
                 update();
-                gamePanel.draw(gamePanel.getGraphics());
+//                gamePanel.draw(gamePanel.getGraphics());
+                gamePanel.repaint();
                 ticks++;
                 delta--;
             }
@@ -117,9 +119,6 @@ public class Game implements Runnable{
         {
             State.getCurrentState().update();
         }
-
-
-        gamePanel.update();
     }
 
     private void render()

@@ -72,21 +72,16 @@ public class GamePanel extends JPanel {
         requestFocus();
     }
 
-    // METHODS
-    public void update() {
-
-    }
 
 
-
-    public void draw(Graphics g) {
-        if(g == null)
-        {
-            createImage(WIDTH, HEIGHT);
-            return;
-        }
-        repaint();
-    }
+//    public void draw(Graphics g) {
+//        if(g == null)
+//        {
+//            createImage(WIDTH, HEIGHT);
+//            return;
+//        }
+//        repaint();
+//    }
 
     @Override
     protected void paintComponent(Graphics g) {
