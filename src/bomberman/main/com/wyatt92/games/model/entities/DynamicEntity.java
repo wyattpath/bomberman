@@ -18,6 +18,7 @@ public abstract class DynamicEntity extends Entity
     protected float speed;
     protected float xMove, yMove;
 
+
     private enum Direction {UP, DOWN, LEFT, RIGHT};
     private Direction mDirection;
 
@@ -101,5 +102,9 @@ public abstract class DynamicEntity extends Entity
     public void setyMove(float yMove)
     {
         this.yMove = yMove;
+    }
+
+    public Point getCenterpoint(){
+        return centerPoint;
     }
 }

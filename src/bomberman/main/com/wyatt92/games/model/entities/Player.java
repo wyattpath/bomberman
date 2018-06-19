@@ -121,10 +121,10 @@ public class Player extends DynamicEntity
             handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
 
         } else if(handler.getKeyManager().SPACE) {
-            ar.x = (int)x;
-            ar.y = (int)y;
-            Point point = handler.getWorld().getTileCenter((int)super.x+32,(int)super.y+32);
-                handler.getWorld().getBombManager().addBomb(Bomb.createNew(point.x, point.y));
+            System.out.println(super.getCenterPoint());
+                handler.getWorld().getBombManager().addBomb(Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y));
+
+
 
 
         }else {
@@ -144,18 +144,10 @@ public class Player extends DynamicEntity
 
     }
 
-    private Point getTilePosition(int x, int y)
+    public Point getCenterPoint()
     {
-        Point point = new Point();
-        for (int tx = 0; tx < handler.getWorld().getWidth();tx++){
-            for(int ty = 0; ty < handler.getWorld().getHeight();ty++) {
-                Point tilePos = handler.getWorld().getTile(tx,ty).getPosition();
-                if(x >= tilePos.x && x < tilePos.x + Tile.TILEWIDTH && y >= tilePos.y && y < tilePos.y + Tile.TILEHEIGHT){
-                    point = new Point (tx,ty);
-                }
-            }
-        }
-        return point;
+
+        return centerPoint;
     }
 
 

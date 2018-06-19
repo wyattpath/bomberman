@@ -14,7 +14,7 @@ public abstract class Entity implements Model
 {
     public static final int DEFAULT_HEALTH = 3;
     protected Handler handler;
-    protected float x,y;
+    protected float x,y,xOffset, yOffset;
     protected int width, height;
     protected int health;
     protected boolean active = true;
@@ -27,8 +27,10 @@ public abstract class Entity implements Model
         this.y = y;
         this.width = width;
         this.height = height;
+        xOffset = width/2;
+        yOffset = height/2;
         health = DEFAULT_HEALTH;
-        centerPoint = new Point((int)x,(int) y);
+        centerPoint = new Point((int)x/width * width + width/2,(int) y/height * height + height/2);
 
         bounds = new Rectangle(0,0, width, height);
     }
@@ -124,6 +126,6 @@ public abstract class Entity implements Model
 
 
     public Point getCenterPoint(){
-        return centerPoint;
+        return new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);
     }
 }
