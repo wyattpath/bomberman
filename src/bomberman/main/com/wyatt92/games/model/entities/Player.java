@@ -1,16 +1,18 @@
 package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends DynamicEntity
 {
 
 //    private boolean isMoving = false;
 
+    private Animation animDown, animUp, animLeft, animRight;
     private int bombCount = 1;
 
     // AttackTimer
@@ -21,11 +23,22 @@ public class Player extends DynamicEntity
         bounds.y = 32;
         bounds.width = 32;
         bounds.height = 32;
+
+        animDown = new Animation(500, Assets.player_down);
+        animUp = new Animation(500, Assets.player_up);
+        animLeft = new Animation(500, Assets.player_left);
+        animRight = new Animation(500, Assets.player_right);
     }
 
     @Override
     public void update()
     {
+        animDown.update();
+        animUp.update();
+        animRight.update();
+        animLeft.update();
+
+
         getInput();
         move();
         placeBomb();
@@ -37,54 +50,10 @@ public class Player extends DynamicEntity
         System.out.println("You can now deploy " + bombCount + " bombs at the same time.");
     }
 
-    private void checkAttacks()
-    {
-        // attack cooldown
-        attackTimer += System.currentTimeMillis() - lastAttackTimer;
-        lastAttackTimer = System.currentTimeMillis();
-        if(attackTimer < attackCooldown)
-            return;
 
-        Rectangle cb = getCollisionBounds(0,0); // collision bounds
-        Rectangle ar = new Rectangle(); // attack rectangle
-        int arSize = 20;
-        ar.width = arSize;
-        ar.height = arSize;
-
-        if(handler.getKeyManager().aUP) {
-            ar.x = cb.x + cb.width / 2 - arSize / 2;
-            ar.y = cb.y - arSize;
-        }else if(handler.getKeyManager().aDOWN) {
-            ar.x = cb.x + cb.width / 2 - arSize / 2;
-            ar.y = cb.y -+ cb.height;
-        }
-        else if(handler.getKeyManager().aLEFT) {
-            ar.x = cb.x - arSize;
-            ar.y = cb.y + cb.height - arSize / 2;
-        }
-        else if(handler.getKeyManager().aRIGHT) {
-            ar.x = cb.x + cb.width;
-            ar.y = cb.y + cb.height / 2 - arSize / 2;
-        } else {
-            return;
-        }
-
-        attackTimer = 0;
-
-        for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
-            if(e.equals(this))
-                continue;
-            if(e.getCollisionBounds(0,0).intersects(ar)){
-                e.hurt(1);
-                return;
-            }
-        }
-
-;    }
 
     private void placeBomb()
     {
-        //TODO
         // attack cooldown
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
@@ -102,7 +71,6 @@ public class Player extends DynamicEntity
         if(handler.getKeyManager().aUP) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-//            Point point = handler.getWorld().getTileCenter(ar.x,ar.y);
             handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
         }else if(handler.getKeyManager().aDOWN) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
@@ -172,23 +140,7 @@ public class Player extends DynamicEntity
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(Assets.player, (int) x ,(int) y, width, height,null);
-
-        g.setColor(Color.red);
-//        g.fillRect((int)(x + bounds.x),(int)(y + bounds.y), bounds.width, bounds.height);
-        Point point = new Point();
-
-                Point tilePos = handler.getWorld().getTileCenter((int)super.x+32,(int)super.y+32);
-//                if(
-//                        super.x+1 >= tilePos.x &&
-//                        super.x+1 < tilePos.x + Tile.TILEWIDTH &&
-//                        super.y+1 >= tilePos.y &&
-//                                super.y+1 < tilePos.y + Tile.TILEHEIGHT){
-                    point = new Point (tilePos.x,tilePos.y);
-//                }
-
-
-        g.fillRect(point.x,point.y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+        g.drawImage(getCurrentAnimationFrame(), (int) x ,(int) y, width, height,null);
     }
 
     @Override
@@ -197,5 +149,17 @@ public class Player extends DynamicEntity
         System.out.println("You lose!");
     }
 
-
+    private BufferedImage getCurrentAnimationFrame(){
+        if(xMove < 0) {
+            return animLeft.getCurrentFrame();
+        } else if(xMove > 0) {
+            return animRight.getCurrentFrame();
+        } else if(yMove < 0) {
+            return animUp.getCurrentFrame();
+        } else if(yMove > 0){
+            return animDown.getCurrentFrame();
+        } else {
+            return animDown.getCurrentFrame();
+        }
+    }
 }
