@@ -45,7 +45,6 @@ public abstract class Tile implements Model
 
     @Override
     public void draw(Graphics g){
-
         g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
     }
 

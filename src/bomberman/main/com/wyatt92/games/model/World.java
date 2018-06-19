@@ -89,6 +89,10 @@ public class World
                 xCenter = tx * Tile.TILEWIDTH;
             }
         }
+//        for(Tile t : Tile.tiles){
+//            System.out.println(t.getPosition());
+//        }
+//        System.out.println(handler.getWorld().getTile(x,y).getPosition());
         return new Point(xCenter,yCenter);
     }
 
