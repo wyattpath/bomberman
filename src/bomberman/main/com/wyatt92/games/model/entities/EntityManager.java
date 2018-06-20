@@ -41,9 +41,14 @@ public class EntityManager
         entities.sort(drawSorter);
     }
     public void draw(Graphics g){
-        for(Entity e : entities){
-            e.draw(g);
-        }
+//        Iterator<Entity> it = entities.iterator();
+//        while(it.hasNext()){
+//            Entity e = it.next();
+//            e.draw(g);
+//        }
+        for(int i = 0; i < entities.size(); i++)
+            entities.get(i).draw(g);
+//        entities.sort(drawSorter);
     }
 
     public void addEntity(Entity e) {
