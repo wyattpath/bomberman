@@ -24,10 +24,10 @@ public class Player extends DynamicEntity
         bounds.width = 32;
         bounds.height = 32;
 
-        animDown = new Animation(500, Assets.player_down);
-        animUp = new Animation(500, Assets.player_up);
-        animLeft = new Animation(500, Assets.player_left);
-        animRight = new Animation(500, Assets.player_right);
+        animDown = new Animation(200, Assets.player_down);
+        animUp = new Animation(200, Assets.player_up);
+        animLeft = new Animation(200, Assets.player_left);
+        animRight = new Animation(200, Assets.player_right);
     }
 
     @Override
@@ -37,7 +37,6 @@ public class Player extends DynamicEntity
         animUp.update();
         animRight.update();
         animLeft.update();
-
 
         getInput();
         move();
@@ -59,8 +58,6 @@ public class Player extends DynamicEntity
         lastAttackTimer = System.currentTimeMillis();
         if(attackTimer < attackCooldown)
             return;
-
-
 
         Rectangle cb = getCollisionBounds(0,0); // collision bounds
         Rectangle ar = new Rectangle(); // attack rectangle

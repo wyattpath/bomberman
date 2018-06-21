@@ -30,7 +30,7 @@ public abstract class UIObject implements Model
     public abstract void onClick();
 
     public void onMouseMove(MouseEvent e) {
-        hovering = (bounds.contains(e.getX(), e.getY()))? true : false;
+        hovering = bounds.contains(e.getX(), e.getY());
     }
 
     public void onMouseRelease(MouseEvent e) {

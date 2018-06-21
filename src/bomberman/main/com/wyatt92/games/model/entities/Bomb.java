@@ -1,23 +1,27 @@
 package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
 
 
 public class Bomb extends StaticEntity{
-    private long startTime;
+    private long lastTime;
     private float countdown;
-    public static Bomb bomb;
+    private float waitTime;
+    private static Animation animBomb;
     private boolean destroyed = false;
 
     protected static Handler handler;
-
-    public static final int BOMBWIDTH = 32, BOMBHEIGHT = 32;
-
     protected Rectangle bounds;
     protected int x, y;
+
+    public static Bomb bomb;
+    public static final int BOMBWIDTH = 64, BOMBHEIGHT = 64;
+
 
     public Bomb(Handler handler, float x, float y)
     {
@@ -25,24 +29,47 @@ public class Bomb extends StaticEntity{
 //        bomb = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
 //        this.texture = texture;
         bounds = new Rectangle((int) x,(int) y, BOMBWIDTH, BOMBHEIGHT);
-        startTime = System.currentTimeMillis();
-        countdown = 2f;
+        lastTime = System.currentTimeMillis();
+        waitTime = 2000f;
+        countdown = waitTime;
+
+        animBomb = new Animation(500, Assets.bomb);
     }
 
 
     public void update()
     {
+        //Animation
+        animBomb.update();
+
+        countdown -= System.currentTimeMillis() - lastTime;
+        lastTime = System.currentTimeMillis();
+
+        if(countdown < 0) {
+            destroy();
+            countdown = waitTime;
+            destroyed = true;
+        }
     }
 
 
     public void draw(Graphics g)
     {
-        g.drawImage(Assets.bomb, x, y, BOMBWIDTH, BOMBHEIGHT, null);
+        g.drawImage(animBomb.getCurrentFrame(), x - BOMBWIDTH/2, y-BOMBHEIGHT/2, BOMBWIDTH, BOMBHEIGHT, null);
     }
 
     protected void destroy()
     {
+        if(!checkCollision())
+            System.out.println(!checkCollision());
+            placeBlast(x + Tile.TILEWIDTH, y);
+        placeBlast(x - Tile.TILEWIDTH, y);
+        placeBlast(x, y - Tile.TILEHEIGHT);
+        placeBlast(x, y + Tile.TILEHEIGHT);
+    }
 
+    private void placeBlast(int x, int y) {
+        handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x, y));
     }
 
     public static Bomb createNew(int x, int y){
@@ -59,8 +86,19 @@ public class Bomb extends StaticEntity{
         bounds.y = y;
     }
 
-    // GETTERS and SETTERS
+    private boolean checkCollision() {
+        for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
+            if (e.equals(this))
+                continue;
+            if (e.getCollisionBounds(32, 32).intersects(bounds)) {
 
+                return true;
+            }
+        }
+        return false;
+
+    }
+    // GETTERS and SETTERS
 
     public Handler getHandler()
     {

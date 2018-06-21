@@ -3,6 +3,7 @@ package com.wyatt92.games.model;
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.items.ItemManager;
+import com.wyatt92.games.model.items.PowerUpItem;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -22,26 +23,37 @@ public class World
     private ItemManager itemManager;
     // Bombs
     private BombManager bombManager;
+    // Blasts
+    private BombBlastManager bombBlastManager;
 
     public World(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Player(handler, 64, 64));
         itemManager = new ItemManager(handler);
         bombManager = new BombManager(handler);
+        bombBlastManager = new BombBlastManager(handler);
 
         // Temporary entity code!
-//        entityManager.addEntity(new Stone(handler, 128, 64));
+        entityManager.addEntity(new Stone(handler, 64, 64));
+        entityManager.addEntity(new Stone(handler, 64*2, 64));
+        entityManager.addEntity(new Stone(handler, 64*5, 64*4));
+        entityManager.addEntity(new Stone(handler, 64*6, 64*5));
+        entityManager.addEntity(new Stone(handler, 64*7, 64*6));
+        entityManager.addEntity(new Stone(handler, 64*8, 64*7));
+        entityManager.addEntity(new Stone(handler, 64*9, 64*8));
+        entityManager.addEntity(new Stone(handler, 64*10, 64));
+        entityManager.addEntity(new Stone(handler, 64*10, 64));
+        entityManager.addEntity(new Stone(handler, 64*11, 64));
+
+        itemManager.addItem(new PowerUpItem(0).createNew(256, 64));
         loadWorld(path);
-
-
-
     }
 
     public void update() {
+        bombBlastManager.update();
         bombManager.update();
         itemManager.update();
         entityManager.update();
-
     }
 
 
@@ -53,7 +65,8 @@ public class World
                 getTile(x, y).draw(g);
             }
         }
-
+        // Blasts
+        bombBlastManager.draw(g);
         // Bombs
         bombManager.draw(g);
         // Items
@@ -174,6 +187,14 @@ public class World
     public int[][] getTiles()
     {
         return tiles;
+    }
+
+    public BombBlastManager getBombBlastManager() {
+        return bombBlastManager;
+    }
+
+    public void setBombBlastManager(BombBlastManager bombBlastManager) {
+        this.bombBlastManager = bombBlastManager;
     }
 }
 
