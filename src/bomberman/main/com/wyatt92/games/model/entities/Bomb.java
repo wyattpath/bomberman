@@ -11,7 +11,7 @@ import java.awt.*;
 public class Bomb extends StaticEntity{
     private long lastTime;
     private float countdown;
-    private float waitTime;
+    private static float waitTime;
     private static Animation animBomb;
     private boolean destroyed = false;
 
@@ -62,10 +62,11 @@ public class Bomb extends StaticEntity{
 
     protected void destroy()
     {
-            placeBlast(x, y, Tile.TILEWIDTH,0); // nextTile on the right
-            placeBlast(x, y, -Tile.TILEWIDTH, 0); // nextTile on the left
-            placeBlast(x, y,0,-Tile.TILEHEIGHT); //nextTile above
-            placeBlast(x, y,0,Tile.TILEHEIGHT); //nextTile below
+        placeBlast(x,y,0,0);
+        placeBlast(x, y, Tile.TILEWIDTH,0); // nextTile on the right
+        placeBlast(x, y, -Tile.TILEWIDTH, 0); // nextTile on the left
+        placeBlast(x, y,0,-Tile.TILEHEIGHT); //nextTile above
+        placeBlast(x, y,0,Tile.TILEHEIGHT); //nextTile below
 
     }
 
@@ -144,5 +145,10 @@ public class Bomb extends StaticEntity{
     public boolean isDestroyed()
     {
         return destroyed;
+    }
+
+    public static float getWaitTime()
+    {
+        return waitTime;
     }
 }

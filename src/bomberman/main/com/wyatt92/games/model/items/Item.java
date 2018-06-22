@@ -10,7 +10,7 @@ public abstract class Item implements Model
 {
     public static Item[] items = new Item[10];
     public static Item bombStrengthItem = new BombStrengthItem(1);
-    public static Item bombCountItem = new BombCountItem(2);
+    public static Item bombCountItem = new MaxBombsItem(2);
 
 
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;

@@ -2,10 +2,10 @@ package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.model.Assets;
 
-public class BombCountItem extends Item
+public class MaxBombsItem extends Item
 {
 
-    public BombCountItem(int id)
+    public MaxBombsItem(int id)
     {
         super(Assets.bombCount, "Powerup", id);
     }
@@ -13,12 +13,12 @@ public class BombCountItem extends Item
     @Override
     protected void addEffect()
     {
-        handler.getWorld().getEntityManager().getPlayer().addBombCount();
+        handler.getWorld().getEntityManager().getPlayer().addMaxBombs();
     }
 
     @Override
     public Item createNew(int x, int y){
-        Item i = new BombCountItem(id);
+        Item i = new MaxBombsItem(id);
         i.setPosition(x,y);
         return i;
     }
