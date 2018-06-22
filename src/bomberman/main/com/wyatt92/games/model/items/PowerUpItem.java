@@ -13,7 +13,7 @@ public class PowerUpItem extends Item
     @Override
     protected void addEffect()
     {
-        handler.getWorld().getEntityManager().getPlayer().addBombCount();
+        handler.getWorld().getEntityManager().getPlayer().addBombStrength();
     }
 
     @Override

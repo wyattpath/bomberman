@@ -18,16 +18,18 @@ public class Bomb extends StaticEntity{
     protected static Handler handler;
     protected Rectangle bounds;
     protected int x, y;
+    protected int bombStrength;
 
     public static Bomb bomb;
     public static final int BOMBWIDTH = 64, BOMBHEIGHT = 64;
 
 
-    public Bomb(Handler handler, float x, float y)
+    public Bomb(Handler handler, float x, float y, int bombStrength)
     {
         super(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
 //        bomb = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
 //        this.texture = texture;
+        this.bombStrength = bombStrength;
         bounds = new Rectangle((int) x,(int) y, BOMBWIDTH, BOMBHEIGHT);
         lastTime = System.currentTimeMillis();
         waitTime = 2000f;
@@ -60,10 +62,12 @@ public class Bomb extends StaticEntity{
 
     protected void destroy()
     {
-            placeBlast(x + Tile.TILEWIDTH, y); // nextTile on the right
-            placeBlast(x - Tile.TILEWIDTH, y); // nextTile on the left
-            placeBlast(x, y - Tile.TILEHEIGHT); //nextTile above
-            placeBlast(x, y + Tile.TILEHEIGHT); //nextTile below
+        for(int i = 0; i < bombStrength;i++){
+            placeBlast(x + Tile.TILEWIDTH + i * Tile.TILEWIDTH, y); // nextTile on the right
+            placeBlast(x - Tile.TILEWIDTH - i * Tile.TILEWIDTH, y); // nextTile on the left
+            placeBlast(x, y - Tile.TILEHEIGHT - i * Tile.TILEHEIGHT); //nextTile above
+            placeBlast(x, y + Tile.TILEHEIGHT + i * Tile.TILEHEIGHT); //nextTile below
+        }
     }
 
     private void placeBlast(int x, int y) {
@@ -72,8 +76,8 @@ public class Bomb extends StaticEntity{
         }
     }
 
-    public static Bomb createNew(int x, int y){
-        Bomb b = new Bomb(handler, x, y);
+    public static Bomb createNew(int x, int y, int bombStrength){
+        Bomb b = new Bomb(handler, x, y, bombStrength);
         b.setPosition(x, y);
         return b;
     }

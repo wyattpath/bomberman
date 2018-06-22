@@ -14,6 +14,7 @@ public class Player extends DynamicEntity
 
     private Animation animDown, animUp, animLeft, animRight;
     private int bombCount = 1;
+    private int bombStrength = 1;
 
     // AttackTimer
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
@@ -49,6 +50,11 @@ public class Player extends DynamicEntity
         System.out.println("You can now deploy " + bombCount + " bombs at the same time.");
     }
 
+    public void addBombStrength(){
+        bombStrength++;
+        System.out.println("Your bombblasts now covers " + bombStrength + " tiles in each direction.");
+    }
+
 
 
     private void placeBomb()
@@ -68,30 +74,26 @@ public class Player extends DynamicEntity
         if(handler.getKeyManager().aUP) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
         }else if(handler.getKeyManager().aDOWN) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
         }
         else if(handler.getKeyManager().aLEFT) {
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2- arSize / 2;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
 
         }
         else if(handler.getKeyManager().aRIGHT) {
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y));
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
 
         } else if(handler.getKeyManager().SPACE) {
             System.out.println(super.getCenterPoint());
-                handler.getWorld().getBombManager().addBomb(Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y));
-
-
-
-
+                handler.getWorld().getBombManager().addBomb(Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength));
         }else {
             return;
         }
