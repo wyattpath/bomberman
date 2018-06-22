@@ -60,19 +60,16 @@ public class Bomb extends StaticEntity{
 
     protected void destroy()
     {
-        if(!collisionWithTile((x + Tile.TILEWIDTH), y)){
             placeBlast(x + Tile.TILEWIDTH, y); // nextTile on the right
-        }
-        if(!collisionWithTile(x - Tile.TILEWIDTH, y))
             placeBlast(x - Tile.TILEWIDTH, y); // nextTile on the left
-        if(!collisionWithTile(x, y - Tile.TILEHEIGHT))
             placeBlast(x, y - Tile.TILEHEIGHT); //nextTile above
-        if(!collisionWithTile(x, y + Tile.TILEHEIGHT))
             placeBlast(x, y + Tile.TILEHEIGHT); //nextTile below
     }
 
     private void placeBlast(int x, int y) {
-        handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x, y));
+        if(!collisionWithTile(x, y)) {
+            handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x, y));
+        }
     }
 
     public static Bomb createNew(int x, int y){
