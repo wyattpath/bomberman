@@ -17,7 +17,7 @@ public class MenuState extends State
 
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUiManager(uiManager);
-        uiManager.addObject(new UIImageButton(200, 200, 128, 64, Assets.btn_start, new Clicker(){
+        uiManager.addObject(new UIImageButton(400, 400, 228, 35, Assets.btn_start, new Clicker(){
             @Override
             public void onClick()
             {
@@ -25,14 +25,18 @@ public class MenuState extends State
                 State.setCurrentState(handler.getGameState());
             }
         }));
+        uiManager.addObject(new UIImageButton(400, 435, 228, 35, Assets.btn_quit, new Clicker(){
+            @Override
+            public void onClick()
+            {
+                System.exit(0);
+            }
+        }));
     }
 
     @Override
     public void update()
     {
-//        if(handler.getMouseManager().isLeftPressed() && start.contains(handler.getMouseManager().getMousePosition())){
-//            State.setCurrentState(handler.getGameState());
-//        }
         uiManager.update();
     }
 
@@ -46,6 +50,8 @@ public class MenuState extends State
 //                handler.getMouseManager().getMouseY(),
 //                8,
 //                8);
+        g.setColor(Color.BLUE);
+        g.fillRect(0,0,handler.getWidth(), handler.getWidth());
         uiManager.draw(g);
     }
 

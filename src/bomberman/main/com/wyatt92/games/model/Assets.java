@@ -8,7 +8,7 @@ public class Assets {
     private static final int width = 32, height = 32;
 
     public static BufferedImage dirt, grass, wall, tree, stone, bombStrength, bombCount;
-    public static BufferedImage[] btn_start;
+    public static BufferedImage[] btn_start,btn_quit;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] bomb;
     public static BufferedImage[] blast;
@@ -18,7 +18,8 @@ public class Assets {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("sheet.png"));
         SpriteSheet blastSheet = new SpriteSheet((ImageLoader.loadImage("blast_anim.png")));
         SpriteSheet bombSheet = new SpriteSheet((ImageLoader.loadImage("bomb_anim.png")));
-        SpriteSheet powerupsSheet = new SpriteSheet((ImageLoader.loadImage("powerups.png")));
+        SpriteSheet powerUpsSheet = new SpriteSheet(ImageLoader.loadImage("powerups.png"));
+        SpriteSheet menuSheet = new SpriteSheet(ImageLoader.loadImage("menu.png"));
 
         player_down = new BufferedImage[2];
         player_up = new BufferedImage[2];
@@ -33,8 +34,6 @@ public class Assets {
         player_right[1] = sheet.crop(width * 5, height, width, height);
         player_left[0] = sheet.crop(width * 6, height, width, height);
         player_left[1] = sheet.crop(width * 7, height, width, height);
-
-
 
         dirt = sheet.crop(width, 0, width, height);
         grass = sheet.crop(width * 2, 0, width, height);
@@ -51,11 +50,15 @@ public class Assets {
         blast[1] = blastSheet.crop(0,width,width,height);
 
         btn_start = new BufferedImage[2];
-        btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height);
-        btn_start[1] = sheet.crop(width * 6, height * 5, width * 2, height);
+        btn_start[0] = menuSheet.crop(0, 0, 228, 35);
+        btn_start[1] = menuSheet.crop(230, 0, 228, 35);
 
-        bombCount = powerupsSheet.crop(0, 0, 152, 152);
-        bombStrength = powerupsSheet.crop(152, 0, 152, 152);
+        btn_quit = new BufferedImage[2];
+        btn_quit[0] = menuSheet.crop(0, 70, 228, 35);
+        btn_quit[1] = menuSheet.crop(230, 70, 228, 35);
+
+        bombCount = powerUpsSheet.crop(0, 0, 152, 152);
+        bombStrength = powerUpsSheet.crop(152, 0, 152, 152);
 
 
     }

@@ -21,6 +21,14 @@ public abstract class Entity implements Model
     protected Rectangle bounds;
     protected Point centerPoint;
 
+    /**
+     *
+     * @param handler
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
     public Entity(Handler handler, float x, float y, int width, int height) {
         this.handler = handler;
         this.x = x;
