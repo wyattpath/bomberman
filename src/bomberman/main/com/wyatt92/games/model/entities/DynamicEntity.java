@@ -19,9 +19,6 @@ public abstract class DynamicEntity extends Entity
     protected float xMove, yMove;
 
 
-    private enum Direction {UP, DOWN, LEFT, RIGHT};
-    private Direction mDirection;
-
     public DynamicEntity(Handler handler, float x, float y, int width, int height) {
         super(handler, x, y, width, height);
         speed = DEFAULT_SPEED;

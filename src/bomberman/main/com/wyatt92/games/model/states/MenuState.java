@@ -1,6 +1,6 @@
 package com.wyatt92.games.model.states;
 
-import com.wyatt92.games.controller.ClickListener;
+import com.wyatt92.games.model.ui.Clicker;
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.ui.UIImageButton;
@@ -14,13 +14,10 @@ public class MenuState extends State
 
     public MenuState(Handler handler){
         super(handler);
-//        start = new Rectangle(100,100);
-//
-//        start.x = 200;
-//        start.y = 200;
+
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUiManager(uiManager);
-        uiManager.addObject(new UIImageButton(200, 200, 128, 64, Assets.btn_start, new ClickListener(){
+        uiManager.addObject(new UIImageButton(200, 200, 128, 64, Assets.btn_start, new Clicker(){
             @Override
             public void onClick()
             {

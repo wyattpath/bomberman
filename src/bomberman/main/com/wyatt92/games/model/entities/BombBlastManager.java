@@ -31,8 +31,8 @@ public class BombBlastManager {
     {
         Iterator<Blast> it = blasts.iterator();
         while(it.hasNext()){
-            Blast i = it.next();
-            i.draw(g);
+            Blast b = it.next();
+            b.draw(g);
         }
     }
 
