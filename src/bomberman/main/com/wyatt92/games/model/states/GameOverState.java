@@ -22,4 +22,16 @@ public class GameOverState extends State
     {
 
     }
+
+    @Override
+    protected void playLoopMusic()
+    {
+
+    }
+
+    @Override
+    protected void stopLoopMusic()
+    {
+
+    }
 }

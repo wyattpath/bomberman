@@ -1,7 +1,9 @@
 package com.wyatt92.games.model;
 
+import com.wyatt92.sounds.Sound;
+
+import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
 public class Assets {
 
@@ -12,6 +14,10 @@ public class Assets {
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] bomb;
     public static BufferedImage[] blast;
+
+    public static Clip menu_bgMusic, menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
+    public static Clip game_bgMusic, game_bombSet, game_bombBoomS, game_bombBoomM, game_bombBoomL;
+
 
 
     public static void init() {
@@ -59,6 +65,14 @@ public class Assets {
 
         bombCount = powerUpsSheet.crop(0, 0, 152, 152);
         bombStrength = powerUpsSheet.crop(152, 0, 152, 152);
+
+        //Sounds
+        menu_bgMusic = Sound.clipForLoopFactory("Undertale001.wav");
+        menu_selectFX = Sound.clipForLoopFactory("select.wav");
+        menu_cursorMoveFX = Sound.clipForLoopFactory("cursor_move.wav");
+        game_bgMusic = Sound.clipForLoopFactory("Undertale002.wav");
+
+
 
 
     }

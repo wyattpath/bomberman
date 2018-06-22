@@ -3,6 +3,7 @@ package com.wyatt92.games.model.entities;
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -91,6 +92,7 @@ public abstract class Player extends DynamicEntity
 
         if (bombCount > 0)
         {
+            Sound.playSound("bomb_Set.wav");
             System.out.println("placing Bomb");
             Bomb b = Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
             handler.getWorld().getBombManager().addBomb(b);

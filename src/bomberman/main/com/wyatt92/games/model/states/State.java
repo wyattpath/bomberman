@@ -21,7 +21,12 @@ public abstract class State implements Model
     }
 
     public static void setCurrentState(State state) {
+        if(currentState!=null)
+        {
+            currentState.stopLoopMusic();
+        }
         currentState = state;
+        currentState.playLoopMusic();
     }
 
     @Override
@@ -29,4 +34,8 @@ public abstract class State implements Model
 
     @Override
     public abstract void draw(Graphics g);
+
+    protected abstract void playLoopMusic();
+
+    protected abstract void stopLoopMusic();
 }

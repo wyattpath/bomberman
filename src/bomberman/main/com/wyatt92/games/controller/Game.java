@@ -6,7 +6,9 @@ import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
 import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.view.GamePanel;
+import com.wyatt92.sounds.Sound;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 
 
@@ -33,6 +35,7 @@ public class Game implements Runnable{
 
     // Handler
     private Handler handler;
+
 
     Game() {
         keyManager = new KeyManager();
@@ -100,6 +103,7 @@ public class Game implements Runnable{
         running = true;
         thread1 = new Thread(this);
         thread1.start();
+
     }
 
     private synchronized void stop(){

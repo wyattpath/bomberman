@@ -4,6 +4,7 @@ import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.sounds.Sound;
 
 import java.awt.*;
 
@@ -72,6 +73,12 @@ public class Bomb extends StaticEntity{
 
     private void placeBlast(int x, int y, int xOffset, int yOffset) {
         boolean stop = false;
+        if(bombStrength>5)
+            Sound.playSound("boom_L.wav");
+        else if(bombStrength > 3)
+            Sound.playSound("boom_M.wav");
+        else Sound.playSound("boom_S.wav");
+
         for(int i = 0; i < bombStrength;i++)
         {
             if(stop || collisionWithTile(x + xOffset + i * xOffset, y + yOffset + i *yOffset))

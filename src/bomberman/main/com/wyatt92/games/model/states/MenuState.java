@@ -5,7 +5,9 @@ import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
+import com.wyatt92.sounds.Sound;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 
 public class MenuState extends State
@@ -15,6 +17,7 @@ public class MenuState extends State
     public MenuState(Handler handler){
         super(handler);
 
+
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUiManager(uiManager);
         uiManager.addObject(new UIImageButton(400, 400, 228, 35, Assets.btn_start, new Clicker(){
@@ -23,6 +26,7 @@ public class MenuState extends State
             {
                 handler.getMouseManager().setUiManager(null);
                 State.setCurrentState(handler.getGameState());
+
             }
         }));
         uiManager.addObject(new UIImageButton(400, 435, 228, 35, Assets.btn_quit, new Clicker(){
@@ -32,6 +36,7 @@ public class MenuState extends State
                 System.exit(0);
             }
         }));
+
     }
 
     @Override
@@ -53,6 +58,19 @@ public class MenuState extends State
         g.setColor(Color.BLUE);
         g.fillRect(0,0,handler.getWidth(), handler.getWidth());
         uiManager.draw(g);
+    }
+
+    @Override
+    protected void playLoopMusic()
+    {
+        Assets.menu_bgMusic.start();
+        Assets.menu_bgMusic.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    @Override
+    protected void stopLoopMusic()
+    {
+        Assets.menu_bgMusic.stop();
     }
 
 

@@ -3,6 +3,7 @@ package com.wyatt92.games.model.items;
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.entities.Player;
+import com.wyatt92.sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -44,6 +45,7 @@ public abstract class Item implements Model
         while(it.hasNext()) {
             Player p = it.next();
             if(p.getCollisionBounds(0f,0f).intersects(bounds)){
+                Sound.playSound("item_get.wav");
                 pickedUp = true;
                 addEffect(p);
             }
