@@ -7,19 +7,26 @@ import com.wyatt92.games.model.Assets;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends DynamicEntity
+public abstract class Player extends DynamicEntity
 {
 
 //    private boolean isMoving = false;
 
+    public static Player[] player = new Player[4];
     private Animation animDown, animUp, animLeft, animRight;
+    private int maxBombs = 1;
     private int bombCount = 1;
     private int bombStrength = 1;
 
     // AttackTimer
-    private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
-    public Player(Handler handler,float x,float y) {
-        super(handler,x,y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
+    private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
+    private long bombCooldown = 2000;
+
+    protected Handler handler;
+
+    public Player(Handler handler, float x, float y)
+    {
+        super(handler, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
         bounds.x = 16;
         bounds.y = 32;
         bounds.width = 32;
@@ -41,57 +48,65 @@ public class Player extends DynamicEntity
 
         getInput();
         move();
+        updateBombCount();
 
     }
 
-    public void addBombCount(){
-        bombCount++;
-        System.out.println("You can now deploy " + bombCount + " bombs at the same time.");
+
+
+    public void addMaxBombs()
+    {
+        maxBombs++;
+        System.out.println("You can now deploy " + maxBombs + " bombs at the same time.");
     }
 
-    public void addBombStrength(){
+    public void addBombStrength()
+    {
         bombStrength++;
         System.out.println("Your bombblasts now covers " + bombStrength + " tiles in each direction.");
     }
 
-
-
-    private void placeBomb()
+    private void updateBombCount()
     {
-        // attack cooldown
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
+
+        if (attackTimer < bombCooldown)
+        {
+            return;
+        }
+        if(bombCount < maxBombs)
+        {
+            bombCount++;
+            System.out.println("bombCount = " + bombCount);
+            attackTimer = 0;
+        }
+    }
+    protected void placeBomb()
+    {
+
+        // attack cooldown
         if (attackTimer < attackCooldown)
             return;
 
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength));
-
-        attackTimer = 0;
-    }
-
-    private void getInput(){
-        xMove = 0;
-        yMove = 0;
-
-        if(handler.getKeyManager().UP)
-            yMove = -speed;
-        if(handler.getKeyManager().DOWN)
-            yMove = speed;
-        if(handler.getKeyManager().LEFT)
-            xMove = -speed;
-        if(handler.getKeyManager().RIGHT)
-            xMove = speed;
-        if(handler.getKeyManager().SPACE){
+        if (bombCount > 0)
+        {
             System.out.println("placing Bomb");
-            placeBomb();
+            Bomb b = Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
+            handler.getWorld().getBombManager().addBomb(b);
+            bombCount--;
+            System.out.println("bombCount = " + bombCount);
+            attackTimer = 0;
         }
 
-
     }
 
+    protected abstract void getInput();
+
     @Override
-    public void draw(Graphics g) {
-        g.drawImage(getCurrentAnimationFrame(), (int) x ,(int) y, width, height,null);
+    public void draw(Graphics g)
+    {
+        g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
     }
 
     @Override
@@ -100,16 +115,22 @@ public class Player extends DynamicEntity
         System.out.println("You lose!");
     }
 
-    private BufferedImage getCurrentAnimationFrame(){
-        if(xMove < 0) {
+    private BufferedImage getCurrentAnimationFrame()
+    {
+        if (xMove < 0)
+        {
             return animLeft.getCurrentFrame();
-        } else if(xMove > 0) {
+        } else if (xMove > 0)
+        {
             return animRight.getCurrentFrame();
-        } else if(yMove < 0) {
+        } else if (yMove < 0)
+        {
             return animUp.getCurrentFrame();
-        } else if(yMove > 0){
+        } else if (yMove > 0)
+        {
             return animDown.getCurrentFrame();
-        } else {
+        } else
+        {
             return animDown.getCurrentFrame();
         }
     }
@@ -118,5 +139,15 @@ public class Player extends DynamicEntity
     {
 
         return centerPoint;
+    }
+
+    public Handler getHandler()
+    {
+        return handler;
+    }
+
+    public void setHandler(Handler handler)
+    {
+        this.handler = handler;
     }
 }

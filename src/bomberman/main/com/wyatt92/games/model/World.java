@@ -12,10 +12,13 @@ public class World
 {
     private Handler handler;
     private int width, height;
+    private int playerCount;
     private int playerSpawnX,playerSpawnY;
     private int[][] tiles;
     private int xCenter;
     private int yCenter;
+    private Player playerOne;
+    private Player playerTwo;
 
     //Entities
     private EntityManager entityManager;
@@ -28,13 +31,19 @@ public class World
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        entityManager = new EntityManager(handler, new Player(handler, 0, 0));
+        entityManager = new EntityManager(handler);
         itemManager = new ItemManager(handler);
         bombManager = new BombManager(handler);
         bombBlastManager = new BombBlastManager(handler);
 
         // Temporary entity code!
+
+
         loadWorld(path);
+        playerOne = new PlayerOne(handler, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
+        playerTwo = new PlayerTwo(handler, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2);
+        entityManager.addPlayer(playerOne);
+        entityManager.addPlayer(playerTwo);
         loadEntities();
 
 
@@ -47,22 +56,16 @@ public class World
         {
             for (int x = 0; x < width; x++)
             {
-//                System.out.println();
-//                System.out.println(!getTile(x,y).isSolid());
-//                System.out.println("playerPos = " + (int)entityManager.getPlayer().getX() + "," + (int)entityManager.getPlayer().getY());
-//                System.out.println("tilePos = " + x * Tile.TILEWIDTH+ "," + y * Tile.TILEHEIGHT);
                 if(!getTile(x,y).isSolid())
-//                            && ((int)entityManager.getPlayer().getX() != x * Tile.TILEWIDTH )
-//                            && ((int)entityManager.getPlayer().getY() != y * Tile.TILEHEIGHT))
                 {
-//                    System.out.println("entity placed");
-                    entityManager.addEntity(new Stone(handler, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
+                    if(
+                            (x*Tile.TILEWIDTH > 128 || y *Tile.TILEHEIGHT > 128) &&
+                                    (x*Tile.TILEWIDTH < width*Tile.TILEWIDTH - Tile.TILEWIDTH*3 || y*Tile.TILEHEIGHT < height*Tile.TILEHEIGHT - Tile.TILEHEIGHT*3)
+                            )
+                        entityManager.addEntity(new Stone(handler, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
                 } else System.out.println("entity not placed");
             }
         }
-        entityManager.getEntities().remove(14);
-        entityManager.getEntities().remove(1);
-        entityManager.getEntities().remove(1);
 
 
     }
@@ -149,11 +152,15 @@ public class World
         String[] tokens = file.split("\\s+");
         width = Utils.parseInt(tokens[0]);
         height = Utils.parseInt(tokens[1]);
-        playerSpawnX = Utils.parseInt(tokens[2]);
-        playerSpawnY = Utils.parseInt(tokens[3]);
+//        for(int i = 0; i < playerCount; i++)
+//        {
+//
+//            playerSpawnX = Utils.parseInt(tokens[3 + i*2]);
+//            playerSpawnY = Utils.parseInt(tokens[4 + i*2]);
+//            entityManager.getPlayer(i).setX(playerSpawnX);
+//            entityManager.getPlayer(i).setY(playerSpawnY);
+//        }
 
-        entityManager.getPlayer().setX(playerSpawnX);
-        entityManager.getPlayer().setY(playerSpawnY);
 
         tiles = new int[width][height];
         for (int y = 0; y < height; y++)

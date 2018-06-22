@@ -10,7 +10,7 @@ import java.util.Iterator;
 public class EntityManager
 {
     private Handler handler;
-    private Player player;
+    private ArrayList<Player> players;
     private ArrayList<Entity> entities;
     private Comparator<Entity> drawSorter = new Comparator<Entity>() {
 
@@ -23,11 +23,11 @@ public class EntityManager
         }
     };
 
-    public EntityManager(Handler handler, Player player) {
+    public EntityManager(Handler handler) {
         this.handler = handler;
-        this.player = player;
+
         entities = new ArrayList<>();
-        addEntity(player);
+        players = new ArrayList<>();
     }
 
     public void update() {
@@ -71,14 +71,21 @@ public class EntityManager
         this.handler = handler;
     }
 
-    public Player getPlayer()
+    public ArrayList<Player> getPlayers()
     {
-        return player;
+        return players;
     }
 
-    public void setPlayer(Player player)
+    public Player getPlayer(int id)
     {
-        this.player = player;
+        return players.get(id);
+    }
+
+    public void addPlayer(Player p)
+    {
+        p.setHandler(handler);
+        players.add(p);
+        addEntity(p);
     }
 
     public ArrayList<Entity> getEntities()

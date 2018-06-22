@@ -29,8 +29,11 @@ public class BombBlastManager {
 
     public void draw(Graphics g)
     {
-        for(Blast i : blasts)
+        Iterator<Blast> it = blasts.iterator();
+        while(it.hasNext()){
+            Blast i = it.next();
             i.draw(g);
+        }
     }
 
     public void addBlast(Blast b) {

@@ -1,6 +1,7 @@
 package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.entities.Player;
 
 public class MaxBombsItem extends Item
 {
@@ -11,9 +12,9 @@ public class MaxBombsItem extends Item
     }
 
     @Override
-    protected void addEffect()
+    protected void addEffect(Player player)
     {
-        handler.getWorld().getEntityManager().getPlayer().addMaxBombs();
+        player.addMaxBombs();
     }
 
     @Override

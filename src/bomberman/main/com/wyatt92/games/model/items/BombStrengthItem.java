@@ -1,6 +1,7 @@
 package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.entities.Player;
 
 public class BombStrengthItem extends Item
 {
@@ -11,9 +12,9 @@ public class BombStrengthItem extends Item
     }
 
     @Override
-    protected void addEffect()
+    protected void addEffect(Player player)
     {
-        handler.getWorld().getEntityManager().getPlayer().addBombStrength();
+        player.addBombStrength();
     }
 
     @Override

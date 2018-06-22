@@ -2,9 +2,11 @@ package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.entities.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 
 public abstract class Item implements Model
 {
@@ -38,9 +40,13 @@ public abstract class Item implements Model
 
     @Override
     public void update() {
-        if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)){
-            pickedUp = true;
-            addEffect();
+        Iterator<Player> it = handler.getWorld().getEntityManager().getPlayers().iterator();
+        while(it.hasNext()) {
+            Player p = it.next();
+            if(p.getCollisionBounds(0f,0f).intersects(bounds)){
+                pickedUp = true;
+                addEffect(p);
+            }
         }
     }
 
@@ -67,7 +73,7 @@ public abstract class Item implements Model
     }
 
 
-    protected void addEffect()
+    protected void addEffect(Player player)
     {
     }
 
