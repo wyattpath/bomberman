@@ -60,12 +60,15 @@ public class Bomb extends StaticEntity{
 
     protected void destroy()
     {
-        if(!checkCollision())
-            System.out.println(!checkCollision());
-            placeBlast(x + Tile.TILEWIDTH, y);
-        placeBlast(x - Tile.TILEWIDTH, y);
-        placeBlast(x, y - Tile.TILEHEIGHT);
-        placeBlast(x, y + Tile.TILEHEIGHT);
+        if(!collisionWithTile((x + Tile.TILEWIDTH), y)){
+            placeBlast(x + Tile.TILEWIDTH, y); // nextTile on the right
+        }
+        if(!collisionWithTile(x - Tile.TILEWIDTH, y))
+            placeBlast(x - Tile.TILEWIDTH, y); // nextTile on the left
+        if(!collisionWithTile(x, y - Tile.TILEHEIGHT))
+            placeBlast(x, y - Tile.TILEHEIGHT); //nextTile above
+        if(!collisionWithTile(x, y + Tile.TILEHEIGHT))
+            placeBlast(x, y + Tile.TILEHEIGHT); //nextTile below
     }
 
     private void placeBlast(int x, int y) {
@@ -91,13 +94,18 @@ public class Bomb extends StaticEntity{
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(32, 32).intersects(bounds)) {
-
                 return true;
             }
         }
         return false;
 
     }
+
+    protected boolean collisionWithTile(int x, int y) {
+        System.out.println("TilePosition x = " + (x/Tile.TILEWIDTH)+ " y = " + (y/Tile.TILEHEIGHT));
+        return handler.getWorld().getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
+    }
+
     // GETTERS and SETTERS
 
     public Handler getHandler()

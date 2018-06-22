@@ -52,7 +52,6 @@ public class Blast extends StaticEntity
 //            destroy();
             countdown = waitTime;
             destroyed = true;
-            System.out.println("blast inactive");
         }
     }
 
@@ -67,7 +66,6 @@ public class Blast extends StaticEntity
 
             }else {
                 this.destroy();
-                System.out.println("no entity found");
             }
         }
     }
@@ -76,7 +74,6 @@ public class Blast extends StaticEntity
     public void draw(Graphics g)
     {
         g.drawImage(animBlast.getCurrentFrame(),x- Tile.TILEWIDTH/2,y- Tile.TILEHEIGHT/2,Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
-        System.out.println("drawing");
     }
 
 
