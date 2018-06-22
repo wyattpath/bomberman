@@ -43,7 +43,7 @@ public class Blast extends StaticEntity
     public void update()
     {
         animBlast.update();
-        checkCollision();
+//        checkCollision();
 
         countdown -= System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
