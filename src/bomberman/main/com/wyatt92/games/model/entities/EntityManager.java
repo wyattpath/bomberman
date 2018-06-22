@@ -54,6 +54,10 @@ public class EntityManager
     public void addEntity(Entity e) {
         entities.add(e);
     }
+    public void removeEntity(Entity e) {
+        entities.remove(e);
+    }
+
 
     // GETTERS and SETTERS
 

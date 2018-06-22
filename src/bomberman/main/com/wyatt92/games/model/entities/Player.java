@@ -18,8 +18,8 @@ public class Player extends DynamicEntity
 
     // AttackTimer
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
-    public Player(Handler handler, float x, float y) {
-        super(handler, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
+    public Player(Handler handler,float x,float y) {
+        super(handler,x,y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
         bounds.x = 16;
         bounds.y = 32;
         bounds.width = 32;
@@ -41,7 +41,6 @@ public class Player extends DynamicEntity
 
         getInput();
         move();
-        placeBomb();
 
     }
 
@@ -65,20 +64,10 @@ public class Player extends DynamicEntity
         if (attackTimer < attackCooldown)
             return;
 
-        if (handler.getKeyManager().SPACE)
-        {
-            System.out.println(super.getCenterPoint());
             handler.getWorld().getBombManager().addBomb(Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength));
-        } else
-        {
-            return;
-        }
 
         attackTimer = 0;
     }
-
-
-
 
     private void getInput(){
         xMove = 0;
@@ -93,6 +82,7 @@ public class Player extends DynamicEntity
         if(handler.getKeyManager().RIGHT)
             xMove = speed;
         if(handler.getKeyManager().SPACE){
+            System.out.println("placing Bomb");
             placeBomb();
         }
 

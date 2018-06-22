@@ -28,7 +28,7 @@ public class World
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        entityManager = new EntityManager(handler, new Player(handler, 64, 64));
+        entityManager = new EntityManager(handler, new Player(handler, 0, 0));
         itemManager = new ItemManager(handler);
         bombManager = new BombManager(handler);
         bombBlastManager = new BombBlastManager(handler);
@@ -36,22 +36,35 @@ public class World
         // Temporary entity code!
         loadWorld(path);
         loadEntities();
-        entityManager.addEntity(new Stone(handler, 64, 64));
-        entityManager.addEntity(new Stone(handler, 64*2, 64));
-        entityManager.addEntity(new Stone(handler, 64*5, 64*4));
-        entityManager.addEntity(new Stone(handler, 64*6, 64*5));
-        entityManager.addEntity(new Stone(handler, 64*7, 64*6));
-        entityManager.addEntity(new Stone(handler, 64*8, 64*7));
-        entityManager.addEntity(new Stone(handler, 64*9, 64*8));
-        entityManager.addEntity(new Stone(handler, 64*10, 64));
-        entityManager.addEntity(new Stone(handler, 64*10, 64));
-        entityManager.addEntity(new Stone(handler, 64*11, 64));
 
-        itemManager.addItem(new BombStrengthItem(0).createNew(256, 64));
+
+//        itemManager.addItem(new BombStrengthItem(0).createNew(256, 64));
     }
 
     private void loadEntities()
     {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+//                System.out.println();
+//                System.out.println(!getTile(x,y).isSolid());
+//                System.out.println("playerPos = " + (int)entityManager.getPlayer().getX() + "," + (int)entityManager.getPlayer().getY());
+//                System.out.println("tilePos = " + x * Tile.TILEWIDTH+ "," + y * Tile.TILEHEIGHT);
+                if(!getTile(x,y).isSolid())
+//                            && ((int)entityManager.getPlayer().getX() != x * Tile.TILEWIDTH )
+//                            && ((int)entityManager.getPlayer().getY() != y * Tile.TILEHEIGHT))
+                {
+//                    System.out.println("entity placed");
+                    entityManager.addEntity(new Stone(handler, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
+                } else System.out.println("entity not placed");
+            }
+        }
+        entityManager.getEntities().remove(14);
+        entityManager.getEntities().remove(1);
+        entityManager.getEntities().remove(1);
+
+
     }
 
     public void update() {

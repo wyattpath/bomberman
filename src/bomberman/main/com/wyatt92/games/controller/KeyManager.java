@@ -33,8 +33,8 @@ public class KeyManager implements KeyListener {
         DOWN = keys[KeyEvent.VK_S];
         LEFT = keys[KeyEvent.VK_A];
         RIGHT = keys[KeyEvent.VK_D];
-        SPACE = keys[KeyEvent.VK_SPACE];
 
+        SPACE = keyJustPressed(KeyEvent.VK_SPACE);
         aUP = keys[KeyEvent.VK_UP];
         aDOWN = keys[KeyEvent.VK_DOWN];
         aLEFT = keys[KeyEvent.VK_LEFT];
