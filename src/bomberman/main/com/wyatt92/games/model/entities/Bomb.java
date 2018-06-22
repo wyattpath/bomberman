@@ -70,12 +70,30 @@ public class Bomb extends StaticEntity{
     }
 
     private void placeBlast(int x, int y, int xOffset, int yOffset) {
+        boolean stop = false;
         for(int i = 0; i < bombStrength;i++)
         {
-            if (!collisionWithTile(x + xOffset + i*xOffset, y + yOffset + i *yOffset))
+            if(stop || collisionWithTile(x + xOffset + i * xOffset, y + yOffset + i *yOffset))
+                return;
+
+            handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x + xOffset + i*xOffset, y + yOffset + i *yOffset));
+
+            Rectangle tempBounds = new Rectangle();
+            tempBounds.x = x + xOffset + i * xOffset;
+            tempBounds.y = y + yOffset + i *yOffset;
+            tempBounds.setSize(BOMBWIDTH, BOMBHEIGHT);
+            for (Entity e : handler.getWorld().getEntityManager().getEntities())
             {
-                handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x + xOffset + i*xOffset, y + yOffset + i *yOffset));
+                if (e.equals(this))
+                    continue;
+                if (e.getCollisionBounds(32, 32).intersects(tempBounds))
+                {
+                    e.destroy();
+                    e.hurt(3);
+                    stop = true;
+                }
             }
+
         }
     }
 
@@ -93,15 +111,16 @@ public class Bomb extends StaticEntity{
         bounds.y = y;
     }
 
-    private boolean checkCollision() {
+    private void checkCollision(int x, int y) {
+        Rectangle tempBounds = new Rectangle(x,y, BOMBWIDTH, BOMBHEIGHT);
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (e.getCollisionBounds(32, 32).intersects(bounds)) {
-                return true;
+            if (e.getCollisionBounds(32, 32).intersects(tempBounds)) {
+                e.destroy();
+                e.hurt(3);
             }
         }
-        return false;
 
     }
 

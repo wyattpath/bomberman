@@ -62,60 +62,22 @@ public class Player extends DynamicEntity
         // attack cooldown
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
-        if(attackTimer < attackCooldown)
+        if (attackTimer < attackCooldown)
             return;
 
-        Rectangle cb = getCollisionBounds(0,0); // collision bounds
-        Rectangle ar = new Rectangle(); // attack rectangle
-        int arSize = 20;
-        ar.width = arSize;
-        ar.height = arSize;
-
-        if(handler.getKeyManager().aUP) {
-            ar.x = cb.x + cb.width / 2 - arSize / 2;
-            ar.y = cb.y - arSize;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
-        }else if(handler.getKeyManager().aDOWN) {
-            ar.x = cb.x + cb.width / 2 - arSize / 2;
-            ar.y = cb.y + cb.height;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
-        }
-        else if(handler.getKeyManager().aLEFT) {
-            ar.x = cb.x - arSize;
-            ar.y = cb.y + cb.height / 2- arSize / 2;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
-
-        }
-        else if(handler.getKeyManager().aRIGHT) {
-            ar.x = cb.x + cb.width;
-            ar.y = cb.y + cb.height / 2 - arSize / 2;
-            handler.getWorld().getBombManager().addBomb(Bomb.createNew(ar.x, ar.y, bombStrength));
-
-        } else if(handler.getKeyManager().SPACE) {
+        if (handler.getKeyManager().SPACE)
+        {
             System.out.println(super.getCenterPoint());
-                handler.getWorld().getBombManager().addBomb(Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength));
-        }else {
+            handler.getWorld().getBombManager().addBomb(Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength));
+        } else
+        {
             return;
         }
 
         attackTimer = 0;
-
-//        for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
-//            if(e.equals(this))
-//                continue;
-//            if(e.getCollisionBounds(0,0).intersects(ar)){
-//                e.hurt(1);
-//                return;
-//            }
-//        }
-
     }
 
-    public Point getCenterPoint()
-    {
 
-        return centerPoint;
-    }
 
 
     private void getInput(){
@@ -160,5 +122,11 @@ public class Player extends DynamicEntity
         } else {
             return animDown.getCurrentFrame();
         }
+    }
+
+    public Point getCenterPoint()
+    {
+
+        return centerPoint;
     }
 }

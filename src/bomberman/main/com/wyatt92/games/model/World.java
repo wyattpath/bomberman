@@ -3,7 +3,7 @@ package com.wyatt92.games.model;
 import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.items.ItemManager;
-import com.wyatt92.games.model.items.PowerUpItem;
+import com.wyatt92.games.model.items.BombStrengthItem;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -34,6 +34,8 @@ public class World
         bombBlastManager = new BombBlastManager(handler);
 
         // Temporary entity code!
+        loadWorld(path);
+        loadEntities();
         entityManager.addEntity(new Stone(handler, 64, 64));
         entityManager.addEntity(new Stone(handler, 64*2, 64));
         entityManager.addEntity(new Stone(handler, 64*5, 64*4));
@@ -45,8 +47,11 @@ public class World
         entityManager.addEntity(new Stone(handler, 64*10, 64));
         entityManager.addEntity(new Stone(handler, 64*11, 64));
 
-        itemManager.addItem(new PowerUpItem(0).createNew(256, 64));
-        loadWorld(path);
+        itemManager.addItem(new BombStrengthItem(0).createNew(256, 64));
+    }
+
+    private void loadEntities()
+    {
     }
 
     public void update() {

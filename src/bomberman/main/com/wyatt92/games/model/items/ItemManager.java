@@ -11,6 +11,8 @@ public class ItemManager
     private Handler handler;
     private ArrayList<Item> items;
 
+
+
     public ItemManager(Handler handler) {
         this.handler = handler;
         items = new ArrayList<>();

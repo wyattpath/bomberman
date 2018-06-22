@@ -7,7 +7,7 @@ public class Assets {
 
     private static final int width = 32, height = 32;
 
-    public static BufferedImage dirt, grass, wall, tree, stone, powerup;
+    public static BufferedImage dirt, grass, wall, tree, stone, bombStrength, bombCount;
     public static BufferedImage[] btn_start;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] bomb;
@@ -18,7 +18,7 @@ public class Assets {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("sheet.png"));
         SpriteSheet blastSheet = new SpriteSheet((ImageLoader.loadImage("blast_anim.png")));
         SpriteSheet bombSheet = new SpriteSheet((ImageLoader.loadImage("bomb_anim.png")));
-        SpriteSheet itemSheet = new SpriteSheet((ImageLoader.loadImage("items.png")));
+        SpriteSheet powerupsSheet = new SpriteSheet((ImageLoader.loadImage("powerups.png")));
 
         player_down = new BufferedImage[2];
         player_up = new BufferedImage[2];
@@ -54,7 +54,8 @@ public class Assets {
         btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height);
         btn_start[1] = sheet.crop(width * 6, height * 5, width * 2, height);
 
-        powerup = sheet.crop(width, height, width, height);
+        bombCount = powerupsSheet.crop(0, 0, 152, 152);
+        bombStrength = powerupsSheet.crop(152, 0, 152, 152);
 
 
     }

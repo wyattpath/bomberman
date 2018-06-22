@@ -8,8 +8,10 @@ import java.awt.image.BufferedImage;
 
 public abstract class Item implements Model
 {
-    public static Item[] items = new Item[256];
-    public static Item powerUpItem = new PowerUpItem(0);
+    public static Item[] items = new Item[5];
+    public static Item bombStrengthItem = new BombStrengthItem(1);
+    public static Item bombCountItem = new BombCountItem(2);
+
 
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 
