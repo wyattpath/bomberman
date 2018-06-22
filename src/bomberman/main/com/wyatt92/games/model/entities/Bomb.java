@@ -62,17 +62,20 @@ public class Bomb extends StaticEntity{
 
     protected void destroy()
     {
-        for(int i = 0; i < bombStrength;i++){
-            placeBlast(x + Tile.TILEWIDTH + i * Tile.TILEWIDTH, y); // nextTile on the right
-            placeBlast(x - Tile.TILEWIDTH - i * Tile.TILEWIDTH, y); // nextTile on the left
-            placeBlast(x, y - Tile.TILEHEIGHT - i * Tile.TILEHEIGHT); //nextTile above
-            placeBlast(x, y + Tile.TILEHEIGHT + i * Tile.TILEHEIGHT); //nextTile below
-        }
+            placeBlast(x, y, Tile.TILEWIDTH,0); // nextTile on the right
+            placeBlast(x, y, -Tile.TILEWIDTH, 0); // nextTile on the left
+            placeBlast(x, y,0,-Tile.TILEHEIGHT); //nextTile above
+            placeBlast(x, y,0,Tile.TILEHEIGHT); //nextTile below
+
     }
 
-    private void placeBlast(int x, int y) {
-        if(!collisionWithTile(x, y)) {
-            handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x, y));
+    private void placeBlast(int x, int y, int xOffset, int yOffset) {
+        for(int i = 0; i < bombStrength;i++)
+        {
+            if (!collisionWithTile(x + xOffset + i*xOffset, y + yOffset + i *yOffset))
+            {
+                handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x + xOffset + i*xOffset, y + yOffset + i *yOffset));
+            }
         }
     }
 
