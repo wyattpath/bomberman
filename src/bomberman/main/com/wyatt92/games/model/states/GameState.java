@@ -10,7 +10,6 @@ import java.awt.*;
 public class GameState extends State
 {
     private World world;
-    private KeyManager keyManager;
 
     public GameState(World world) {
         this.world = world;

@@ -62,7 +62,7 @@ public class Game implements Runnable{
         Assets.init();
 //        gamePanel.setDoubleBuffered(true);
 
-        world = new World(keyManager, "world1.txt");
+        world = new World("world1.txt");
         gameState = new GameState(world);
         menuState = new MenuState(world, gameState, uiManager, mouseManager);
         State.setCurrentState(menuState);
@@ -168,21 +168,6 @@ public class Game implements Runnable{
     }
 
     // GETTERS and SETTERS
-
-    public KeyManager getKeyManager() {
-        return keyManager;
-    }
-
-    public MouseManager getMouseManager() {
-        return mouseManager;
-    }
-
-    public State getGameState() {
-        return gameState;
-    }
-    public State getMenuState() {
-        return menuState;
-    }
 
     public int getWidth(){
         return WIDTH;

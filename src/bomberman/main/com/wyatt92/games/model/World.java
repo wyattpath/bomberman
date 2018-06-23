@@ -28,16 +28,16 @@ public class World
     // Blasts
     private BombBlastManager bombBlastManager;
 
-    private KeyManager keyManager;
 
-    public World(KeyManager keyManager, String path) {
+
+    public World( String path) {
         entityManager = new EntityManager(this);
         itemManager = new ItemManager(this);
         bombManager = new BombManager(this);
         bombBlastManager = new BombBlastManager(this);
 
         // Temporary entity code!
-        this.keyManager = keyManager;
+
 
         loadWorld(path);
         playerOne = new PlayerOne(this, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);

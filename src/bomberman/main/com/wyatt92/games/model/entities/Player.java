@@ -20,7 +20,6 @@ public abstract class Player extends DynamicEntity
     private int maxBombs = 1;
     private int bombCount = 1;
     private int bombStrength = 1;
-    protected KeyManager keyManager;
 
     // AttackTimer
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
@@ -152,9 +151,8 @@ public abstract class Player extends DynamicEntity
         }
     }
 
-    public void setKeyManager(KeyManager keyManager) {
-        this.keyManager = keyManager;
-    }
+
+
 
     public Point getCenterPoint()
     {
