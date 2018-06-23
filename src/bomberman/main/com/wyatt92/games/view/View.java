@@ -17,8 +17,7 @@ public class View
         gamePanel.repaint();
     }
 
-    public GamePanel getGamePanel()
-    {
+    public GamePanel getGamePanel() {
         return gamePanel;
     }
 }

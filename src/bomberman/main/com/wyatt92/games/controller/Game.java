@@ -1,6 +1,7 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
