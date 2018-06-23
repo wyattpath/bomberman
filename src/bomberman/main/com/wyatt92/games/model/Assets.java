@@ -67,10 +67,10 @@ public class Assets {
         bombStrength = powerUpsSheet.crop(152, 0, 152, 152);
 
         //Sounds
-        menu_bgMusic = Sound.clipForLoopFactory("Undertale001.wav");
+        menu_bgMusic = Sound.clipForLoopFactory("Undertale002.wav");
         menu_selectFX = Sound.clipForLoopFactory("select.wav");
         menu_cursorMoveFX = Sound.clipForLoopFactory("cursor_move.wav");
-        game_bgMusic = Sound.clipForLoopFactory("Undertale002.wav");
+        game_bgMusic = Sound.clipForLoopFactory("Undertale036.wav");
 
 
 

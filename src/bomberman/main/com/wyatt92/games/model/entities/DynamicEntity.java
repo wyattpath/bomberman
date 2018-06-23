@@ -1,6 +1,7 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
+
+import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -16,11 +17,11 @@ public abstract class DynamicEntity extends Entity
     public static final int DEFAULT_CHARACTER_HEIGHT = 64;
 
     protected float speed;
-    protected float xMove, yMove;
+    public float xMove, yMove;
 
 
-    public DynamicEntity(Handler handler, float x, float y, int width, int height) {
-        super(handler, x, y, width, height);
+    public DynamicEntity(World world, float x, float y, int width, int height) {
+        super(world, x, y, width, height);
         speed = DEFAULT_SPEED;
     }
 
@@ -75,7 +76,7 @@ public abstract class DynamicEntity extends Entity
     }
 
     protected boolean collisionWithTile(int x, int y) {
-        return handler.getWorld().getTile(x,y).isSolid();
+        return world.getTile(x,y).isSolid();
     }
 
 

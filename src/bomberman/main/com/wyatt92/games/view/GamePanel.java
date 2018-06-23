@@ -10,6 +10,10 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Creates a GameFrame and a GamePanel. Configures the GamePanel
+ * Represents the visualization of the data that model contains.
+ */
 public class GamePanel extends JPanel {
 
     // The following "off" vars are used for the off-screen double-buffered image.

@@ -1,6 +1,7 @@
 package com.wyatt92.games.model.items;
 
-import com.wyatt92.games.controller.Handler;
+
+import com.wyatt92.games.model.World;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,13 +9,13 @@ import java.util.Iterator;
 
 public class ItemManager
 {
-    private Handler handler;
+    private World world;
     private ArrayList<Item> items;
 
 
 
-    public ItemManager(Handler handler) {
-        this.handler = handler;
+    public ItemManager(World world) {
+        this.world = world;
         items = new ArrayList<>();
     }
 
@@ -39,19 +40,19 @@ public class ItemManager
     }
 
     public void addItem(Item i) {
-        i.setHandler(handler);
+        i.setWorld(world);
         items.add(i);
     }
 
     // GETTERS and SETTERS
 
-    public Handler getHandler()
+    public World getWorld()
     {
-        return handler;
+        return world;
     }
 
-    public void setHandler(Handler handler)
+    public void setWorld(World world)
     {
-        this.handler = handler;
+        this.world = world;
     }
 }

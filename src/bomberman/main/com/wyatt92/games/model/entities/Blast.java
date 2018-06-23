@@ -1,8 +1,9 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
+
 import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -18,13 +19,13 @@ public class Blast extends StaticEntity
     private static Animation animBlast;
     private boolean destroyed = false;
 
-    protected static Handler handler;
+    protected static World world;
     protected Rectangle bounds;
     protected int x, y;
 
-    public Blast(Handler handler, float x, float y)
+    public Blast(World world, float x, float y)
     {
-        super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+        super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
 //        ar = getCollisionBounds(x,y);
 //        ar = new Rectangle();
 //        ar.width = arSize;
@@ -57,7 +58,7 @@ public class Blast extends StaticEntity
 
     private void checkCollision()
     {
-        for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+        for(Entity e : world.getEntityManager().getEntities()) {
             if(e.equals(this))
                 continue;
             if(e.getCollisionBounds(32,32).intersects(bounds)){
@@ -85,7 +86,7 @@ public class Blast extends StaticEntity
 
 
     public static Blast createNew(int x, int y){
-        Blast b = new Blast(handler, x, y);
+        Blast b = new Blast(world, x, y);
         b.setPosition(x, y);
         return b;
     }
@@ -98,13 +99,13 @@ public class Blast extends StaticEntity
         bounds.y = y;
     }
     // GETTERS and SETTERS
-    public static Handler getHandler() {
-        return handler;
+    public World getWorld() {
+        return world;
 
     }
 
-    public static void setHandler(Handler handler) {
-        Blast.handler = handler;
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     public boolean isDestroyed()

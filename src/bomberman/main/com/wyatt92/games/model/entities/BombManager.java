@@ -1,7 +1,6 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
-import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.World;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,11 +8,11 @@ import java.util.Iterator;
 
 public class BombManager
 {
-    private Handler handler;
+    private World world;
     private ArrayList<Bomb> bombs;
 
-    public BombManager(Handler handler) {
-        this.handler = handler;
+    public BombManager(World world) {
+        this.world = world;
         bombs = new ArrayList<>();
     }
 
@@ -36,7 +35,7 @@ public class BombManager
     }
 
     public void addBomb(Bomb b) {
-        b.setHandler(handler);
+        b.setHandler(world);
         bombs.add(b);
     }
 }

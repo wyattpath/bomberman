@@ -1,8 +1,9 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
+
 import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.sounds.Sound;
 
@@ -16,7 +17,7 @@ public class Bomb extends StaticEntity{
     private static Animation animBomb;
     private boolean destroyed = false;
 
-    protected static Handler handler;
+    protected static World world;
     protected Rectangle bounds;
     protected int x, y;
     protected int bombStrength;
@@ -25,9 +26,9 @@ public class Bomb extends StaticEntity{
     public static final int BOMBWIDTH = 64, BOMBHEIGHT = 64;
 
 
-    public Bomb(Handler handler, float x, float y, int bombStrength)
+    public Bomb(World world, float x, float y, int bombStrength)
     {
-        super(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
+        super(world, x, y, BOMBWIDTH, BOMBHEIGHT);
 //        bomb = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
 //        this.texture = texture;
         this.bombStrength = bombStrength;
@@ -84,13 +85,13 @@ public class Bomb extends StaticEntity{
             if(stop || collisionWithTile(x + xOffset + i * xOffset, y + yOffset + i *yOffset))
                 return;
 
-            handler.getWorld().getBombBlastManager().addBlast(Blast.createNew(x + xOffset + i*xOffset, y + yOffset + i *yOffset));
+            world.getBombBlastManager().addBlast(Blast.createNew(x + xOffset + i*xOffset, y + yOffset + i *yOffset));
 
             Rectangle tempBounds = new Rectangle();
             tempBounds.x = x + xOffset + i * xOffset;
             tempBounds.y = y + yOffset + i *yOffset;
             tempBounds.setSize(BOMBWIDTH, BOMBHEIGHT);
-            for (Entity e : handler.getWorld().getEntityManager().getEntities())
+            for (Entity e : world.getEntityManager().getEntities())
             {
                 if (e.equals(this))
                     continue;
@@ -106,7 +107,7 @@ public class Bomb extends StaticEntity{
     }
 
     public static Bomb createNew(int x, int y, int bombStrength){
-        Bomb b = new Bomb(handler, x, y, bombStrength);
+        Bomb b = new Bomb(world, x, y, bombStrength);
         b.setPosition(x, y);
         return b;
     }
@@ -121,7 +122,7 @@ public class Bomb extends StaticEntity{
 
     private void checkCollision(int x, int y) {
         Rectangle tempBounds = new Rectangle(x,y, BOMBWIDTH, BOMBHEIGHT);
-        for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
+        for (Entity e : world.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(32, 32).intersects(tempBounds)) {
@@ -134,19 +135,19 @@ public class Bomb extends StaticEntity{
 
     protected boolean collisionWithTile(int x, int y) {
         System.out.println("TilePosition x = " + (x/Tile.TILEWIDTH)+ " y = " + (y/Tile.TILEHEIGHT));
-        return handler.getWorld().getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
+        return world.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
     }
 
     // GETTERS and SETTERS
 
-    public Handler getHandler()
+    public World getHandler()
     {
-        return handler;
+        return world;
     }
 
-    public void setHandler(Handler handler)
+    public void setHandler(World world)
     {
-        this.handler = handler;
+        this.world = world;
     }
 
     public boolean isDestroyed()

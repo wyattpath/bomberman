@@ -1,9 +1,8 @@
 package com.wyatt92.games.model.states;
 
-import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.controller.KeyManager;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
-import com.wyatt92.sounds.Sound;
 
 import javax.sound.sampled.Clip;
 import java.awt.*;
@@ -11,11 +10,10 @@ import java.awt.*;
 public class GameState extends State
 {
     private World world;
+    private KeyManager keyManager;
 
-    public GameState(Handler handler) {
-        super(handler);
-        world = new World(handler, "world1.txt");
-        handler.setWorld(world);
+    public GameState(World world) {
+        this.world = world;
 
     }
 

@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
+/**
+ * Sets a GameFrame up.
+ */
 public class GameFrame extends JFrame {
 
 //    private JPanel contentPane;

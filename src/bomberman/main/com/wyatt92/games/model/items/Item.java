@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.items;
 
-import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.sounds.Sound;
 
@@ -18,7 +18,7 @@ public abstract class Item implements Model
 
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 
-    protected Handler handler;
+    protected World world;
     protected BufferedImage texture;
     protected String name;
     protected final int id;
@@ -41,7 +41,7 @@ public abstract class Item implements Model
 
     @Override
     public void update() {
-        Iterator<Player> it = handler.getWorld().getEntityManager().getPlayers().iterator();
+        Iterator<Player> it = world.getEntityManager().getPlayers().iterator();
         while(it.hasNext()) {
             Player p = it.next();
             if(p.getCollisionBounds(0f,0f).intersects(bounds)){
@@ -56,7 +56,7 @@ public abstract class Item implements Model
 
     @Override
     public void draw(Graphics g){
-        if(handler != null)
+        if(world != null)
             draw(g, x, y);
     }
 
@@ -81,14 +81,14 @@ public abstract class Item implements Model
 
     // GETTERS and SETTERS
 
-    public Handler getHandler()
+    public World getWorld()
     {
-        return handler;
+        return world;
     }
 
-    public void setHandler(Handler handler)
+    public void setWorld(World world)
     {
-        this.handler = handler;
+        this.world = world;
     }
 
     public BufferedImage getTexture()

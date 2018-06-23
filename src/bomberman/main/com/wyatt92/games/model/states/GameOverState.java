@@ -1,14 +1,19 @@
 package com.wyatt92.games.model.states;
 
-import com.wyatt92.games.controller.Handler;
+
+
+import com.wyatt92.games.model.World;
 
 import java.awt.*;
 
 public class GameOverState extends State
 {
-    public GameOverState(Handler handler)
+    private World world;
+
+    public GameOverState(World world)
     {
-        super(handler);
+
+        this.world = world;
     }
 
     @Override

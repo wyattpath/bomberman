@@ -1,11 +1,11 @@
 package com.wyatt92.games.model.states;
 
+import com.wyatt92.games.controller.MouseManager;
+import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.ui.Clicker;
-import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
-import com.wyatt92.sounds.Sound;
 
 import javax.sound.sampled.Clip;
 import java.awt.*;
@@ -13,30 +13,24 @@ import java.awt.*;
 public class MenuState extends State
 {
     private UIManager uiManager;
+    private UIImageButton start;
+    private UIImageButton quit;
 
-    public MenuState(Handler handler){
-        super(handler);
+    private World world;
+    private MouseManager mouseManager;
 
+    public MenuState(World world, State gameState, UIManager uiManager, MouseManager mouseManager) {
+        this.world = world;
+        this.uiManager = uiManager;
+        this.mouseManager = mouseManager;
 
-        uiManager = new UIManager(handler);
-        handler.getMouseManager().setUiManager(uiManager);
-        uiManager.addObject(new UIImageButton(400, 400, 228, 35, Assets.btn_start, new Clicker(){
-            @Override
-            public void onClick()
-            {
-                handler.getMouseManager().setUiManager(null);
-                State.setCurrentState(handler.getGameState());
-
-            }
-        }));
-        uiManager.addObject(new UIImageButton(400, 435, 228, 35, Assets.btn_quit, new Clicker(){
-            @Override
-            public void onClick()
-            {
-                System.exit(0);
-            }
-        }));
-
+        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () ->
+        {
+            mouseManager.setUiManager(null);
+            State.setCurrentState(gameState);
+        });
+        uiManager.addObject(start);
+        uiManager.addObject(new UIImageButton(400, 435, 228, 35, Assets.btn_quit, () -> System.exit(0)));
     }
 
     @Override
@@ -56,7 +50,8 @@ public class MenuState extends State
 //                8,
 //                8);
         g.setColor(Color.BLUE);
-        g.fillRect(0,0,handler.getWidth(), handler.getWidth());
+        if(world!= null)
+            g.fillRect(0,0,world.getWidth(), world.getWidth());
         uiManager.draw(g);
     }
 

@@ -1,8 +1,10 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
+
+import com.wyatt92.games.controller.KeyManager;
 import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.World;
 import com.wyatt92.sounds.Sound;
 
 import java.awt.*;
@@ -18,16 +20,17 @@ public abstract class Player extends DynamicEntity
     private int maxBombs = 1;
     private int bombCount = 1;
     private int bombStrength = 1;
+    protected KeyManager keyManager;
 
     // AttackTimer
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private long bombCooldown = 2000;
 
-    protected Handler handler;
+    protected World world;
 
-    public Player(Handler handler, float x, float y)
+    public Player(World world, float x, float y)
     {
-        super(handler, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
+        super(world, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
         bounds.x = 16;
         bounds.y = 32;
         bounds.width = 32;
@@ -47,12 +50,9 @@ public abstract class Player extends DynamicEntity
         animRight.update();
         animLeft.update();
 
-        getInput();
-        move();
         updateBombCount();
 
     }
-
 
 
     public void addMaxBombs()
@@ -83,7 +83,8 @@ public abstract class Player extends DynamicEntity
             attackTimer = 0;
         }
     }
-    protected void placeBomb()
+
+    public void placeBomb()
     {
 
         // attack cooldown
@@ -95,7 +96,7 @@ public abstract class Player extends DynamicEntity
             Sound.playSound("bomb_Set.wav");
             System.out.println("placing Bomb");
             Bomb b = Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
-            handler.getWorld().getBombManager().addBomb(b);
+            world.getBombManager().addBomb(b);
             bombCount--;
             System.out.println("bombCount = " + bombCount);
             attackTimer = 0;
@@ -103,7 +104,21 @@ public abstract class Player extends DynamicEntity
 
     }
 
-    protected abstract void getInput();
+    public void moveUp(){
+        yMove = -speed;
+    }
+
+    public void moveDown(){
+        yMove = speed;
+    }
+
+    public void moveLeft(){
+        xMove = -speed;
+    }
+
+    public void moveRight(){
+        xMove = speed;
+    }
 
     @Override
     public void draw(Graphics g)
@@ -137,19 +152,23 @@ public abstract class Player extends DynamicEntity
         }
     }
 
+    public void setKeyManager(KeyManager keyManager) {
+        this.keyManager = keyManager;
+    }
+
     public Point getCenterPoint()
     {
 
         return centerPoint;
     }
 
-    public Handler getHandler()
+    public World getWorld()
     {
-        return handler;
+        return world;
     }
 
-    public void setHandler(Handler handler)
+    public void setWorld(World world)
     {
-        this.handler = handler;
+        this.world = world;
     }
 }

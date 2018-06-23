@@ -1,16 +1,14 @@
 package com.wyatt92.games.model;
 
-import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.controller.KeyManager;
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.items.ItemManager;
-import com.wyatt92.games.model.items.BombStrengthItem;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
 
 public class World
 {
-    private Handler handler;
     private int width, height;
     private int playerCount;
     private int playerSpawnX,playerSpawnY;
@@ -19,6 +17,7 @@ public class World
     private int yCenter;
     private Player playerOne;
     private Player playerTwo;
+
 
     //Entities
     private EntityManager entityManager;
@@ -29,22 +28,25 @@ public class World
     // Blasts
     private BombBlastManager bombBlastManager;
 
-    public World(Handler handler, String path) {
-        this.handler = handler;
-        entityManager = new EntityManager(handler);
-        itemManager = new ItemManager(handler);
-        bombManager = new BombManager(handler);
-        bombBlastManager = new BombBlastManager(handler);
+    private KeyManager keyManager;
+
+    public World(KeyManager keyManager, String path) {
+        entityManager = new EntityManager(this);
+        itemManager = new ItemManager(this);
+        bombManager = new BombManager(this);
+        bombBlastManager = new BombBlastManager(this);
 
         // Temporary entity code!
-
+        this.keyManager = keyManager;
 
         loadWorld(path);
-        playerOne = new PlayerOne(handler, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
-        playerTwo = new PlayerTwo(handler, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2);
+        playerOne = new PlayerOne(this, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
+        playerTwo = new PlayerTwo(this, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2);
         entityManager.addPlayer(playerOne);
         entityManager.addPlayer(playerTwo);
         loadEntities();
+
+
 
 
 //        itemManager.addItem(new BombStrengthItem(0).createNew(256, 64));
@@ -62,7 +64,7 @@ public class World
                             (x*Tile.TILEWIDTH > 128 || y *Tile.TILEHEIGHT > 128) &&
                                     (x*Tile.TILEWIDTH < width*Tile.TILEWIDTH - Tile.TILEWIDTH*3 || y*Tile.TILEHEIGHT < height*Tile.TILEHEIGHT - Tile.TILEHEIGHT*3)
                             )
-                        entityManager.addEntity(new Stone(handler, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
+                        entityManager.addEntity(new Stone(this, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
                 } else System.out.println("entity not placed");
             }
         }
@@ -201,12 +203,12 @@ public class World
 
     public int getWidth()
     {
-        return width;
+        return width* Tile.TILEWIDTH;
     }
 
     public int getHeight()
     {
-        return height;
+        return height*Tile.TILEHEIGHT;
     }
 
     public int[][] getTiles()
@@ -220,6 +222,26 @@ public class World
 
     public void setBombBlastManager(BombBlastManager bombBlastManager) {
         this.bombBlastManager = bombBlastManager;
+    }
+
+    public Player getPlayerOne()
+    {
+        return playerOne;
+    }
+
+    public void setPlayerOne(Player playerOne)
+    {
+        this.playerOne = playerOne;
+    }
+
+    public Player getPlayerTwo()
+    {
+        return playerTwo;
+    }
+
+    public void setPlayerTwo(Player playerTwo)
+    {
+        this.playerTwo = playerTwo;
     }
 }
 

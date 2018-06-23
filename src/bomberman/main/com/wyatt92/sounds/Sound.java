@@ -16,7 +16,7 @@ public class Sound
 	          Clip clp = AudioSystem.getClip();
 
 	          AudioInputStream aisStream = 
-	        		  AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream(strPath));
+	        		  AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream("./fx/" + strPath));
 
 	          clp.open(aisStream);
 	          clp.start(); 
@@ -35,27 +35,26 @@ public class Sound
 		Clip clp = null;
 		
 		// this line caused the original exceptions
-		
-		try {
-			AudioInputStream aisStream =
-					  AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream(strPath));
-			clp = AudioSystem.getClip();
-		    clp.open( aisStream );
-				
-		} catch (UnsupportedAudioFileException exp) {
-			
-			exp.printStackTrace();
-		} catch (IOException exp) {
-			
-			exp.printStackTrace();
-		} catch (LineUnavailableException exp) {
-			
-			exp.printStackTrace();
-			
-		//the next three lines were added to catch all exceptions generated
-		}catch(Exception exp){
-			System.out.println("error");
-		}
+
+        try
+        {
+            AudioInputStream aisStream =
+                    AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream(strPath));
+            clp = AudioSystem.getClip();
+            clp.open(aisStream);
+
+        } catch (LineUnavailableException exp)
+        {
+
+            exp.printStackTrace();
+
+        } catch (IOException exp)
+        {
+            System.out.println("error");
+        } catch (UnsupportedAudioFileException exp)
+        {
+            System.out.println("error");
+        }
 		
 		return clp;
 		

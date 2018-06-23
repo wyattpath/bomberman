@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.tiles.Tile;
 
@@ -9,8 +9,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class Stone extends StaticEntity {
-    public Stone(Handler handler, float x, float y) {
-        super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+    public Stone(World world, float x, float y) {
+        super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Stone extends StaticEntity {
         int randInt = new Random().nextInt(Item.items.length);
         System.out.println(randInt);
         if(randInt != 0 && randInt < 3)
-            handler.getWorld().getItemManager().addItem(Item.items[randInt].createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
+            world.getItemManager().addItem(Item.items[randInt].createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
 //        handler.getWorld().getItemManager().addItem(Item.powerUpItem.createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
     }
 }

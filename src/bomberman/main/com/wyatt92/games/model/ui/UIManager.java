@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.ui;
 
-import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.World;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,11 +9,10 @@ import java.util.ArrayList;
 
 public class UIManager implements Model
 {
-    private Handler handler;
+    private World world;
     private ArrayList<UIObject> objects;
 
-    public UIManager(Handler handler) {
-        this.handler = handler;
+    public UIManager() {
         objects = new ArrayList<UIObject>();
     }
 
@@ -29,6 +28,11 @@ public class UIManager implements Model
         for(UIObject o : objects){
             o.draw(g);
         }
+    }
+
+    public void onClick()
+    {
+
     }
 
     public void onMouseMove(MouseEvent e) {
@@ -54,14 +58,14 @@ public class UIManager implements Model
     // GETTERS and SETTERS
 
 
-    public Handler getHandler()
+    public World getWorld()
     {
-        return handler;
+        return world;
     }
 
-    public void setHandler(Handler handler)
+    public void setWorld(World world)
     {
-        this.handler = handler;
+        this.world = world;
     }
 
     public ArrayList<UIObject> getObjects()

@@ -1,8 +1,7 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
 import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.games.model.World;
 
 import java.awt.*;
 
@@ -13,7 +12,7 @@ import java.awt.*;
 public abstract class Entity implements Model
 {
     public static final int DEFAULT_HEALTH = 3;
-    protected Handler handler;
+    protected World world;
     protected float x,y,xOffset, yOffset;
     protected int width, height;
     protected int health;
@@ -23,14 +22,14 @@ public abstract class Entity implements Model
 
     /**
      *
-     * @param handler
+     * @param world
      * @param x
      * @param y
      * @param width
      * @param height
      */
-    public Entity(Handler handler, float x, float y, int width, int height) {
-        this.handler = handler;
+    public Entity(World world, float x, float y, int width, int height) {
+        this.world = world;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -60,7 +59,7 @@ public abstract class Entity implements Model
     protected abstract void destroy();
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for(Entity e : handler.getWorld().getEntityManager().getEntities()){
+        for(Entity e : world.getEntityManager().getEntities()){
             if(e.equals(this)){
                 continue;
             }

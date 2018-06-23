@@ -1,17 +1,22 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
-import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.games.model.ui.Clicker;
+import com.wyatt92.games.model.ui.UIImageButton;
+import com.wyatt92.games.model.ui.UIManager;
 import com.wyatt92.games.view.GamePanel;
-import com.wyatt92.sounds.Sound;
 
-import javax.sound.sampled.Clip;
 import java.awt.*;
 
 
+/**
+ * Controls and updates the view.
+ * Keeps View and Model separated.
+ */
 public class Game implements Runnable{
 
     private static final int WIDTH = 15 * 64;
@@ -29,17 +34,20 @@ public class Game implements Runnable{
     private State gameState;
     private State menuState;
 
+    // World
+    private World world;
+
     // Input
     private KeyManager keyManager;
     private MouseManager mouseManager;
-
-    // Handler
-    private Handler handler;
+    private UIManager uiManager;
 
 
     Game() {
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+        uiManager = new UIManager();
+        mouseManager.setUiManager(uiManager);
         init();
         run();
     }
@@ -54,9 +62,9 @@ public class Game implements Runnable{
         Assets.init();
 //        gamePanel.setDoubleBuffered(true);
 
-        handler = new Handler(this);
-        gameState = new GameState(handler);
-        menuState = new MenuState(handler);
+        world = new World(keyManager, "world1.txt");
+        gameState = new GameState(world);
+        menuState = new MenuState(world, gameState, uiManager, mouseManager);
         State.setCurrentState(menuState);
     }
 
@@ -119,10 +127,39 @@ public class Game implements Runnable{
 
     private void update(){
         keyManager.update();
+        world.getPlayerOne().xMove = 0;
+        world.getPlayerOne().yMove = 0;
+        world.getPlayerTwo().xMove = 0;
+        world.getPlayerTwo().yMove = 0;
+
+        if(keyManager.W)
+            world.getPlayerOne().moveUp();
+        if(keyManager.S)
+            world.getPlayerOne().moveDown();
+        if(keyManager.A)
+            world.getPlayerOne().moveLeft();
+        if(keyManager.D)
+            world.getPlayerOne().moveRight();
+        if(keyManager.SPACE)
+            world.getPlayerOne().placeBomb();
+        if(keyManager.UP)
+            world.getPlayerTwo().moveUp();
+        if(keyManager.DOWN)
+            world.getPlayerTwo().moveDown();
+        if(keyManager.LEFT)
+            world.getPlayerTwo().moveLeft();
+        if(keyManager.RIGHT)
+            world.getPlayerTwo().moveRight();
+        if(keyManager.CTRL)
+            world.getPlayerTwo().placeBomb();
+        world.getPlayerOne().move();
+        world.getPlayerTwo().move();
         if(State.getCurrentState() != null)
         {
             State.getCurrentState().update();
         }
+
+
     }
 
     private void render()
@@ -130,31 +167,38 @@ public class Game implements Runnable{
 
     }
 
-    State getGameState() {
-        return gameState;
-    }
+    // GETTERS and SETTERS
 
-    public KeyManager getKeyManager()
-    {
+    public KeyManager getKeyManager() {
         return keyManager;
     }
 
-    public MouseManager getMouseManager()
-    {
+    public MouseManager getMouseManager() {
         return mouseManager;
     }
 
-    public int getWidth() {
+    public State getGameState() {
+        return gameState;
+    }
+    public State getMenuState() {
+        return menuState;
+    }
+
+    public int getWidth(){
         return WIDTH;
     }
 
-    public int getHeight()
-    {
+    public int getHeight(){
         return HEIGHT;
     }
 
-    public State getMenuState()
+    public World getWorld()
     {
-        return menuState;
+        return world;
+    }
+
+    public void setWorld(World world)
+    {
+        this.world = world;
     }
 }

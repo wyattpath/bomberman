@@ -1,6 +1,6 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.controller.Handler;
+import com.wyatt92.games.model.World;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 public class EntityManager
 {
-    private Handler handler;
+    private World world;
     private ArrayList<Player> players;
     private ArrayList<Entity> entities;
     private Comparator<Entity> drawSorter = new Comparator<Entity>() {
@@ -23,8 +23,8 @@ public class EntityManager
         }
     };
 
-    public EntityManager(Handler handler) {
-        this.handler = handler;
+    public EntityManager(World world) {
+        this.world = world;
 
         entities = new ArrayList<>();
         players = new ArrayList<>();
@@ -61,14 +61,14 @@ public class EntityManager
 
     // GETTERS and SETTERS
 
-    public Handler getHandler()
+    public World getWorld()
     {
-        return handler;
+        return world;
     }
 
-    public void setHandler(Handler handler)
+    public void setWorld(World world)
     {
-        this.handler = handler;
+        this.world = world;
     }
 
     public ArrayList<Player> getPlayers()
@@ -83,7 +83,7 @@ public class EntityManager
 
     public void addPlayer(Player p)
     {
-        p.setHandler(handler);
+        p.setWorld(world);
         players.add(p);
         addEntity(p);
     }
