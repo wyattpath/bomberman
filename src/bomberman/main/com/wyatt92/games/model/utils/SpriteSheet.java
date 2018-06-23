@@ -2,6 +2,9 @@ package com.wyatt92.games.model.utils;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Crops an image.
+ */
 public class SpriteSheet {
 
     private BufferedImage sheet;

@@ -8,6 +8,10 @@ import com.wyatt92.games.model.utils.Utils;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * This class loads the World from a file.
+ * Creates and manages all entities, items, bombs, blasts.
+ */
 public class World
 {
     private int width, height;
@@ -30,7 +34,11 @@ public class World
     private BombBlastManager bombBlastManager;
 
 
-
+    /**
+     * Constructor
+     *
+     * @param path path to the word file
+     */
     public World( String path) {
         entityManager = new EntityManager(this);
         itemManager = new ItemManager(this);
@@ -38,17 +46,12 @@ public class World
         bombBlastManager = new BombBlastManager(this);
 
         // Temporary entity code!
-
-
         loadWorld(path);
         playerOne = new PlayerOne(this, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
         playerTwo = new PlayerTwo(this, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2-1,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2-1);
         entityManager.addPlayer(playerOne);
         entityManager.addPlayer(playerTwo);
         loadEntities();
-
-
-
 
 //        itemManager.addItem(new BombStrengthItem(0).createNew(256, 64));
     }

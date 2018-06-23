@@ -3,12 +3,22 @@ package com.wyatt92.games.model.utils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * This class is responsible for Animation.
+ * Loops through images at a specific animation speed
+ */
 public class Animation
 {
     private int animSpeed, index;
     private long lastTime, timer;
     private BufferedImage[] frames;
 
+    /**
+     * Constructor
+     *
+     * @param animSpeed speed of animation
+     * @param frames list of buffered images
+     */
     public Animation(int animSpeed, BufferedImage[] frames){
     this.animSpeed = animSpeed;
     this.frames = frames;

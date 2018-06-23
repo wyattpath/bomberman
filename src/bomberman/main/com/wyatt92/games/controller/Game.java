@@ -87,7 +87,7 @@ public class Game implements Runnable{
             if(delta >= 1) {
                 update();
 //                gamePanel.draw(gamePanel.getGraphics());
-                gamePanel.repaint();
+                draw();
                 ticks++;
                 delta--;
             }
@@ -123,33 +123,36 @@ public class Game implements Runnable{
 
     private void update(){
         gameKeyListener.update();
-        world.getPlayerOne().xMove = 0;
-        world.getPlayerOne().yMove = 0;
-        world.getPlayerTwo().xMove = 0;
-        world.getPlayerTwo().yMove = 0;
+        if(world.getPlayerOne()!=null){
+            world.getPlayerOne().xMove = 0;
+            world.getPlayerOne().yMove = 0;
+            if(gameKeyListener.W)
+                world.getPlayerOne().moveUp();
+            if(gameKeyListener.S)
+                world.getPlayerOne().moveDown();
+            if(gameKeyListener.A)
+                world.getPlayerOne().moveLeft();
+            if(gameKeyListener.D)
+                world.getPlayerOne().moveRight();
+            if(gameKeyListener.SPACE)
+                world.getPlayerOne().placeBomb();
 
-        if(gameKeyListener.W)
-            world.getPlayerOne().moveUp();
-        if(gameKeyListener.S)
-            world.getPlayerOne().moveDown();
-        if(gameKeyListener.A)
-            world.getPlayerOne().moveLeft();
-        if(gameKeyListener.D)
-            world.getPlayerOne().moveRight();
-        if(gameKeyListener.SPACE)
-            world.getPlayerOne().placeBomb();
-        if(gameKeyListener.UP)
-            world.getPlayerTwo().moveUp();
-        if(gameKeyListener.DOWN)
-            world.getPlayerTwo().moveDown();
-        if(gameKeyListener.LEFT)
-            world.getPlayerTwo().moveLeft();
-        if(gameKeyListener.RIGHT)
-            world.getPlayerTwo().moveRight();
-        if(gameKeyListener.CTRL)
-            world.getPlayerTwo().placeBomb();
-        world.getPlayerOne().move();
-        world.getPlayerTwo().move();
+        }
+        if(world.getPlayerTwo()!=null){
+            world.getPlayerTwo().xMove = 0;
+            world.getPlayerTwo().yMove = 0;
+
+            if(gameKeyListener.UP)
+                world.getPlayerTwo().moveUp();
+            if(gameKeyListener.DOWN)
+                world.getPlayerTwo().moveDown();
+            if(gameKeyListener.LEFT)
+                world.getPlayerTwo().moveLeft();
+            if(gameKeyListener.RIGHT)
+                world.getPlayerTwo().moveRight();
+            if(gameKeyListener.CTRL)
+                world.getPlayerTwo().placeBomb();
+        }
         if(State.getCurrentState() != null)
         {
             State.getCurrentState().update();
@@ -158,9 +161,9 @@ public class Game implements Runnable{
 
     }
 
-    private void render()
+    private void draw()
     {
-
+        gamePanel.repaint();
     }
 
     // GETTERS and SETTERS

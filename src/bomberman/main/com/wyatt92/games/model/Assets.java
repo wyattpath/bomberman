@@ -7,6 +7,10 @@ import com.wyatt92.sounds.Sound;
 import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
 
+/**
+ * An asset is the representation of any object that can be used.
+ * It can come from outside sources such as audio files or images.
+ */
 public class Assets {
 
     private static final int width = 32, height = 32;
@@ -19,8 +23,6 @@ public class Assets {
 
     public static Clip menu_bgMusic, menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
     public static Clip game_bgMusic, game_bombSet, game_bombBoomS, game_bombBoomM, game_bombBoomL;
-
-
 
     public static void init() {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("sheet.png"));

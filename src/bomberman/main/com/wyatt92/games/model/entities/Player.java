@@ -58,6 +58,7 @@ public abstract class Player extends DynamicEntity
         animRight.update();
         animLeft.update();
 
+        move();
         updateBombCount();
 
     }

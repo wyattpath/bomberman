@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Loads Strings from files.
+ * Parses Strings to Integers
+ */
 public class Utils
 {
     public static String loadFileAsString(String path) {
