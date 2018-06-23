@@ -29,9 +29,6 @@ public class GameFrame extends JFrame {
 
     //Component initialization
     private void initGameFrame() throws Exception {
-//        contentPane = (JPanel) this.getContentPane();
-//        contentPane.setLayout(borderLayout1);
-//        this.getContentPane().add(this);
         this.pack();
         this.setSize(width, height);
         this.setTitle(title);
@@ -41,6 +38,13 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+//        gmf.setSize(frameWidth, frameHeight);
+//        gmf.setTitle(title);
+//        gmf.setResizable(false);
+//        gmf.setPreferredSize(new Dimension(frameWidth, frameHeight));
+//        gmf.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
+//        gmf.setLocationRelativeTo(null);
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * This class loads the World from a file.
+ * This class loads the world from a file.
  * Creates and manages all entities, items, bombs, blasts.
  */
 public class World
@@ -45,19 +45,17 @@ public class World
         bombManager = new BombManager(this);
         bombBlastManager = new BombBlastManager(this);
 
-        // Temporary entity code!
         loadWorld(path);
-        playerOne = new PlayerOne(this, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
-        playerTwo = new PlayerTwo(this, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2-1,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2-1);
-        entityManager.addPlayer(playerOne);
-        entityManager.addPlayer(playerTwo);
         loadEntities();
-
-//        itemManager.addItem(new BombStrengthItem(0).createNew(256, 64));
     }
 
     private void loadEntities()
     {
+        playerOne = new PlayerOne(this, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
+        playerTwo = new PlayerTwo(this, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2-1,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2-1);
+        entityManager.addPlayer(playerOne);
+        entityManager.addPlayer(playerTwo);
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -118,59 +116,12 @@ public class World
         return t;
     }
 
-    public Point getTileCenter(int x, int y){
-
-        for (int ty = 0; ty < height; ty++)
-        {
-            if(y >= ty*Tile.TILEHEIGHT && y < ty*Tile.TILEHEIGHT + Tile.TILEHEIGHT)
-            {
-                yCenter = ty * Tile.TILEHEIGHT ;
-            }
-        }
-        for (int tx = 0; tx < width; tx++)
-        {
-            if(x >= tx*Tile.TILEWIDTH && y < tx*Tile.TILEWIDTH + Tile.TILEWIDTH)
-            {
-                xCenter = tx * Tile.TILEWIDTH;
-            }
-        }
-//        for(Tile t : Tile.tiles){
-//            System.out.println(t.getPosition());
-//        }
-//        System.out.println(handler.getWorld().getTile(x,y).getPosition());
-        return new Point(xCenter,yCenter);
-    }
-
-    public Point getTilePosition(int x, int y) {
-        Point point = new Point();
-        for(int ty = 0; ty < height; ty++)
-            for(int tx = 0; tx < width; tx++){
-            if(
-                    x+1 >= tx &&
-                        x+1 < tx + Tile.TILEWIDTH &&
-                        y+1 >= ty &&
-                                y+1 < ty + Tile.TILEHEIGHT){
-                point = new Point(tx,ty);
-            }
-            }
-            return point;
-    }
-
     private void loadWorld(String path)
     {
         String file = Utils.loadFileAsString(path);
         String[] tokens = file.split("\\s+");
         width = Utils.parseInt(tokens[0]);
         height = Utils.parseInt(tokens[1]);
-//        for(int i = 0; i < playerCount; i++)
-//        {
-//
-//            playerSpawnX = Utils.parseInt(tokens[3 + i*2]);
-//            playerSpawnY = Utils.parseInt(tokens[4 + i*2]);
-//            entityManager.getPlayer(i).setX(playerSpawnX);
-//            entityManager.getPlayer(i).setY(playerSpawnY);
-//        }
-
 
         tiles = new int[width][height];
         for (int y = 0; y < height; y++)

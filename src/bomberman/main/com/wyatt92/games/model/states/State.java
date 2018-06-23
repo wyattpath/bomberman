@@ -2,6 +2,7 @@ package com.wyatt92.games.model.states;
 
 
 import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.World;
 
 import java.awt.*;
 
@@ -12,6 +13,16 @@ import java.awt.*;
 public abstract class State implements Model
 {
     private static State currentState = null;
+
+    protected abstract void playLoopMusic();
+
+    protected abstract void stopLoopMusic();
+
+    @Override
+    public abstract void update();
+
+    @Override
+    public abstract void draw(Graphics g);
 
     public static State getCurrentState()
     {
@@ -26,14 +37,4 @@ public abstract class State implements Model
         currentState = state;
         currentState.playLoopMusic();
     }
-
-    @Override
-    public abstract void update();
-
-    @Override
-    public abstract void draw(Graphics g);
-
-    protected abstract void playLoopMusic();
-
-    protected abstract void stopLoopMusic();
 }

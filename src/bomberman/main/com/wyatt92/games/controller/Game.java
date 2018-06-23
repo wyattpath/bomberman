@@ -7,6 +7,7 @@ import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
 import com.wyatt92.games.model.ui.UIManager;
 import com.wyatt92.games.view.GamePanel;
+import com.wyatt92.games.view.View;
 
 import java.awt.*;
 
@@ -17,14 +18,12 @@ import java.awt.*;
  */
 public class Game implements Runnable{
 
-    private static final int WIDTH = 15 * 64;
-    private static final int HEIGHT = 15 * 64 + 32;
-    private static final String TITLE = "Bomberman";
+
 
     private boolean running = false;
     private Thread thread1;
 
-    private GamePanel gamePanel;
+    private View view;
 
     private Graphics g;
 
@@ -40,7 +39,8 @@ public class Game implements Runnable{
     private GameMouseListener gameMouseListener;
     private UIManager uiManager;
 
-    Game() {
+    Game(View view) {
+        this.view = view;
         gameKeyListener = new GameKeyListener();
         gameMouseListener = new GameMouseListener();
         uiManager = new UIManager();
@@ -52,10 +52,9 @@ public class Game implements Runnable{
     // METHODS
 
     private void init() {
-        gamePanel = new GamePanel(TITLE, WIDTH, HEIGHT);
-        gamePanel.addKeyListener(gameKeyListener);
-        gamePanel.addMouseListener(gameMouseListener);
-        gamePanel.addMouseMotionListener(gameMouseListener);
+        view.getGamePanel().addKeyListener(gameKeyListener);
+        view.getGamePanel().addMouseListener(gameMouseListener);
+        view.getGamePanel().addMouseMotionListener(gameMouseListener);
         Assets.init();
 //        gamePanel.setDoubleBuffered(true);
 
@@ -87,7 +86,7 @@ public class Game implements Runnable{
             if(delta >= 1) {
                 update();
 //                gamePanel.draw(gamePanel.getGraphics());
-                draw();
+                view.repaint();
                 ticks++;
                 delta--;
             }
@@ -161,20 +160,8 @@ public class Game implements Runnable{
 
     }
 
-    private void draw()
-    {
-        gamePanel.repaint();
-    }
 
     // GETTERS and SETTERS
-
-    public int getWidth(){
-        return WIDTH;
-    }
-
-    public int getHeight(){
-        return HEIGHT;
-    }
 
     public World getWorld()
     {
