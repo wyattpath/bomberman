@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.security.Key;
 
+/**
+ * Registers Keys.
+ */
 public class GameKeyListener implements KeyListener {
 
     private boolean[] keys, justPressed, cantPress;

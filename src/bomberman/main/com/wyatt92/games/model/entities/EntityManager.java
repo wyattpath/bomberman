@@ -7,29 +7,26 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
+/**
+ * This class manages all entities.
+ * Adds entities to a list.
+ * Updates all entities.
+ * Removes an Entity if it is not set active.
+ * Calls the draw method of all entities.
+ * Determines the order of when the entities are drawn.
+ */
 public class EntityManager
 {
     private World world;
-    private ArrayList<Bomb> bombs;
     private ArrayList<Player> players;
     private ArrayList<Entity> entities;
-    private Comparator<Entity> drawSorter = new Comparator<Entity>() {
-
-        @Override
-        public int compare(Entity a, Entity b)
-        {
-            if(a.getY() + a.getHeight() < b.getY() + b.getHeight())
-                return -1;
-            return 1;
-        }
-    };
+    private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? 0 : 1;
 
     public EntityManager(World world) {
         this.world = world;
 
         entities = new ArrayList<>();
         players = new ArrayList<>();
-        bombs = new ArrayList<>();
     }
 
     public void update() {

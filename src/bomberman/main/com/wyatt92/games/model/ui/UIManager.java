@@ -30,11 +30,6 @@ public class UIManager implements Model
         }
     }
 
-    public void onClick()
-    {
-
-    }
-
     public void onMouseMove(MouseEvent e) {
         for(UIObject o : objects){
             o.onMouseMove(e);

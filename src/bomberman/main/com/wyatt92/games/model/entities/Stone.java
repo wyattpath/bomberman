@@ -8,6 +8,10 @@ import com.wyatt92.games.model.tiles.Tile;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * This class represents a Stone.
+ * Spawns sometimes an Item if it gets destroyed.
+ */
 public class Stone extends StaticEntity {
     public Stone(World world, float x, float y) {
         super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);

@@ -121,7 +121,6 @@ public class Game implements Runnable{
         }
     }
 
-
     private void update(){
         gameKeyListener.update();
         world.getPlayerOne().xMove = 0;

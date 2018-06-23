@@ -5,12 +5,13 @@ import com.wyatt92.games.model.Model;
 
 import java.awt.*;
 
+/**
+ * This class sets the State that will be updated and drawn.
+ * Plays different background music depending on the state.
+ */
 public abstract class State implements Model
 {
     private static State currentState = null;
-
-    public State() {
-    }
 
     public static State getCurrentState()
     {

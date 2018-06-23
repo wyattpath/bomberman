@@ -25,6 +25,15 @@ public class Bomb extends StaticEntity{
     public static final int BOMBWIDTH = 64, BOMBHEIGHT = 64;
 
 
+    /**
+     * A Bomb can be placed by a player in the world.
+     * After a specific time the bomb explodes and places blasts depending on the strength of the bomb.
+     *
+     * @param world world where the bomb will be placed
+     * @param x x-coordinate of bomb
+     * @param y y-coordinate of bomb
+     * @param bombStrength strength of bomb
+     */
     public Bomb(World world, float x, float y, int bombStrength)
     {
         super(world, x, y, BOMBWIDTH, BOMBHEIGHT);

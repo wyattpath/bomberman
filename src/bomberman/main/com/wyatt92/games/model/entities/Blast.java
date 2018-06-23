@@ -8,6 +8,9 @@ import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
 
+/**
+ * This class
+ */
 public class Blast extends StaticEntity
 {
     private long lastTime;
@@ -19,6 +22,12 @@ public class Blast extends StaticEntity
     protected Rectangle bounds;
     protected int x, y;
 
+    /**
+     *
+     * @param world
+     * @param x
+     * @param y
+     */
     public Blast(World world, float x, float y)
     {
         super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);

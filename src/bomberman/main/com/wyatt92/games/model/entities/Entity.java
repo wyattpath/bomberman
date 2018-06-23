@@ -7,7 +7,11 @@ import java.awt.*;
 
 /**
  * An Entity is any object that can be placed into a level.
- * Entities can be created (spawned) and destroyed through gameplay code
+ * Entities can be created (spawned) and destroyed through GamePlay.
+ * Loses health if it gets hurt and consequently can be destroyed if the health drops to 0;
+ * If not set to active it gets removed by the EntityManager.
+ * All entities have a default health that can be changed individually for subclasses.
+ * Can collide with Tiles and other Entities.
  */
 public abstract class Entity implements Model
 {
@@ -21,12 +25,13 @@ public abstract class Entity implements Model
     protected Point centerPoint;
 
     /**
+     * Constructor
      *
-     * @param world
-     * @param x
-     * @param y
-     * @param width
-     * @param height
+     * @param world world where the entity should be created
+     * @param x x-coordinate of entity
+     * @param y y-coordinate of entity
+     * @param width width of entity
+     * @param height height of entity
      */
     public Entity(World world, float x, float y, int width, int height) {
         this.world = world;

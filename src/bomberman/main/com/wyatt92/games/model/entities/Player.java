@@ -9,6 +9,9 @@ import com.wyatt92.sounds.Sound;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * A Player can be controlled by an AI or a Human.
+ */
 public abstract class Player extends DynamicEntity
 {
 
@@ -26,6 +29,13 @@ public abstract class Player extends DynamicEntity
 
     protected World world;
 
+    /**
+     * Constructor
+     *
+     * @param world world of the player
+     * @param x x-coordinate of player
+     * @param y y-coordinate of player
+     */
     public Player(World world, float x, float y)
     {
         super(world, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);

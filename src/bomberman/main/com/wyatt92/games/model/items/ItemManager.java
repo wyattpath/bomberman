@@ -7,13 +7,19 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Manages all items.
+ */
 public class ItemManager
 {
     private World world;
     private ArrayList<Item> items;
 
-
-
+    /**
+     * Constructor
+     *
+     * @param world world where the items will be managed
+     */
     public ItemManager(World world) {
         this.world = world;
         items = new ArrayList<>();

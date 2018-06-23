@@ -3,6 +3,10 @@ package com.wyatt92.games.model.items;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.entities.Player;
 
+/**
+ * Grants a player more bombStrength when picked up.
+ * If the player places a bomb the bomb covers more tiles with blasts when it explodes.
+ */
 public class BombStrengthItem extends Item
 {
 

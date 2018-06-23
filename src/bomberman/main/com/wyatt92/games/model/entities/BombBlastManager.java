@@ -7,6 +7,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * This class manages all bomb blasts by adding, updating, removing and drawing blasts.
+ */
 public class BombBlastManager {
     private World world;
     private ArrayList<Blast> blasts;

@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * Listens to mouse motions and mouse clicks.
+ */
 public class GameMouseListener implements MouseListener, MouseMotionListener
 {
     private boolean leftPressed, rightPressed;

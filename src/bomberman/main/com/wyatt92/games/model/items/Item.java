@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
+/**
+ * Grants a player additional abilities when picked up.
+ */
 public abstract class Item implements Model
 {
     public static Item[] items = new Item[10];
@@ -28,6 +31,13 @@ public abstract class Item implements Model
     protected int x, y, count;
     protected boolean pickedUp = false;
 
+    /**
+     * Constructor
+     *
+     * @param texture texture of Item
+     * @param name name of Item
+     * @param id id of Item
+     */
     public Item(BufferedImage texture, String name, int id){
         this.texture = texture;
         this.name = name;
