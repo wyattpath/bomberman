@@ -6,6 +6,7 @@ import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.model.utils.Utils;
 
 import java.awt.*;
+import java.util.Random;
 
 public class World
 {
@@ -41,7 +42,7 @@ public class World
 
         loadWorld(path);
         playerOne = new PlayerOne(this, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
-        playerTwo = new PlayerTwo(this, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2);
+        playerTwo = new PlayerTwo(this, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2-1,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2-1);
         entityManager.addPlayer(playerOne);
         entityManager.addPlayer(playerTwo);
         loadEntities();
@@ -61,10 +62,14 @@ public class World
                 if(!getTile(x,y).isSolid())
                 {
                     if(
-                            (x*Tile.TILEWIDTH > 128 || y *Tile.TILEHEIGHT > 128) &&
+                            (x*Tile.TILEWIDTH > Tile.TILEWIDTH*2 || y *Tile.TILEHEIGHT > Tile.TILEHEIGHT*2) &&
                                     (x*Tile.TILEWIDTH < width*Tile.TILEWIDTH - Tile.TILEWIDTH*3 || y*Tile.TILEHEIGHT < height*Tile.TILEHEIGHT - Tile.TILEHEIGHT*3)
-                            )
-                        entityManager.addEntity(new Stone(this, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
+                            ){
+                        int r = new Random().nextInt(3);
+                        if(r != 0){
+                            entityManager.addEntity(new Stone(this, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
+                        }
+                    }
                 } else System.out.println("entity not placed");
             }
         }
