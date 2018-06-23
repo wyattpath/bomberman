@@ -22,7 +22,7 @@ public class BombBlastManager {
         while(it.hasNext()) {
             Blast b = it.next();
             b.update();
-            if(b.isDestroyed()) {
+            if(!b.isActive()) {
                 it.remove();
             }
         }

@@ -1,4 +1,4 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

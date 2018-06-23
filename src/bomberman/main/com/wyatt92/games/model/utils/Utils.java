@@ -1,4 +1,4 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

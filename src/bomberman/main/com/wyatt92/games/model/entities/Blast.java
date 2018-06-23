@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.entities;
 
 
-import com.wyatt92.games.model.Animation;
+import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.tiles.Tile;
@@ -10,14 +10,10 @@ import java.awt.*;
 
 public class Blast extends StaticEntity
 {
-//    Rectangle cb;
-//    Rectangle ar;
-//    int arSize = 20;
     private long lastTime;
     private float countdown;
     private float waitTime;
     private static Animation animBlast;
-    private boolean destroyed = false;
 
     protected static World world;
     protected Rectangle bounds;
@@ -26,12 +22,7 @@ public class Blast extends StaticEntity
     public Blast(World world, float x, float y)
     {
         super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
-//        ar = getCollisionBounds(x,y);
-//        ar = new Rectangle();
-//        ar.width = arSize;
-//        ar.height = arSize;
         System.out.println("placed Blast at: x = " + x + " y = " + y );
-//        bounds = new Rectangle((int) x,(int) y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
         bounds = getCollisionBounds(0f,0f);
         lastTime = System.currentTimeMillis();
         waitTime = 2000f;
@@ -50,9 +41,8 @@ public class Blast extends StaticEntity
         lastTime = System.currentTimeMillis();
 
         if(countdown < 0) {
-//            destroy();
             countdown = waitTime;
-            destroyed = true;
+            active = false;
         }
     }
 
@@ -81,7 +71,6 @@ public class Blast extends StaticEntity
     @Override
     protected void destroy()
     {
-//        handler.getWorld().getEntityManager().getEntities().remove(this);
     }
 
 
@@ -106,10 +95,5 @@ public class Blast extends StaticEntity
 
     public void setWorld(World world) {
         this.world = world;
-    }
-
-    public boolean isDestroyed()
-    {
-        return destroyed;
     }
 }

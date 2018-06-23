@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.entities;
 
 
-import com.wyatt92.games.model.Animation;
+import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.tiles.Tile;
@@ -15,7 +15,6 @@ public class Bomb extends StaticEntity{
     private float countdown;
     private static float waitTime;
     private static Animation animBomb;
-    private boolean destroyed = false;
 
     protected static World world;
     protected Rectangle bounds;
@@ -29,8 +28,6 @@ public class Bomb extends StaticEntity{
     public Bomb(World world, float x, float y, int bombStrength)
     {
         super(world, x, y, BOMBWIDTH, BOMBHEIGHT);
-//        bomb = new Bomb(handler, x, y, BOMBWIDTH, BOMBHEIGHT);
-//        this.texture = texture;
         this.bombStrength = bombStrength;
         bounds = new Rectangle((int) x,(int) y, BOMBWIDTH, BOMBHEIGHT);
         lastTime = System.currentTimeMillis();
@@ -52,7 +49,7 @@ public class Bomb extends StaticEntity{
         if(countdown < 0) {
             destroy();
             countdown = waitTime;
-            destroyed = true;
+            active = false;
         }
     }
 
@@ -140,23 +137,14 @@ public class Bomb extends StaticEntity{
 
     // GETTERS and SETTERS
 
-    public World getHandler()
+    public World getWorld()
     {
         return world;
     }
 
-    public void setHandler(World world)
+    public void setWorld(World world)
     {
         this.world = world;
     }
 
-    public boolean isDestroyed()
-    {
-        return destroyed;
-    }
-
-    public static float getWaitTime()
-    {
-        return waitTime;
-    }
 }

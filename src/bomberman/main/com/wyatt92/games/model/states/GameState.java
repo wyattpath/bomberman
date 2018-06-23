@@ -1,6 +1,5 @@
 package com.wyatt92.games.model.states;
 
-import com.wyatt92.games.controller.KeyManager;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
 

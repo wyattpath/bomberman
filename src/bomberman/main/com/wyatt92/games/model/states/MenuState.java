@@ -1,8 +1,6 @@
 package com.wyatt92.games.model.states;
 
-import com.wyatt92.games.controller.MouseManager;
 import com.wyatt92.games.model.World;
-import com.wyatt92.games.model.ui.Clicker;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
@@ -17,20 +15,16 @@ public class MenuState extends State
     private UIImageButton quit;
 
     private World world;
-    private MouseManager mouseManager;
 
-    public MenuState(World world, State gameState, UIManager uiManager, MouseManager mouseManager) {
+
+    public MenuState(World world, State gameState, UIManager uiManager) {
         this.world = world;
         this.uiManager = uiManager;
-        this.mouseManager = mouseManager;
 
-        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () ->
-        {
-            mouseManager.setUiManager(null);
-            State.setCurrentState(gameState);
-        });
+        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () -> State.setCurrentState(gameState));
+        quit = new UIImageButton(400, 435, 228, 35, Assets.btn_quit, () -> System.exit(0));
         uiManager.addObject(start);
-        uiManager.addObject(new UIImageButton(400, 435, 228, 35, Assets.btn_quit, () -> System.exit(0)));
+        uiManager.addObject(quit);
     }
 
     @Override

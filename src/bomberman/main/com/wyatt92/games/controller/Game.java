@@ -5,8 +5,6 @@ import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
-import com.wyatt92.games.model.ui.Clicker;
-import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
 import com.wyatt92.games.view.GamePanel;
 
@@ -38,16 +36,15 @@ public class Game implements Runnable{
     private World world;
 
     // Input
-    private KeyManager keyManager;
-    private MouseManager mouseManager;
+    private GameKeyListener gameKeyListener;
+    private GameMouseListener gameMouseListener;
     private UIManager uiManager;
 
-
     Game() {
-        keyManager = new KeyManager();
-        mouseManager = new MouseManager();
+        gameKeyListener = new GameKeyListener();
+        gameMouseListener = new GameMouseListener();
         uiManager = new UIManager();
-        mouseManager.setUiManager(uiManager);
+        gameMouseListener.setUiManager(uiManager);
         init();
         run();
     }
@@ -56,15 +53,15 @@ public class Game implements Runnable{
 
     private void init() {
         gamePanel = new GamePanel(TITLE, WIDTH, HEIGHT);
-        gamePanel.addKeyListener(keyManager);
-        gamePanel.addMouseListener(mouseManager);
-        gamePanel.addMouseMotionListener(mouseManager);
+        gamePanel.addKeyListener(gameKeyListener);
+        gamePanel.addMouseListener(gameMouseListener);
+        gamePanel.addMouseMotionListener(gameMouseListener);
         Assets.init();
 //        gamePanel.setDoubleBuffered(true);
 
         world = new World("world1.txt");
         gameState = new GameState(world);
-        menuState = new MenuState(world, gameState, uiManager, mouseManager);
+        menuState = new MenuState(world, gameState, uiManager);
         State.setCurrentState(menuState);
     }
 
@@ -126,31 +123,31 @@ public class Game implements Runnable{
 
 
     private void update(){
-        keyManager.update();
+        gameKeyListener.update();
         world.getPlayerOne().xMove = 0;
         world.getPlayerOne().yMove = 0;
         world.getPlayerTwo().xMove = 0;
         world.getPlayerTwo().yMove = 0;
 
-        if(keyManager.W)
+        if(gameKeyListener.W)
             world.getPlayerOne().moveUp();
-        if(keyManager.S)
+        if(gameKeyListener.S)
             world.getPlayerOne().moveDown();
-        if(keyManager.A)
+        if(gameKeyListener.A)
             world.getPlayerOne().moveLeft();
-        if(keyManager.D)
+        if(gameKeyListener.D)
             world.getPlayerOne().moveRight();
-        if(keyManager.SPACE)
+        if(gameKeyListener.SPACE)
             world.getPlayerOne().placeBomb();
-        if(keyManager.UP)
+        if(gameKeyListener.UP)
             world.getPlayerTwo().moveUp();
-        if(keyManager.DOWN)
+        if(gameKeyListener.DOWN)
             world.getPlayerTwo().moveDown();
-        if(keyManager.LEFT)
+        if(gameKeyListener.LEFT)
             world.getPlayerTwo().moveLeft();
-        if(keyManager.RIGHT)
+        if(gameKeyListener.RIGHT)
             world.getPlayerTwo().moveRight();
-        if(keyManager.CTRL)
+        if(gameKeyListener.CTRL)
             world.getPlayerTwo().placeBomb();
         world.getPlayerOne().move();
         world.getPlayerTwo().move();

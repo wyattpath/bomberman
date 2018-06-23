@@ -10,6 +10,7 @@ import java.util.Iterator;
 public class EntityManager
 {
     private World world;
+    private ArrayList<Bomb> bombs;
     private ArrayList<Player> players;
     private ArrayList<Entity> entities;
     private Comparator<Entity> drawSorter = new Comparator<Entity>() {
@@ -28,6 +29,7 @@ public class EntityManager
 
         entities = new ArrayList<>();
         players = new ArrayList<>();
+        bombs = new ArrayList<>();
     }
 
     public void update() {

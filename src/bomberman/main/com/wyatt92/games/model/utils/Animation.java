@@ -1,28 +1,27 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.model.utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Animation implements Model
+public class Animation
 {
-    private int speed, index;
+    private int animSpeed, index;
     private long lastTime, timer;
     private BufferedImage[] frames;
 
-    public Animation(int speed, BufferedImage[] frames){
-    this.speed = speed;
+    public Animation(int animSpeed, BufferedImage[] frames){
+    this.animSpeed = animSpeed;
     this.frames = frames;
     index = 0;
     timer = 0;
     lastTime = System.currentTimeMillis();
     }
 
-    @Override
     public void update(){
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
 
-        if(timer > speed) {
+        if(timer > animSpeed) {
             index++;
             timer = 0;
             if(index >= frames.length){
@@ -31,11 +30,6 @@ public class Animation implements Model
         }
     }
 
-    @Override
-    public void draw(Graphics g)
-    {
-
-    }
 
     public BufferedImage getCurrentFrame() {
     return frames[index];

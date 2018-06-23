@@ -1,8 +1,7 @@
 package com.wyatt92.games.model.entities;
 
 
-import com.wyatt92.games.controller.KeyManager;
-import com.wyatt92.games.model.Animation;
+import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
 import com.wyatt92.sounds.Sound;

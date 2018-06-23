@@ -22,7 +22,7 @@ public class BombManager
         while(it.hasNext()) {
             Bomb b = it.next();
             b.update();
-            if(b.isDestroyed()) {
+            if(!b.isActive()) {
                 it.remove();
             }
         }
@@ -35,7 +35,7 @@ public class BombManager
     }
 
     public void addBomb(Bomb b) {
-        b.setHandler(world);
+        b.setWorld(world);
         bombs.add(b);
     }
 }

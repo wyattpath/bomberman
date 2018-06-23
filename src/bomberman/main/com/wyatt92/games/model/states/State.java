@@ -2,7 +2,6 @@ package com.wyatt92.games.model.states;
 
 
 import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.World;
 
 import java.awt.*;
 

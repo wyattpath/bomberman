@@ -1,9 +1,9 @@
 package com.wyatt92.games.model;
 
-import com.wyatt92.games.controller.KeyManager;
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.items.ItemManager;
 import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.games.model.utils.Utils;
 
 import java.awt.*;
 

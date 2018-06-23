@@ -1,6 +1,5 @@
 package com.wyatt92.games.model.ui;
 
-import com.wyatt92.games.controller.MouseManager;
 import com.wyatt92.games.model.Model;
 
 import java.awt.*;

@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.security.Key;
 
-public class KeyManager implements KeyListener {
+public class GameKeyListener implements KeyListener {
 
     private boolean[] keys, justPressed, cantPress;
     public boolean W, S, A, D;
@@ -12,7 +12,7 @@ public class KeyManager implements KeyListener {
     public boolean UP, DOWN, LEFT, RIGHT;
     public boolean CTRL;
 
-    public KeyManager() {
+    public GameKeyListener() {
         keys = new boolean[256];
         justPressed = new boolean[keys.length];
         cantPress = new boolean[keys.length];
