@@ -20,7 +20,7 @@ public class EntityManager
     private World world;
     private ArrayList<Player> players;
     private ArrayList<Entity> entities;
-    private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? 0 : 1;
+    private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? -1 : 1;
 
     public EntityManager(World world) {
         this.world = world;
