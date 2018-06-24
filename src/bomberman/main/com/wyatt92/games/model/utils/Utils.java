@@ -14,7 +14,7 @@ public class Utils
         StringBuilder builder = new StringBuilder();
 
         try{
-            BufferedReader br = new BufferedReader(new FileReader("./src/bomberman/resources/" + path));
+            BufferedReader br = new BufferedReader(new FileReader(Utils.class.getClassLoader().getResource("./worlds/" + path).getPath()));
             String line;
             while((line = br.readLine()) != null)
                 builder.append(line + "\n");

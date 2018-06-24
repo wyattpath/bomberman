@@ -1,18 +1,13 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.states.GameOverState;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
 import com.wyatt92.games.model.ui.UIManager;
-import com.wyatt92.games.view.GamePanel;
 import com.wyatt92.games.view.View;
-
-import javax.swing.*;
-import java.awt.*;
 
 
 /**

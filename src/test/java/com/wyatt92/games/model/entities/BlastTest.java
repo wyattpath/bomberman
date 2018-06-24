@@ -19,21 +19,19 @@ class BlastTest
 
 
     @Test
-    void destroy()
+    void createNew()
     {
-        Blast blast = new Blast(world,3, 4);
-        world.getBombBlastManager().addBlast(blast);
-        blast.destroy();
-        assertTrue(world.getBombBlastManager().getBlasts().isEmpty());
+        Blast blast = Blast.createNew(3, 4);
+        assertNotNull(blast);
+        assertTrue(blast.isActive());
     }
 
     @Test
-    void createNew()
+    void destroy()
     {
         Blast blast = new Blast(world,3, 4);
-        world.getBombBlastManager().addBlast(blast);
-        Blast.createNew(4,5);
-        assertEquals(2, world.getBombBlastManager().getBlasts().size());
+        blast.destroy();
+        assertFalse(blast.isActive());
     }
 
     @Test

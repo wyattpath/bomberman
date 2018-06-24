@@ -20,7 +20,6 @@ public class Blast extends StaticEntity
 
     protected static World world;
     protected Rectangle bounds;
-    protected int x, y;
 
     /**
      *
@@ -78,7 +77,7 @@ public class Blast extends StaticEntity
     @Override
     public void draw(Graphics g)
     {
-        g.drawImage(animBlast.getCurrentFrame(),x- Tile.TILEWIDTH/2,y- Tile.TILEHEIGHT/2,Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
+        g.drawImage(animBlast.getCurrentFrame(),(int)super.x- Tile.TILEWIDTH/2,(int)super.y- Tile.TILEHEIGHT/2,Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
     }
 
     @Override
@@ -90,7 +89,7 @@ public class Blast extends StaticEntity
 
     // GETTERS and SETTERS
     public Point getPosition() {
-        return new Point(x,y);
+        return new Point((int)super.x,(int)super.y);
     }
 
     public void setPosition(int x, int y)

@@ -1,10 +1,10 @@
 package com.wyatt92.games.model.entities;
 
 
+import com.wyatt92.games.model.utils.Sound;
 import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
-import com.wyatt92.resources.sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

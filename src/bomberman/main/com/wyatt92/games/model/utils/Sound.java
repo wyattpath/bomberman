@@ -1,4 +1,4 @@
-package com.wyatt92.resources.sounds;
+package com.wyatt92.games.model.utils;
 
 
 import javax.sound.sampled.*;
@@ -15,8 +15,8 @@ public class Sound
 	        try {
 	          Clip clp = AudioSystem.getClip();
 
-	          AudioInputStream aisStream = 
-	        		  AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream("./fx/" + strPath));
+	          AudioInputStream aisStream =
+	        		  AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource("./sounds/fx/" + strPath));
 
 	          clp.open(aisStream);
 	          clp.start(); 
@@ -39,7 +39,7 @@ public class Sound
         try
         {
             AudioInputStream aisStream =
-                    AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream(strPath));
+                    AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource("./sounds/" + strPath));
             clp = AudioSystem.getClip();
             clp.open(aisStream);
 
