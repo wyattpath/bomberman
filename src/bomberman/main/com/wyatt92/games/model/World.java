@@ -101,7 +101,7 @@ public class World implements Model
                             entityManager.addEntity(new Stone(this, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
                         }
                     }
-                } else System.out.println("entity not placed");
+                }
             }
         }
 

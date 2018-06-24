@@ -13,9 +13,6 @@ import java.awt.*;
 public abstract class State implements Model
 {
     private static State currentState = null;
-
-
-
     private static State gameState;
     protected World world;
     private int winner;

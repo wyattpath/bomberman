@@ -18,6 +18,7 @@ public abstract class Item implements Model
     public static Item[] items = new Item[10];
     public static Item bombStrengthItem = new BombStrengthItem(1);
     public static Item bombCountItem = new MaxBombsItem(2);
+    public static Item playerSpeedItem = new PlayerSpeedItem(3);
 
 
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
@@ -86,9 +87,7 @@ public abstract class Item implements Model
     }
 
 
-    protected void addEffect(Player player)
-    {
-    }
+    protected abstract void addEffect(Player player);
 
     // GETTERS and SETTERS
 

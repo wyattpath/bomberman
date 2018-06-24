@@ -87,6 +87,10 @@ public class Player extends DynamicEntity
         System.out.println("Your bombblasts now covers " + bombStrength + " tiles in each direction.");
     }
 
+    public void addPlayerSpeed() {
+        speed+=1.0f;
+    }
+
     public void placeBomb()
     {
 

@@ -160,7 +160,6 @@ public class Game implements Runnable{
 
                 if(!world.isGameOver())
                 {
-                    System.out.println(world.getEntityManager().getPlayerCount());
                     if(world.getEntityManager().getPlayerCount()<2){
                         world.setGameOver(true);
                         int winner = 0;

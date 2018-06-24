@@ -17,9 +17,6 @@ public class GameOverState extends State
     private UIManager uiManager;
     private World world;
 
-
-
-
     public GameOverState(World world, UIManager uiManager)
     {
         super(world);
