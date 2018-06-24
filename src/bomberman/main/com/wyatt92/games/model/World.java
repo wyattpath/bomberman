@@ -7,6 +7,7 @@ import com.wyatt92.games.model.utils.Utils;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ public class World implements Model
     private int xCenter;
     private int yCenter;
     private static Map<Integer, Point> spawnMap;
+    private boolean gameOver = false;
 
     //Entities
     private EntityManager entityManager;
@@ -144,12 +146,30 @@ public class World implements Model
         }
     }
 
-    private void addPlayers() {
+    public void addPlayers() {
         for (int i = 1; i <= playerCount; i++) {
             final Point startingPoint = spawnMap.get(i);
             final Player player = new Player(this, startingPoint.x * Tile.TILEWIDTH, startingPoint.y * Tile.TILEHEIGHT, i);
             entityManager.addPlayer(player);
         }
+    }
+
+    public void removePlayers() {
+            Iterator<Player> it = entityManager.getPlayers().iterator();
+            while(it.hasNext()) {
+                Player p = it.next();
+                if(p.isActive()){
+                    Iterator<Entity> its = entityManager.getEntities().iterator();
+                    while(its.hasNext()){
+                        Entity e = its.next();
+                        if(e.equals(p)){
+                            its.remove();
+                        }
+                    }
+                    it.remove();
+                }
+            }
+
     }
 
     // GETTERS and SETTERS
@@ -210,6 +230,16 @@ public class World implements Model
     public void setPlayerCount(int playerCount)
     {
         this.playerCount = playerCount;
+    }
+
+    public boolean isGameOver()
+    {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver)
+    {
+        this.gameOver = gameOver;
     }
 }
 

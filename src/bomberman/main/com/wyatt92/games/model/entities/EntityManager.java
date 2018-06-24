@@ -81,6 +81,11 @@ public class EntityManager
         return players;
     }
 
+    public void setPlayers(ArrayList<Player> players)
+    {
+        this.players = players;
+    }
+
     public int getPlayerCount() {
         return players.size();
     }
@@ -94,6 +99,11 @@ public class EntityManager
         p.setWorld(world);
         players.add(p);
         addEntity(p);
+    }
+
+    public void removePlayer(Player p) {
+        players.remove(p);
+        removeEntity(p);
     }
 
     public ArrayList<Entity> getEntities()

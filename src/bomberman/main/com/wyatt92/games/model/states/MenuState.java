@@ -2,12 +2,14 @@ package com.wyatt92.games.model.states;
 
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.Assets;
+import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Represents the Main menu of the game.
@@ -21,13 +23,7 @@ public class MenuState extends State
     private UIImageButton quit;
     private World world;
 
-    /**
-     *
-     */
-    public MenuState(World world)
-    {
-        this.world = world;
-    }
+
 
     /**
      *
@@ -39,7 +35,16 @@ public class MenuState extends State
         this.world = world;
         this.uiManager = uiManager;
 
-        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () -> State.setCurrentState(State.getGameState()));
+        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () ->
+        {
+            if(world.isGameOver()){
+                world.setGameOver(false);
+                world.setPlayerCount(2);
+                world.removePlayers();
+                world.addPlayers();
+            }
+            State.setCurrentState(State.getGameState());
+        });
         quit = new UIImageButton(400, 435, 228, 35, Assets.btn_quit, () -> System.exit(0));
         uiManager.addObject(start);
         uiManager.addObject(quit);

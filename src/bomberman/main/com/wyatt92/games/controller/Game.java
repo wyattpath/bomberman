@@ -47,7 +47,7 @@ public class Game implements Runnable{
 
     // METHODS
 
-    private void init() {
+    public void init() {
         view.getGamePanel().addKeyListener(gameKeyListener);
         view.getGamePanel().addMouseListener(gameMouseListener);
         view.getGamePanel().addMouseMotionListener(gameMouseListener);
@@ -56,8 +56,9 @@ public class Game implements Runnable{
 
         world = new World("world1.txt");
         gameState = new GameState(world);
+        State.setGameState(gameState);
         menuState = new MenuState(world, uiManager);
-        gameOverState = new GameOverState(world);
+
         State.setCurrentState(menuState);
     }
 
@@ -118,28 +119,28 @@ public class Game implements Runnable{
     }
 
     private void update(){
-        gameKeyListener.update();
-        if(world.getPlayerCount()>0){
-            for(int i = 0; i < world.getPlayerCount(); i++){
-                world.getEntityManager().getPlayer(i).xMove = 0;
-                world.getEntityManager().getPlayer(i).yMove = 0;
+            gameKeyListener.update();
+            if(world.getPlayerCount()>0){
+                for(int i = 0; i < world.getPlayerCount(); i++){
+                    world.getEntityManager().getPlayer(i).xMove = 0;
+                    world.getEntityManager().getPlayer(i).yMove = 0;
+                }
             }
-        }
 
             if (world.getPlayerCount()>=1){
 
                 if (gameKeyListener.W)
                     world.getEntityManager().getPlayer(0).moveUp();
-            if (gameKeyListener.S)
-                world.getEntityManager().getPlayer(0).moveDown();
-            if (gameKeyListener.A)
-                world.getEntityManager().getPlayer(0).moveLeft();
-            if (gameKeyListener.D)
-                world.getEntityManager().getPlayer(0).moveRight();
-            if (gameKeyListener.SPACE)
-                world.getEntityManager().getPlayer(0).placeBomb();
-        }
-        if (world.getPlayerCount()> 1)
+                if (gameKeyListener.S)
+                    world.getEntityManager().getPlayer(0).moveDown();
+                if (gameKeyListener.A)
+                    world.getEntityManager().getPlayer(0).moveLeft();
+                if (gameKeyListener.D)
+                    world.getEntityManager().getPlayer(0).moveRight();
+                if (gameKeyListener.SPACE)
+                    world.getEntityManager().getPlayer(0).placeBomb();
+            }
+            if (world.getPlayerCount()> 1)
             {
                 if (gameKeyListener.UP)
                     world.getEntityManager().getPlayer(1).moveUp();
@@ -153,10 +154,29 @@ public class Game implements Runnable{
                     world.getEntityManager().getPlayer(1).placeBomb();
             }
 
-        if(State.getCurrentState() != null)
-        {
-            State.getCurrentState().update();
+            if(State.getCurrentState() != null)
+            {
+                State.getCurrentState().update();
+
+                if(!world.isGameOver())
+                {
+                    System.out.println(world.getEntityManager().getPlayerCount());
+                    if(world.getEntityManager().getPlayerCount()<2){
+                        world.setGameOver(true);
+                        int winner = 0;
+                        for(Player p : world.getEntityManager().getPlayers()){
+                            if(p.isActive()) {
+                                winner = p.getId();
+                            }
+                        }
+                        gameOverState = new GameOverState(world, uiManager);
+                        gameOverState.setWinner(winner);
+                        State.setCurrentState(gameOverState);
+
+                    }
+                }
+            }
         }
 
-    }
+
 }

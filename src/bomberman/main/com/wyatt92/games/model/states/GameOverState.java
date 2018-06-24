@@ -2,25 +2,35 @@ package com.wyatt92.games.model.states;
 
 
 
+import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.ui.UIImageButton;
+import com.wyatt92.games.model.ui.UIManager;
 import com.wyatt92.games.model.ui.UIObject;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 
 public class GameOverState extends State
 {
+    private UIManager uiManager;
+    private World world;
 
-    public GameOverState(World world)
+
+
+
+    public GameOverState(World world, UIManager uiManager)
     {
-
+        super(world);
         this.world = world;
+        this.uiManager = uiManager;
     }
 
     @Override
     public void update()
     {
-
+        uiManager.update();
     }
 
     @Override
@@ -37,18 +47,20 @@ public class GameOverState extends State
             g.drawString("The Winner is Player " + getWinner(),world.getWidth()/3, world.getHeight()/2);
         }
 
+        uiManager.draw(g);
 
     }
 
     @Override
     protected void playLoopMusic()
     {
-
+        Assets.gameOver_bgMusic.start();
+        Assets.gameOver_bgMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     @Override
     protected void stopLoopMusic()
     {
-
+        Assets.gameOver_bgMusic.stop();
     }
 }
