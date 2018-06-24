@@ -24,7 +24,8 @@ public class World implements Model
     private int xCenter;
     private int yCenter;
     private static Map<Integer, Point> spawnMap;
-    private boolean gameOver = false;
+    private boolean gameOver;
+    private String path;
 
     //Entities
     private EntityManager entityManager;
@@ -42,11 +43,27 @@ public class World implements Model
      * @param path path to the word file
      */
     public World( String path) {
+        this.path = path;
         entityManager = new EntityManager(this);
         itemManager = new ItemManager(this);
         bombManager = new BombManager(this);
         bombBlastManager = new BombBlastManager(this);
         playerCount = 2;
+        gameOver = false;
+
+        loadWorld(path);
+        loadSpawnPoints();
+        addPlayers();
+        loadEntities();
+    }
+
+    public void resetWorld() {
+        entityManager = new EntityManager(this);
+        itemManager = new ItemManager(this);
+        bombManager = new BombManager(this);
+        bombBlastManager = new BombBlastManager(this);
+        playerCount = 2;
+        gameOver = false;
 
         loadWorld(path);
         loadSpawnPoints();

@@ -44,7 +44,7 @@ public class GameOverState extends State
             g.setColor(Color.WHITE);
             g.drawString("Game Over",world.getWidth()/3, world.getHeight()/3);
             g.setFont(new Font("Unispace", Font.BOLD, 40));
-            g.drawString("The Winner is Player " + getWinner(),world.getWidth()/3, world.getHeight()/2);
+            g.drawString("The Winner is Player " + getWinner(),world.getWidth()/4, world.getHeight()-200);
         }
 
         uiManager.draw(g);

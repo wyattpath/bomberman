@@ -38,10 +38,15 @@ public class MenuState extends State
         start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () ->
         {
             if(world.isGameOver()){
-                world.setGameOver(false);
-                world.setPlayerCount(2);
-                world.removePlayers();
-                world.addPlayers();
+//                world.setGameOver(false);
+//                world.setPlayerCount(2);
+//                world.removePlayers();
+//                world.addPlayers();
+
+                world.resetWorld();
+//                World wworld = new World("world1.txt");
+//                GameState gameState = new GameState(wworld);
+//                State.setGameState(gameState);
             }
             State.setCurrentState(State.getGameState());
         });
