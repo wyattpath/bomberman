@@ -12,9 +12,9 @@ class BombManagerTest
     void addBomb()
     {
         World world = new World("world1.txt");
-        assertTrue(world.getBombManager().getBombs().isEmpty());
         Bomb b = new Bomb(world, 3, 4,2);
-//        world.getBombManager().addBomb(b);
+        assertTrue(world.getBombManager().getBombs().isEmpty());
+        world.getBombManager().addBomb(b);
         assertTrue(world.getBombManager().getBombs().contains(b));
 
     }

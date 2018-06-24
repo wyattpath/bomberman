@@ -26,7 +26,7 @@ class BombBlastManagerTest
     {
         Blast b = new Blast(world, 3, 54);
         assertFalse(world.getBombBlastManager().getBlasts().contains(b));
-        assertTrue(world.getBombBlastManager().getBlasts().contains(b));
         world.getBombBlastManager().addBlast(b);
+        assertTrue(world.getBombBlastManager().getBlasts().contains(b));
     }
 }
