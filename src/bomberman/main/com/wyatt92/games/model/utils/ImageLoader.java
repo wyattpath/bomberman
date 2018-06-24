@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ImageLoader {
     public static BufferedImage loadImage(String path) {
         try {
-            return ImageIO.read(new FileInputStream("./src/bomberman/resources/" + path));
+            return ImageIO.read(new FileInputStream("./src/bomberman/main/com/wyatt92/resources/images/" + path));
         } catch (IOException e) {
             e.printStackTrace();
         }

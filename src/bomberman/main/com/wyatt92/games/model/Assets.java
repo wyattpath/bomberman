@@ -2,7 +2,7 @@ package com.wyatt92.games.model;
 
 import com.wyatt92.games.model.utils.ImageLoader;
 import com.wyatt92.games.model.utils.SpriteSheet;
-import com.wyatt92.sounds.Sound;
+import com.wyatt92.resources.sounds.Sound;
 
 import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;

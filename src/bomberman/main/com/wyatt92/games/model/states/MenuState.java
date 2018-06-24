@@ -6,6 +6,7 @@ import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
 
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -34,6 +35,7 @@ public class MenuState extends State
         quit = new UIImageButton(400, 435, 228, 35, Assets.btn_quit, () -> System.exit(0));
         uiManager.addObject(start);
         uiManager.addObject(quit);
+        JButton button = new JButton();
     }
 
     @Override

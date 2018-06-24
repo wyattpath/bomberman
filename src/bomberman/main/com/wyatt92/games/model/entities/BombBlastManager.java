@@ -44,4 +44,9 @@ public class BombBlastManager {
         b.setWorld(world);
         blasts.add(b);
     }
+
+    public ArrayList<Blast> getBlasts()
+    {
+        return blasts;
+    }
 }

@@ -3,7 +3,7 @@ package com.wyatt92.games.model.items;
 import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.entities.Player;
-import com.wyatt92.sounds.Sound;
+import com.wyatt92.resources.sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

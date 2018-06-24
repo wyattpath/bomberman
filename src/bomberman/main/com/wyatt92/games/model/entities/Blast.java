@@ -40,6 +40,26 @@ public class Blast extends StaticEntity
         animBlast = new Animation(200, Assets.blast);
     }
 
+    private void checkCollision()
+    {
+        for(Entity e : world.getEntityManager().getEntities()) {
+            if(e.equals(this))
+                continue;
+            if(e.getCollisionBounds(32,32).intersects(bounds)){
+                e.destroy();
+                e.hurt(3);
+            }
+        }
+    }
+
+
+
+    public static Blast createNew(int x, int y){
+        Blast b = new Blast(world, x, y);
+        b.setPosition(x, y);
+        return b;
+    }
+
     @Override
     public void update()
     {
@@ -51,22 +71,7 @@ public class Blast extends StaticEntity
 
         if(countdown < 0) {
             countdown = waitTime;
-            active = false;
-        }
-    }
-
-    private void checkCollision()
-    {
-        for(Entity e : world.getEntityManager().getEntities()) {
-            if(e.equals(this))
-                continue;
-            if(e.getCollisionBounds(32,32).intersects(bounds)){
-                e.destroy();
-                e.hurt(3);
-
-            }else {
-                this.destroy();
-            }
+            destroy();
         }
     }
 
@@ -76,17 +81,16 @@ public class Blast extends StaticEntity
         g.drawImage(animBlast.getCurrentFrame(),x- Tile.TILEWIDTH/2,y- Tile.TILEHEIGHT/2,Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
     }
 
-
     @Override
     protected void destroy()
     {
+        setActive(false);
     }
 
 
-    public static Blast createNew(int x, int y){
-        Blast b = new Blast(world, x, y);
-        b.setPosition(x, y);
-        return b;
+    // GETTERS and SETTERS
+    public Point getPosition() {
+        return new Point(x,y);
     }
 
     public void setPosition(int x, int y)
@@ -96,7 +100,7 @@ public class Blast extends StaticEntity
         bounds.x = x;
         bounds.y = y;
     }
-    // GETTERS and SETTERS
+
     public World getWorld() {
         return world;
 
@@ -105,4 +109,5 @@ public class Blast extends StaticEntity
     public void setWorld(World world) {
         this.world = world;
     }
+
 }

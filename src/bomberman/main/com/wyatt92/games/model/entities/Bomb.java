@@ -5,7 +5,7 @@ import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.tiles.Tile;
-import com.wyatt92.sounds.Sound;
+import com.wyatt92.resources.sounds.Sound;
 
 import java.awt.*;
 
@@ -21,7 +21,6 @@ public class Bomb extends StaticEntity{
     protected int x, y;
     protected int bombStrength;
 
-    public static Bomb bomb;
     public static final int BOMBWIDTH = 64, BOMBHEIGHT = 64;
 
 

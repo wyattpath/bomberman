@@ -1,4 +1,4 @@
-package com.wyatt92.sounds;
+package com.wyatt92.resources.sounds;
 
 
 import javax.sound.sampled.*;

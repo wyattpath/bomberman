@@ -56,7 +56,7 @@ public abstract class Entity implements Model
     public void hurt(int amount) {
         health -= amount;
         if(health <= 0) {
-            active = false;
+            setActive(false);
             destroy();
         }
     }
@@ -135,7 +135,6 @@ public abstract class Entity implements Model
     {
         this.active = active;
     }
-
 
     public Point getCenterPoint(){
         return new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);

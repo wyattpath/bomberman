@@ -78,31 +78,4 @@ public abstract class DynamicEntity extends Entity
     protected boolean collisionWithTile(int x, int y) {
         return world.getTile(x,y).isSolid();
     }
-
-
-
-    // GETTERS and SETTERS
-    public float getxMove()
-    {
-        return xMove;
-    }
-
-    public void setxMove(float xMove)
-    {
-        this.xMove = xMove;
-    }
-
-    public float getyMove()
-    {
-        return yMove;
-    }
-
-    public void setyMove(float yMove)
-    {
-        this.yMove = yMove;
-    }
-
-    public Point getCenterpoint(){
-        return centerPoint;
-    }
 }

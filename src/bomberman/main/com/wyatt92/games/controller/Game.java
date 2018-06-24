@@ -3,6 +3,7 @@ package com.wyatt92.games.controller;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.states.GameOverState;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
 import com.wyatt92.games.model.states.State;
@@ -10,6 +11,7 @@ import com.wyatt92.games.model.ui.UIManager;
 import com.wyatt92.games.view.GamePanel;
 import com.wyatt92.games.view.View;
 
+import javax.swing.*;
 import java.awt.*;
 
 
@@ -19,18 +21,15 @@ import java.awt.*;
  */
 public class Game implements Runnable{
 
-
-
     private boolean running = false;
     private Thread thread1;
 
     private View view;
 
-    private Graphics g;
-
     // States
     private State gameState;
     private State menuState;
+    private State gameOverState;
 
     // World
     private World world;
@@ -62,6 +61,7 @@ public class Game implements Runnable{
         world = new World("world1.txt");
         gameState = new GameState(world);
         menuState = new MenuState(world, gameState, uiManager);
+        gameOverState = new GameOverState(world);
         State.setCurrentState(menuState);
     }
 
@@ -123,35 +123,43 @@ public class Game implements Runnable{
 
     private void update(){
         gameKeyListener.update();
-        if(world.getPlayerOne()!=null){
-            world.getPlayerOne().xMove = 0;
-            world.getPlayerOne().yMove = 0;
-            if(gameKeyListener.W)
-                world.getPlayerOne().moveUp();
-            if(gameKeyListener.S)
-                world.getPlayerOne().moveDown();
-            if(gameKeyListener.A)
-                world.getPlayerOne().moveLeft();
-            if(gameKeyListener.D)
-                world.getPlayerOne().moveRight();
-            if(gameKeyListener.SPACE)
-                world.getPlayerOne().placeBomb();
-
+        if(world.getPlayerCount()>0){
+            for(int i = 0; i < world.getPlayerCount(); i++){
+                world.getEntityManager().getPlayer(i).xMove = 0;
+                world.getEntityManager().getPlayer(i).yMove = 0;
+            }
         }
-        if(world.getPlayerTwo()!=null){
-            world.getPlayerTwo().xMove = 0;
-            world.getPlayerTwo().yMove = 0;
+        {
+            if (world.getEntityManager().getPlayer(0) != null)
 
-            if(gameKeyListener.UP)
-                world.getPlayerTwo().moveUp();
-            if(gameKeyListener.DOWN)
-                world.getPlayerTwo().moveDown();
-            if(gameKeyListener.LEFT)
-                world.getPlayerTwo().moveLeft();
-            if(gameKeyListener.RIGHT)
-                world.getPlayerTwo().moveRight();
-            if(gameKeyListener.CTRL)
-                world.getPlayerTwo().placeBomb();
+            if (gameKeyListener.W)
+                world.getEntityManager().getPlayer(0).moveUp();
+            if (gameKeyListener.S)
+                world.getEntityManager().getPlayer(0).moveDown();
+            if (gameKeyListener.A)
+                world.getEntityManager().getPlayer(0).moveLeft();
+            if (gameKeyListener.D)
+                world.getEntityManager().getPlayer(0).moveRight();
+            if (gameKeyListener.SPACE)
+                world.getEntityManager().getPlayer(0).placeBomb();
+
+
+            if (world.getEntityManager().getPlayer(1) != null)
+            {
+                world.getEntityManager().getPlayer(1).xMove = 0;
+                world.getEntityManager().getPlayer(1).yMove = 0;
+
+                if (gameKeyListener.UP)
+                    world.getEntityManager().getPlayer(1).moveUp();
+                if (gameKeyListener.DOWN)
+                    world.getEntityManager().getPlayer(1).moveDown();
+                if (gameKeyListener.LEFT)
+                    world.getEntityManager().getPlayer(1).moveLeft();
+                if (gameKeyListener.RIGHT)
+                    world.getEntityManager().getPlayer(1).moveRight();
+                if (gameKeyListener.CTRL)
+                    world.getEntityManager().getPlayer(1).placeBomb();
+            }
         }
         if(State.getCurrentState() != null)
         {
@@ -159,18 +167,5 @@ public class Game implements Runnable{
         }
 
 
-    }
-
-
-    // GETTERS and SETTERS
-
-    public World getWorld()
-    {
-        return world;
-    }
-
-    public void setWorld(World world)
-    {
-        this.world = world;
     }
 }

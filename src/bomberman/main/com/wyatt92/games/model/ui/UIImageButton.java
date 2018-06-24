@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.ui;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.sounds.Sound;
+import com.wyatt92.resources.sounds.Sound;
 
 import javax.sound.midi.Soundbank;
 import javax.sound.sampled.Clip;

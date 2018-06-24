@@ -6,13 +6,15 @@ import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.model.utils.Utils;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
  * This class loads the world from a file.
  * Creates and manages all entities, items, bombs, blasts.
  */
-public class World
+public class World implements Model
 {
     private int width, height;
     private int playerCount;
@@ -20,9 +22,7 @@ public class World
     private int[][] tiles;
     private int xCenter;
     private int yCenter;
-    private Player playerOne;
-    private Player playerTwo;
-
+    private static Map<Integer, Point> spawnMap;
 
     //Entities
     private EntityManager entityManager;
@@ -44,17 +44,28 @@ public class World
         itemManager = new ItemManager(this);
         bombManager = new BombManager(this);
         bombBlastManager = new BombBlastManager(this);
+        playerCount = 2;
 
         loadWorld(path);
+        loadSpawnPoints();
+        addPlayers();
         loadEntities();
+    }
+
+    private void loadSpawnPoints()
+    {
+        spawnMap = new HashMap<Integer, Point>() {
+            {
+                put(1, new Point(1, 1));
+                put(2, new Point(width - 2, height - 2));
+                put(3, new Point(width - 2, 0));
+                put(4, new Point(0, height - 2));
+            }
+        };
     }
 
     private void loadEntities()
     {
-        playerOne = new PlayerOne(this, 0+Tile.TILEWIDTH,0+Tile.TILEHEIGHT);
-        playerTwo = new PlayerTwo(this, width*Tile.TILEWIDTH-Tile.TILEWIDTH*2-1,height*Tile.TILEHEIGHT-Tile.TILEHEIGHT*2-1);
-        entityManager.addPlayer(playerOne);
-        entityManager.addPlayer(playerTwo);
 
         for (int y = 0; y < height; y++)
         {
@@ -133,6 +144,14 @@ public class World
         }
     }
 
+    private void addPlayers() {
+        for (int i = 1; i <= playerCount; i++) {
+            final Point startingPoint = spawnMap.get(i);
+            final Player player = new Player(this, startingPoint.x * Tile.TILEWIDTH, startingPoint.y * Tile.TILEHEIGHT, i);
+            entityManager.addPlayer(player);
+        }
+    }
+
     // GETTERS and SETTERS
 
     public EntityManager getEntityManager()
@@ -183,24 +202,9 @@ public class World
         this.bombBlastManager = bombBlastManager;
     }
 
-    public Player getPlayerOne()
+    public int getPlayerCount()
     {
-        return playerOne;
-    }
-
-    public void setPlayerOne(Player playerOne)
-    {
-        this.playerOne = playerOne;
-    }
-
-    public Player getPlayerTwo()
-    {
-        return playerTwo;
-    }
-
-    public void setPlayerTwo(Player playerTwo)
-    {
-        this.playerTwo = playerTwo;
+        return playerCount;
     }
 }
 
