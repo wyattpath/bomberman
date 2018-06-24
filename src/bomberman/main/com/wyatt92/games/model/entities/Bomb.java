@@ -16,9 +16,8 @@ public class Bomb extends StaticEntity{
     private static float waitTime;
     private static Animation animBomb;
 
-    protected static World world;
+//    protected static World world;
     protected Rectangle bounds;
-    protected int x, y;
     protected int bombStrength;
 
     public static final int BOMBWIDTH = 64, BOMBHEIGHT = 64;
@@ -26,7 +25,8 @@ public class Bomb extends StaticEntity{
 
     /**
      * A Bomb can be placed by a player in the world.
-     * After a specific time the bomb explodes and places blasts depending on the strength of the bomb.
+     * After a specific time the bomb explodes and places blasts depending on the strength of the bomb in the four directions.
+     * If a blast in a line hits a tile or an entity it will destroy that entity or tile and will not place another blast in the line.
      *
      * @param world world where the bomb will be placed
      * @param x x-coordinate of bomb
@@ -43,6 +43,7 @@ public class Bomb extends StaticEntity{
         countdown = waitTime;
 
         animBomb = new Animation(500, Assets.bomb);
+        world.getBombManager().addBomb(this);
     }
 
 
@@ -55,42 +56,40 @@ public class Bomb extends StaticEntity{
         lastTime = System.currentTimeMillis();
 
         if(countdown < 0) {
-            destroy();
+            setActive(false);
             countdown = waitTime;
-            active = false;
         }
     }
 
 
     public void draw(Graphics g)
     {
-        g.drawImage(animBomb.getCurrentFrame(), x - BOMBWIDTH/2, y-BOMBHEIGHT/2, BOMBWIDTH, BOMBHEIGHT, null);
+        g.drawImage(animBomb.getCurrentFrame(), (int)super.x - BOMBWIDTH/2, (int)super.y-BOMBHEIGHT/2, BOMBWIDTH, BOMBHEIGHT, null);
     }
 
     protected void destroy()
     {
-        placeBlast(x,y,0,0);
-        placeBlast(x, y, Tile.TILEWIDTH,0); // nextTile on the right
-        placeBlast(x, y, -Tile.TILEWIDTH, 0); // nextTile on the left
-        placeBlast(x, y,0,-Tile.TILEHEIGHT); //nextTile above
-        placeBlast(x, y,0,Tile.TILEHEIGHT); //nextTile below
+        placeBlast((int)super.x,(int)super.y,0,0);
+        placeBlast((int)super.x, (int)super.y, Tile.TILEWIDTH,0); // nextTile on the right
+        placeBlast((int)super.x, (int)super.y, -Tile.TILEWIDTH, 0); // nextTile on the left
+        placeBlast((int)super.x, (int)super.y,0,-Tile.TILEHEIGHT); //nextTile above
+        placeBlast((int)super.x, (int)super.y,0,Tile.TILEHEIGHT); //nextTile below
 
     }
 
     private void placeBlast(int x, int y, int xOffset, int yOffset) {
         boolean stop = false;
-        if(bombStrength>5)
-            Sound.playSound("boom_L.wav");
-        else if(bombStrength > 3)
-            Sound.playSound("boom_M.wav");
-        else Sound.playSound("boom_S.wav");
+        String sound =
+                (bombStrength>5) ? "boom_L.wav" :
+                (bombStrength> 3)? "boom_M.wav" : "boom_S.wav";
+        Sound.playSound(sound);
 
         for(int i = 0; i < bombStrength;i++)
         {
             if(stop || collisionWithTile(x + xOffset + i * xOffset, y + yOffset + i *yOffset))
                 return;
 
-            world.getBombBlastManager().addBlast(Blast.createNew(x + xOffset + i*xOffset, y + yOffset + i *yOffset));
+            new Blast(world , x + xOffset + i*xOffset, y + yOffset + i *yOffset);
 
             Rectangle tempBounds = new Rectangle();
             tempBounds.x = x + xOffset + i * xOffset;
@@ -109,12 +108,6 @@ public class Bomb extends StaticEntity{
             }
 
         }
-    }
-
-    public static Bomb createNew(int x, int y, int bombStrength){
-        Bomb b = new Bomb(world, x, y, bombStrength);
-        b.setPosition(x, y);
-        return b;
     }
 
     public void setPosition(int x, int y)
@@ -147,7 +140,7 @@ public class Bomb extends StaticEntity{
 
     public World getWorld()
     {
-        return world;
+        return super.world;
     }
 
     public void setWorld(World world)
@@ -155,4 +148,8 @@ public class Bomb extends StaticEntity{
         this.world = world;
     }
 
+    public int getBombStrength()
+    {
+        return bombStrength;
+    }
 }

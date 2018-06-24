@@ -23,19 +23,26 @@ public class MenuState extends State
 
     /**
      *
+     */
+    public MenuState(World world)
+    {
+        this.world = world;
+    }
+
+    /**
+     *
      * @param world world of the MenuState
-     * @param gameState gameState of World
      * @param uiManager uiManager of World
      */
-    public MenuState(World world, State gameState, UIManager uiManager) {
+    public MenuState(World world, UIManager uiManager) {
+        super(world);
         this.world = world;
         this.uiManager = uiManager;
 
-        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () -> State.setCurrentState(gameState));
+        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () -> State.setCurrentState(State.getGameState()));
         quit = new UIImageButton(400, 435, 228, 35, Assets.btn_quit, () -> System.exit(0));
         uiManager.addObject(start);
         uiManager.addObject(quit);
-        JButton button = new JButton();
     }
 
     @Override

@@ -98,7 +98,7 @@ public class Player extends DynamicEntity
         {
             Sound.playSound("bomb_Set.wav");
             System.out.println("placing Bomb");
-            Bomb b = Bomb.createNew(super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
+            Bomb b = new Bomb(world, super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
             world.getBombManager().addBomb(b);
             bombCount--;
             System.out.println("bombCount = " + bombCount);

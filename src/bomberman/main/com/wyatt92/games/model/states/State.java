@@ -13,6 +13,21 @@ import java.awt.*;
 public abstract class State implements Model
 {
     private static State currentState = null;
+    private static State gameState;
+    private static State menuState;
+    private static State gameOverState;
+    protected World world;
+
+    public State(World world) {
+        this.world = world;
+        gameState = new GameState(world);
+        menuState = new MenuState(world);
+        gameOverState = new GameOverState(world);
+    }
+
+    protected State()
+    {
+    }
 
     protected abstract void playLoopMusic();
 
@@ -37,4 +52,10 @@ public abstract class State implements Model
         currentState = state;
         currentState.playLoopMusic();
     }
+
+    public static State getGameState()
+    {
+            return gameState;
+    }
+
 }

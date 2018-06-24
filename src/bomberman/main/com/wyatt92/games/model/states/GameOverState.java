@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class GameOverState extends State
 {
-    private World world;
 
     public GameOverState(World world)
     {

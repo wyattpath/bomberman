@@ -18,7 +18,6 @@ public class Blast extends StaticEntity
     private float waitTime;
     private static Animation animBlast;
 
-    protected static World world;
     protected Rectangle bounds;
 
     /**
@@ -37,6 +36,7 @@ public class Blast extends StaticEntity
         countdown = waitTime;
 
         animBlast = new Animation(200, Assets.blast);
+        world.getBombBlastManager().addBlast(this);
     }
 
     private void checkCollision()
@@ -53,8 +53,8 @@ public class Blast extends StaticEntity
 
 
 
-    public static Blast createNew(int x, int y){
-        Blast b = new Blast(world, x, y);
+    public Blast createNew(int x, int y){
+        Blast b = new Blast(super.world, x, y);
         b.setPosition(x, y);
         return b;
     }
@@ -106,7 +106,7 @@ public class Blast extends StaticEntity
     }
 
     public void setWorld(World world) {
-        this.world = world;
+        super.world = world;
     }
 
 }

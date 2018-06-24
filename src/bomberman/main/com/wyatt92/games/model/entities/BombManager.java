@@ -26,6 +26,7 @@ public class BombManager
             Bomb b = it.next();
             b.update();
             if(!b.isActive()) {
+                b.destroy();
                 it.remove();
             }
         }
@@ -40,5 +41,10 @@ public class BombManager
     public void addBomb(Bomb b) {
         b.setWorld(world);
         bombs.add(b);
+    }
+
+    public ArrayList<Bomb> getBombs()
+    {
+        return bombs;
     }
 }

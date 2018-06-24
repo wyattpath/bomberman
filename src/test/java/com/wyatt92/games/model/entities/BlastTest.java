@@ -17,13 +17,12 @@ class BlastTest
         assertNotNull(world);
     }
 
-
     @Test
-    void createNew()
-    {
-        Blast blast = Blast.createNew(3, 4);
-        assertNotNull(blast);
-        assertTrue(blast.isActive());
+    void constructor(){
+        Blast blast = new Blast(world, 3, 4);
+        assertEquals(world, blast.getWorld());
+        assertEquals(3,blast.getX());
+        assertEquals(4, blast.getY());
     }
 
     @Test
@@ -55,7 +54,6 @@ class BlastTest
     void getWorld()
     {
         Blast blast = new Blast(world,3, 4);
-        world.getBombBlastManager().addBlast(blast);
         assertEquals(world,blast.getWorld());
     }
 

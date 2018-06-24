@@ -11,7 +11,7 @@ class ImageLoaderTest {
 
     @Test
     public void testLoadImage() {
-        testbImg = ImageLoader.loadImage("./src/bomberman/resources/test.png");
+        testbImg = ImageLoader.loadImage("test.png");
         assert testbImg != null : "There was a problem loading your image.";
     }
 

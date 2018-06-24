@@ -8,11 +8,10 @@ import java.awt.*;
 
 public class GameState extends State
 {
-    private World world;
+
 
     public GameState(World world) {
         this.world = world;
-
     }
 
     @Override

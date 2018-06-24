@@ -55,7 +55,7 @@ public class Game implements Runnable{
 
         world = new World("world1.txt");
         gameState = new GameState(world);
-        menuState = new MenuState(world, gameState, uiManager);
+        menuState = new MenuState(world, uiManager);
         gameOverState = new GameOverState(world);
         State.setCurrentState(menuState);
     }
@@ -137,7 +137,6 @@ public class Game implements Runnable{
                 world.getEntityManager().getPlayer(0).moveRight();
             if (gameKeyListener.SPACE)
                 world.getEntityManager().getPlayer(0).placeBomb();
-
 
             if (world.getEntityManager().getPlayer(1) != null)
             {
