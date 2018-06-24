@@ -23,6 +23,7 @@ public class Assets {
 
     public static Clip menu_bgMusic, menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
     public static Clip game_bgMusic, game_bombSet, game_bombBoomS, game_bombBoomM, game_bombBoomL;
+    public static Clip gameOver_bgMusic;
 
     public static void init() {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("sheet.png"));
@@ -75,8 +76,7 @@ public class Assets {
         menu_selectFX = Sound.clipForLoopFactory("select.wav");
         menu_cursorMoveFX = Sound.clipForLoopFactory("cursor_move.wav");
         game_bgMusic = Sound.clipForLoopFactory("Undertale036.wav");
-
-
+        gameOver_bgMusic  = Sound.clipForLoopFactory("Undertale092.wav");
 
 
     }

@@ -17,6 +17,7 @@ public abstract class State implements Model
     private static State menuState;
     private static State gameOverState;
     protected World world;
+    private int winner;
 
     public State(World world) {
         this.world = world;
@@ -57,5 +58,18 @@ public abstract class State implements Model
     {
             return gameState;
     }
+    public static State getGameOverState()
+    {
+        return gameOverState;
+    }
 
+    public void setWinner(int winner)
+    {
+        this.winner = winner;
+    }
+
+    public int getWinner()
+    {
+        return winner;
+    }
 }

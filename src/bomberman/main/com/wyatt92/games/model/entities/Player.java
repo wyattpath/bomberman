@@ -177,4 +177,9 @@ public class Player extends DynamicEntity
     {
         this.world = world;
     }
+
+    public int getId()
+    {
+        return id;
+    }
 }

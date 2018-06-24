@@ -2,6 +2,7 @@ package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.model.states.GameOverState;
 import com.wyatt92.games.model.states.GameState;
 import com.wyatt92.games.model.states.MenuState;
@@ -124,11 +125,11 @@ public class Game implements Runnable{
                 world.getEntityManager().getPlayer(i).yMove = 0;
             }
         }
-        {
-            if (world.getEntityManager().getPlayer(0) != null)
 
-            if (gameKeyListener.W)
-                world.getEntityManager().getPlayer(0).moveUp();
+            if (world.getPlayerCount()>=1){
+
+                if (gameKeyListener.W)
+                    world.getEntityManager().getPlayer(0).moveUp();
             if (gameKeyListener.S)
                 world.getEntityManager().getPlayer(0).moveDown();
             if (gameKeyListener.A)
@@ -137,12 +138,9 @@ public class Game implements Runnable{
                 world.getEntityManager().getPlayer(0).moveRight();
             if (gameKeyListener.SPACE)
                 world.getEntityManager().getPlayer(0).placeBomb();
-
-            if (world.getEntityManager().getPlayer(1) != null)
+        }
+        if (world.getPlayerCount()> 1)
             {
-                world.getEntityManager().getPlayer(1).xMove = 0;
-                world.getEntityManager().getPlayer(1).yMove = 0;
-
                 if (gameKeyListener.UP)
                     world.getEntityManager().getPlayer(1).moveUp();
                 if (gameKeyListener.DOWN)
@@ -154,12 +152,11 @@ public class Game implements Runnable{
                 if (gameKeyListener.CTRL)
                     world.getEntityManager().getPlayer(1).placeBomb();
             }
-        }
+
         if(State.getCurrentState() != null)
         {
             State.getCurrentState().update();
         }
-
 
     }
 }

@@ -206,6 +206,11 @@ public class World implements Model
     {
         return playerCount;
     }
+
+    public void setPlayerCount(int playerCount)
+    {
+        this.playerCount = playerCount;
+    }
 }
 
 

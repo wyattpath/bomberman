@@ -34,8 +34,14 @@ public class EntityManager
         while(it.hasNext()){
             Entity e = it.next();
             e.update();
-            if(!e.isActive())
+            if(!e.isActive()){
+                if(getPlayers().contains(e))
+                {
+                    players.remove(e);
+                    world.setPlayerCount(world.getPlayerCount()-1);
+                }
                 it.remove();
+            }
         }
         entities.sort(drawSorter);
     }
@@ -75,6 +81,9 @@ public class EntityManager
         return players;
     }
 
+    public int getPlayerCount() {
+        return players.size();
+    }
     public Player getPlayer(int id)
     {
         return players.get(id);

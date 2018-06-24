@@ -43,7 +43,7 @@ public class Bomb extends StaticEntity{
         countdown = waitTime;
 
         animBomb = new Animation(500, Assets.bomb);
-        world.getBombManager().addBomb(this);
+
     }
 
 
@@ -89,7 +89,7 @@ public class Bomb extends StaticEntity{
             if(stop || collisionWithTile(x + xOffset + i * xOffset, y + yOffset + i *yOffset))
                 return;
 
-            new Blast(world , x + xOffset + i*xOffset, y + yOffset + i *yOffset);
+            world.getBombBlastManager().addBlast(new Blast(world , x + xOffset + i*xOffset, y + yOffset + i *yOffset));
 
             Rectangle tempBounds = new Rectangle();
             tempBounds.x = x + xOffset + i * xOffset;
@@ -110,27 +110,6 @@ public class Bomb extends StaticEntity{
         }
     }
 
-    public void setPosition(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-        bounds.x = x;
-        bounds.y = y;
-    }
-
-    private void checkCollision(int x, int y) {
-        Rectangle tempBounds = new Rectangle(x,y, BOMBWIDTH, BOMBHEIGHT);
-        for (Entity e : world.getEntityManager().getEntities()) {
-            if (e.equals(this))
-                continue;
-            if (e.getCollisionBounds(32, 32).intersects(tempBounds)) {
-                e.destroy();
-                e.hurt(3);
-            }
-        }
-
-    }
-
     protected boolean collisionWithTile(int x, int y) {
         System.out.println("TilePosition x = " + (x/Tile.TILEWIDTH)+ " y = " + (y/Tile.TILEHEIGHT));
         return world.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
@@ -145,7 +124,7 @@ public class Bomb extends StaticEntity{
 
     public void setWorld(World world)
     {
-        this.world = world;
+        super.world = world;
     }
 
     public int getBombStrength()

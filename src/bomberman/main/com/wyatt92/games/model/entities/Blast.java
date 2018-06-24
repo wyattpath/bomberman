@@ -36,7 +36,6 @@ public class Blast extends StaticEntity
         countdown = waitTime;
 
         animBlast = new Animation(200, Assets.blast);
-        world.getBombBlastManager().addBlast(this);
     }
 
     private void checkCollision()

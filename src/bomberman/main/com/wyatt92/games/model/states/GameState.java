@@ -2,6 +2,7 @@ package com.wyatt92.games.model.states;
 
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.entities.Player;
 
 import javax.sound.sampled.Clip;
 import java.awt.*;
@@ -18,6 +19,18 @@ public class GameState extends State
     public void update()
     {
         world.update();
+        System.out.println(world.getEntityManager().getPlayerCount());
+        if(world.getEntityManager().getPlayerCount()<2){
+            int winner = 0;
+            for(Player p : world.getEntityManager().getPlayers()){
+                if(p.isActive()) {
+                    winner = p.getId();
+                }
+            }
+            State.getGameOverState().setWinner(winner);
+            State.setCurrentState(State.getGameOverState());
+
+        }
     }
 
     @Override
