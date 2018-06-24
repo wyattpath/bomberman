@@ -1,6 +1,7 @@
 package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.utils.Sound;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.entities.Player;
@@ -24,7 +25,7 @@ public abstract class Item implements Model
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 
     protected World world;
-    protected BufferedImage texture;
+    protected Animation animation;
     protected String name;
     protected final int id;
 
@@ -36,12 +37,12 @@ public abstract class Item implements Model
     /**
      * Constructor
      *
-     * @param texture texture of Item
-     * @param name name of Item
-     * @param id id of Item
+     * @param images animationframes as BufferedImages
+     * @param name name as String
+     * @param id id as Integer
      */
-    public Item(BufferedImage texture, String name, int id){
-        this.texture = texture;
+    public Item(BufferedImage[] images, String name, int id){
+        this.animation = new Animation(500,images);
         this.name = name;
         this.id = id;
         count = 1;
@@ -53,6 +54,7 @@ public abstract class Item implements Model
 
     @Override
     public void update() {
+        animation.update();
         Iterator<Player> it = world.getEntityManager().getPlayers().iterator();
         while(it.hasNext()) {
             Player p = it.next();
@@ -74,7 +76,7 @@ public abstract class Item implements Model
 
     public void draw(Graphics g, int x, int y)
     {
-        g.drawImage(texture,x, y, ITEMWIDTH, ITEMHEIGHT, null);
+        g.drawImage(animation.getCurrentFrame(),x, y, ITEMWIDTH, ITEMHEIGHT, null);
     }
 
     public abstract Item createNew(int x, int y);
@@ -101,14 +103,14 @@ public abstract class Item implements Model
         this.world = world;
     }
 
-    public BufferedImage getTexture()
+    public Animation getAnimation()
     {
-        return texture;
+        return animation;
     }
 
-    public void setTexture(BufferedImage texture)
+    public void setAnimation(Animation animation)
     {
-        this.texture = texture;
+        this.animation = animation;
     }
 
     public String getName()

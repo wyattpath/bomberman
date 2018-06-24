@@ -16,7 +16,7 @@ public class Assets {
     private static final int width = 32, height = 32;
 
     public static BufferedImage dirt, grass, wall, tree, stone;
-    public static BufferedImage bombStrength, bombCount, playerSpeed;
+    public static BufferedImage[] bombStrength, bombCount, playerSpeed;
     public static BufferedImage[] btn_start,btn_quit;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] bomb;
@@ -69,9 +69,18 @@ public class Assets {
         btn_quit[0] = menuSheet.crop(0, 70, 228, 35);
         btn_quit[1] = menuSheet.crop(230, 70, 228, 35);
 
-        bombCount = powerUpsSheet.crop(0, 0, 152, 152);
-        bombStrength = powerUpsSheet.crop(153, 0, 152, 152);
-        playerSpeed = powerUpsSheet.crop(305, 0, 152, 152);
+        bombCount = new BufferedImage[2];
+        bombCount[0] = powerUpsSheet.crop(5, 0, 150, 150);
+        bombCount[1] = powerUpsSheet.crop(10, 2, 150, 150);
+
+        bombStrength = new BufferedImage[2];
+        bombStrength[0] = powerUpsSheet.crop(155, 0, 150, 150);
+        bombStrength[1] = powerUpsSheet.crop(160, 2, 150, 150);
+
+        playerSpeed = new BufferedImage[2];
+        playerSpeed[0] = powerUpsSheet.crop(315, 0, 150, 150);
+        playerSpeed[1] = powerUpsSheet.crop(320, 2, 150, 150);
+
 
         //Sounds
         menu_bgMusic = Sound.clipForLoopFactory("Undertale002.wav");

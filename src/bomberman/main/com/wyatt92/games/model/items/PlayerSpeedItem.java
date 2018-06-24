@@ -3,14 +3,13 @@ package com.wyatt92.games.model.items;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.entities.Player;
 
-import java.awt.image.BufferedImage;
 
 public class PlayerSpeedItem extends Item
 {
     /**
      * Constructor
      *
-     * @param id      id of Item
+     * @param id id of Item
      */
     public PlayerSpeedItem(int id)
     {

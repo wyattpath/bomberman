@@ -2,6 +2,7 @@ package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.entities.Player;
+import com.wyatt92.games.model.utils.Animation;
 
 /**
  * Grants a player more bombStrength when picked up.

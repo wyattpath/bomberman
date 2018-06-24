@@ -111,7 +111,6 @@ public class Bomb extends StaticEntity{
     }
 
     protected boolean collisionWithTile(int x, int y) {
-        System.out.println("TilePosition x = " + (x/Tile.TILEWIDTH)+ " y = " + (y/Tile.TILEHEIGHT));
         return world.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
     }
 

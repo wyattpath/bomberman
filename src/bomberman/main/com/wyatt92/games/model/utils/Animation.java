@@ -44,4 +44,14 @@ public class Animation
     public BufferedImage getCurrentFrame() {
     return frames[index];
     }
+
+    public int getAnimSpeed()
+    {
+        return animSpeed;
+    }
+
+    public void setAnimSpeed(int animSpeed)
+    {
+        this.animSpeed = animSpeed;
+    }
 }

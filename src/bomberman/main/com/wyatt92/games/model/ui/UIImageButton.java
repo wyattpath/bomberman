@@ -30,7 +30,6 @@ public class UIImageButton extends UIObject
         if(hovering){
             countdown -= System.currentTimeMillis() - lastTime;
             lastTime = System.currentTimeMillis();
-            System.out.println(countdown);
             if(countdown < 0)
             {
                 Sound.playSound("cursor_move.wav");

@@ -33,6 +33,7 @@ public class Game implements Runnable{
     // Input
     private GameKeyListener gameKeyListener;
     private GameMouseListener gameMouseListener;
+
     private UIManager uiManager;
 
     Game(View view) {

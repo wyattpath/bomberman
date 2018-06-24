@@ -29,7 +29,6 @@ public class Blast extends StaticEntity
     public Blast(World world, float x, float y)
     {
         super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
-        System.out.println("placed Blast at: x = " + x + " y = " + y );
         bounds = getCollisionBounds(0f,0f);
         lastTime = System.currentTimeMillis();
         waitTime = 2000f;
