@@ -35,7 +35,6 @@ public class Stone extends StaticEntity {
     protected void destroy()
     {
         int randInt = new Random().nextInt(Item.items.length);
-        System.out.println(randInt);
         if(randInt != 0 && randInt < 4)
             world.getItemManager().addItem(Item.items[randInt].createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
 //        handler.getWorld().getItemManager().addItem(Item.powerUpItem.createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
