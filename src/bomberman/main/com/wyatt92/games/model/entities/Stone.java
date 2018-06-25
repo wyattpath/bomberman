@@ -4,6 +4,7 @@ import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.games.model.utils.Animation;
 
 import java.awt.*;
 import java.util.Random;
@@ -13,18 +14,21 @@ import java.util.Random;
  * Spawns sometimes an Item if it gets destroyed.
  */
 public class Stone extends StaticEntity {
+    private Animation animStone;
+
     public Stone(World world, float x, float y) {
         super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+        animStone = new Animation(1000, Assets.stone);
     }
 
     @Override
     public void update() {
-
+        animStone.update();
     }
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(Assets.stone, (int) x, (int) y, width, height, null);
+        g.drawImage(animStone.getCurrentFrame(), (int) x, (int) y, width, height, null);
     }
 
     @Override

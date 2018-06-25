@@ -6,6 +6,7 @@ import com.wyatt92.games.model.utils.SpriteSheet;
 
 import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 /**
  * An asset is the representation of any object that can be used.
@@ -15,7 +16,8 @@ public class Assets {
 
     private static final int width = 32, height = 32;
 
-    public static BufferedImage dirt, grass, wall, tree, stone;
+    public static BufferedImage dirt, grass, wall, tree;
+    public static BufferedImage[] stone;
     public static BufferedImage[] bombStrength, bombCount, playerSpeed;
     public static BufferedImage[] btn_start,btn_quit;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
@@ -51,7 +53,10 @@ public class Assets {
         grass = sheet.crop(width * 2, 0, width, height);
         wall = sheet.crop(width * 3, 0, width, height);
         tree = sheet.crop(0, height, width, height);
-        stone = sheet.crop(0, width * 2, width, height);
+        stone = new BufferedImage[2];
+        stone[0] = sheet.crop(0, width * 2, width-1, height-1);
+        stone[1] = sheet.crop(1, width * 2+1, width-1, height-1);
+
 
         bomb = new BufferedImage[2];
         bomb[0] = bombSheet.crop(0, 0, width*8, height*8);
@@ -83,11 +88,14 @@ public class Assets {
 
 
         //Sounds
-        menu_bgMusic = Sound.clipForLoopFactory("Undertale002.wav");
         menu_selectFX = Sound.clipForLoopFactory("select.wav");
         menu_cursorMoveFX = Sound.clipForLoopFactory("cursor_move.wav");
-        game_bgMusic = Sound.clipForLoopFactory("Undertale036.wav");
-        gameOver_bgMusic  = Sound.clipForLoopFactory("Undertale092.wav");
+        int r = new Random().nextInt(2);
+        menu_bgMusic = Sound.clipForLoopFactory("Undertale00"+ r +".wav");
+        r = new Random().nextInt(9);
+        game_bgMusic = Sound.clipForLoopFactory("music0"+ r +".wav");
+        r = new Random().nextInt(2);
+        gameOver_bgMusic  = Sound.clipForLoopFactory("gomusic0"+ r +".wav");
 
 
     }

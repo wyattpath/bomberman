@@ -30,6 +30,7 @@ public class GameState extends State
     @Override
     protected void playLoopMusic()
     {
+        Assets.game_bgMusic.setFramePosition(0);
         Assets.game_bgMusic.start();
         Assets.game_bgMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }

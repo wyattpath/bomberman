@@ -105,7 +105,6 @@ public class Player extends DynamicEntity
             Bomb b = new Bomb(world, super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
             world.getBombManager().addBomb(b);
             bombCount--;
-            System.out.println("bombCount = " + bombCount);
             attackTimer = 0;
         }
 
