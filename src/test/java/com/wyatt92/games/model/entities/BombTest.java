@@ -36,16 +36,6 @@ class BombTest
     }*/
 
 
-
-    @Test
-    void collisionWithTile()
-    {
-        assertFalse(b.collisionWithTile(64,64));
-        b.setX(0);
-        b.setY(0);
-        assertTrue(b.collisionWithTile(0,0));
-    }
-
     @Test
     void getWorld()
     {

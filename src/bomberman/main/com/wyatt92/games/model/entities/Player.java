@@ -70,7 +70,7 @@ public class Player extends DynamicEntity
 
 
     @Override
-    protected void destroy()
+    public void destroy()
     {
         System.out.println(id + " : You died!");
     }

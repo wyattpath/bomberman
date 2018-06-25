@@ -129,8 +129,24 @@ public class Game implements Model
         playerManager.update();
 
         checkPlayerCollisions();
+        checkBlastCollisions();
         checkItemPickUp();
 
+    }
+
+    private void checkBlastCollisions()
+    {
+        //checkCollision
+        for(Blast b : bombBlastManager.getBlasts()) {
+            for(Entity e : entityManager.getEntities()) {
+                if(e.equals(b))
+                    continue;
+                if(e.getCollisionBounds(32,32).intersects(b.getBounds())){
+                    e.destroy();
+                    e.hurt(3);
+                }
+            }
+        }
     }
 
     private void checkItemPickUp()
@@ -149,6 +165,7 @@ public class Game implements Model
             }
         }
     }
+
 
     private void checkPlayerCollisions()
     {

@@ -161,10 +161,8 @@ public class Controller implements Runnable{
 
                 if(!game.isGameOver())
                 {
-                    System.out.println(game.getPlayerManager().getPlayerCount());
                     if(game.getPlayerManager().getPlayerCount()<2){
                         game.setGameOver(true);
-                        System.out.println("game over");
                         int winner = 0;
                         for(Player p : game.getPlayerManager().getPlayers()){
                             if(p.isActive()) {

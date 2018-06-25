@@ -61,7 +61,7 @@ public abstract class Entity implements Model
         }
     }
 
-    protected abstract void destroy();
+    public abstract void destroy();
 
 
 

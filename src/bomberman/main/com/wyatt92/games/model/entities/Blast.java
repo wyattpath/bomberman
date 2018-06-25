@@ -18,6 +18,16 @@ public class Blast extends StaticEntity
     private float waitTime;
     private static Animation animBlast;
 
+    public Rectangle getBounds()
+    {
+        return bounds;
+    }
+
+    public void setBounds(Rectangle bounds)
+    {
+        this.bounds = bounds;
+    }
+
     protected Rectangle bounds;
 
     /**
@@ -58,7 +68,7 @@ public class Blast extends StaticEntity
     }
 
     @Override
-    protected void destroy()
+    public void destroy()
     {
         setActive(false);
     }

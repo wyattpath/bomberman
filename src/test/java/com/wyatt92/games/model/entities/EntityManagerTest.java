@@ -48,34 +48,6 @@ class EntityManagerTest
         assertEquals(newGame, entityManager.getGame());
     }
 
-    @Test
-    void addPlayer()
-    {
-        Player player = new Player(game, 3, 4, 0);
-        entityManager.addPlayer(player);
-        assertTrue(entityManager.getPlayers().contains(player));
-        assertEquals(player,entityManager.getPlayer(0));
-    }
-
-    @Test
-    void getPlayers()
-    {
-        assertEquals(0,entityManager.getPlayers().size());
-        Player player = new Player(game, 3, 4, 0);
-        entityManager.addPlayer(player);
-        assertEquals(1,entityManager.getPlayers().size());
-    }
-
-    @Test
-    void getPlayer()
-    {
-        Player player = new Player(game, 3, 4, 0);
-        Player player2 = new Player(game, 10, 4, 1);
-        entityManager.addPlayer(player);
-        entityManager.addPlayer(player2);
-        assertEquals(player,entityManager.getPlayer(0));
-        assertEquals(player2,entityManager.getPlayer(1));
-    }
 
     @Test
     void getEntities()
@@ -107,11 +79,4 @@ class EntityManagerTest
 
     }
 
-    @Test
-    void getPlayerCount() {
-        assertEquals(0, entityManager.getPlayerCount());
-        Player p = new Player(game, 0, 0, 0);
-        entityManager.addPlayer(p);
-        assertEquals(1, entityManager.getPlayerCount());
-    }
 }

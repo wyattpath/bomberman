@@ -26,19 +26,6 @@ public class BombBlastManager {
             Blast b = it.next();
             b.update();
 
-            //checkCollision
-            for(Entity e : game.getEntityManager().getEntities()) {
-                if(e.equals(b))
-                    continue;
-                if(e.getCollisionBounds(32,32).intersects(b.bounds)){
-                    e.destroy();
-                    e.hurt(3);
-                }
-            }
-//            if(b.checkEntityCollisions(32,32)){
-
-
-
             if(!b.isActive()) {
                 it.remove();
             }

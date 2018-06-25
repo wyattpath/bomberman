@@ -32,7 +32,7 @@ public class Stone extends StaticEntity {
     }
 
     @Override
-    protected void destroy()
+    public void destroy()
     {
         int randInt = new Random().nextInt(Item.items.length);
         if(randInt != 0 && randInt < 4)
