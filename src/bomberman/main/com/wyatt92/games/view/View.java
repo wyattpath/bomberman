@@ -22,23 +22,5 @@ public class View
         return gamePanel;
     }
 
-    public int getFrameWidth()
-    {
-        return frameWidth;
-    }
 
-    public void setFrameWidth(int frameWidth)
-    {
-        this.frameWidth = frameWidth;
-    }
-
-    public int getFrameHeight()
-    {
-        return frameHeight;
-    }
-
-    public void setFrameHeight(int frameHeight)
-    {
-        this.frameHeight = frameHeight;
-    }
 }
