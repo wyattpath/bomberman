@@ -123,8 +123,8 @@ public class Game implements Runnable{
             gameKeyListener.update();
             if(world.getEntityManager().getPlayers().size()>0){
                 for(int i = 0; i < world.getEntityManager().getPlayers().size(); i++){
-                    world.getEntityManager().getPlayer(i).xMove = 0;
-                    world.getEntityManager().getPlayer(i).yMove = 0;
+                    world.getEntityManager().getPlayer(i).setxMove(0);
+                    world.getEntityManager().getPlayer(i).setyMove(0);
                 }
             }
 

@@ -34,6 +34,15 @@ public class EntityManager
         while(it.hasNext()){
             Entity e = it.next();
             e.update();
+            if(getPlayers().contains(e)){
+                Player p = (Player) e;
+                if(!checkEntityCollisions(p, p.getxMove(),0f)){
+                    p.moveX();
+                }
+                if(!checkEntityCollisions(p,0f, p.getyMove())) {
+                    p.moveY();
+                }
+            }
             if(!e.isActive()){
                 if(getPlayers().contains(e))
                 {
@@ -62,6 +71,18 @@ public class EntityManager
     }
     public void removeEntity(Entity e) {
         entities.remove(e);
+    }
+
+    public boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
+        for(Entity e : entities){
+            if(e.equals(e1)){
+                continue;
+            }
+            if(e.getCollisionBounds(0f, 0f).intersects(e1.getCollisionBounds(xOffset, yOffset))){
+                return true;
+            }
+        }
+        return false;
     }
 
 

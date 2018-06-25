@@ -35,6 +35,9 @@ public class BombBlastManager {
                     e.hurt(3);
                 }
             }
+//            if(b.checkEntityCollisions(32,32)){
+
+
 
             if(!b.isActive()) {
                 it.remove();

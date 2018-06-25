@@ -61,7 +61,6 @@ public class Bomb extends StaticEntity{
         }
     }
 
-
     public void draw(Graphics g)
     {
         g.drawImage(animBomb.getCurrentFrame(), (int)super.x - BOMBWIDTH/2, (int)super.y-BOMBHEIGHT/2, BOMBWIDTH, BOMBHEIGHT, null);
@@ -71,12 +70,6 @@ public class Bomb extends StaticEntity{
     {
 
 
-    }
-
-
-
-    protected boolean collisionWithTile(int x, int y) {
-        return world.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
     }
 
     // GETTERS and SETTERS

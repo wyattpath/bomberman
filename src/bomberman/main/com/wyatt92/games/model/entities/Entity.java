@@ -63,17 +63,7 @@ public abstract class Entity implements Model
 
     protected abstract void destroy();
 
-    public boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for(Entity e : world.getEntityManager().getEntities()){
-            if(e.equals(this)){
-                continue;
-            }
-            if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     public Rectangle getCollisionBounds(float xOffset, float yOffset) {
         return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);

@@ -133,7 +133,6 @@ public class Player extends DynamicEntity
         animRight.update();
         animLeft.update();
 
-        move();
         updateBombCount();
 
     }

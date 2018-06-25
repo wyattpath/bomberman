@@ -58,7 +58,7 @@ public class BombManager
         boolean stop = false;
         for(int i = 0; i < b.bombStrength;i++)
         {
-            if(stop || b.collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
+            if(stop || collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
                 return;
 
             world.getBombBlastManager().addBlast(new Blast(world , b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset));
@@ -80,6 +80,10 @@ public class BombManager
             }
 
         }
+    }
+
+    protected boolean collisionWithTile(int x, int y) {
+        return world.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
     }
 
     public ArrayList<Bomb> getBombs()

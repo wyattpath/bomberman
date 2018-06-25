@@ -17,7 +17,7 @@ public abstract class DynamicEntity extends Entity
     public static final int DEFAULT_CHARACTER_HEIGHT = 64;
 
     protected float speed;
-    public float xMove, yMove;
+    protected float xMove, yMove;
 
 
     public DynamicEntity(World world, float x, float y, int width, int height) {
@@ -25,16 +25,7 @@ public abstract class DynamicEntity extends Entity
         speed = DEFAULT_SPEED;
     }
 
-    public void move() {
-        if(!checkEntityCollisions(xMove, 0f)) {
-            moveX();
 
-        }
-        if(!checkEntityCollisions(0f, yMove)) {
-            moveY();
-        }
-
-    }
     public void moveX() {
         if(xMove > 0){ //moving right
             int tx = (int) ((x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH);
@@ -77,5 +68,25 @@ public abstract class DynamicEntity extends Entity
 
     protected boolean collisionWithTile(int x, int y) {
         return world.getTile(x,y).isSolid();
+    }
+
+    public float getxMove()
+    {
+        return xMove;
+    }
+
+    public void setxMove(float xMove)
+    {
+        this.xMove = xMove;
+    }
+
+    public float getyMove()
+    {
+        return yMove;
+    }
+
+    public void setyMove(float yMove)
+    {
+        this.yMove = yMove;
     }
 }
