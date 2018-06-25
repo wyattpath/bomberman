@@ -1,6 +1,6 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.model.utils.Sound;
 
@@ -13,11 +13,11 @@ import java.util.Iterator;
  */
 public class BombManager
 {
-    private World world;
+    private Game game;
     private ArrayList<Bomb> bombs;
 
-    public BombManager(World world) {
-        this.world = world;
+    public BombManager(Game game) {
+        this.game = game;
         bombs = new ArrayList<>();
     }
 
@@ -50,7 +50,7 @@ public class BombManager
     }
 
     public void addBomb(Bomb b) {
-        b.setWorld(world);
+        b.setWorld(game);
         bombs.add(b);
     }
 
@@ -61,13 +61,13 @@ public class BombManager
             if(stop || collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
                 return;
 
-            world.getBombBlastManager().addBlast(new Blast(world , b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset));
+            game.getBombBlastManager().addBlast(new Blast(game, b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset));
 
             Rectangle tempBounds = new Rectangle();
             tempBounds.x = (int)b.getX() + xOffset + i * xOffset;
             tempBounds.y = (int)b.getY() + yOffset + i *yOffset;
             tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
-            for (Entity e : world.getEntityManager().getEntities())
+            for (Entity e : game.getEntityManager().getEntities())
             {
                 if (e.equals(this))
                     continue;
@@ -83,7 +83,7 @@ public class BombManager
     }
 
     protected boolean collisionWithTile(int x, int y) {
-        return world.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
+        return game.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
     }
 
     public ArrayList<Bomb> getBombs()

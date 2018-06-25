@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.model.utils.Animation;
@@ -16,8 +16,8 @@ import java.util.Random;
 public class Stone extends StaticEntity {
     private Animation animStone;
 
-    public Stone(World world, float x, float y) {
-        super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+    public Stone(Game game, float x, float y) {
+        super(game, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
         animStone = new Animation(1000, Assets.stone);
     }
 
@@ -36,7 +36,7 @@ public class Stone extends StaticEntity {
     {
         int randInt = new Random().nextInt(Item.items.length);
         if(randInt != 0 && randInt < 4)
-            world.getItemManager().addItem(Item.items[randInt].createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
+            game.getItemManager().addItem(Item.items[randInt].createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
 //        handler.getWorld().getItemManager().addItem(Item.powerUpItem.createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
     }
 }

@@ -4,7 +4,7 @@ package com.wyatt92.games.model.entities;
 import com.wyatt92.games.model.utils.Sound;
 import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -27,18 +27,18 @@ public class Player extends DynamicEntity
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private long bombCooldown = 2000;
 
-    protected World world;
+    protected Game game;
 
     /**
      * Constructor
      *
-     * @param world world of the player
+     * @param game world of the player
      * @param x x-coordinate of player
      * @param y y-coordinate of player
      */
-    public Player(World world, float x, float y, int id)
+    public Player(Game game, float x, float y, int id)
     {
-        super(world, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
+        super(game, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
         this.id = id;
         bounds.x = 16;
         bounds.y = 32;
@@ -101,8 +101,8 @@ public class Player extends DynamicEntity
         if (bombCount > 0)
         {
             Sound.playSound("bomb_Set.wav");
-            Bomb b = new Bomb(world, super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
-            world.getBombManager().addBomb(b);
+            Bomb b = new Bomb(game, super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
+            game.getBombManager().addBomb(b);
             bombCount--;
             attackTimer = 0;
         }
@@ -169,14 +169,14 @@ public class Player extends DynamicEntity
         return centerPoint;
     }
 
-    public World getWorld()
+    public Game getGame()
     {
-        return world;
+        return game;
     }
 
-    public void setWorld(World world)
+    public void setGame(Game game)
     {
-        this.world = world;
+        this.game = game;
     }
 
     public int getId()

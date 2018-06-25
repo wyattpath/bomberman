@@ -1,6 +1,6 @@
 package com.wyatt92.games.model.states;
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
@@ -27,18 +27,18 @@ public class MenuState extends State
 
     /**
      *
-     * @param world world of the MenuState
+     * @param game world of the MenuState
      * @param uiManager uiManager of World
      */
-    public MenuState(World world, UIManager uiManager) {
-        super(world);
+    public MenuState(Game game, UIManager uiManager) {
+        super(game);
         this.uiManager = uiManager;
 
         start = new UIImageButton(400, 600, 228, 35, Assets.btn_start, () ->
         {
-            if(world.isGameOver()){
-
-                world.resetWorld();
+            if(game.isGameOver()){
+                game.loadWorld("world1.txt");
+                game.resetWorld();
             }
             State.setCurrentState(State.getGameState());
         });
@@ -46,10 +46,9 @@ public class MenuState extends State
         {
             System.exit(0);
         });
-//        animLogo = new UIAnimation(256,64,512, 256,Assets.logo);
+
         animLogo = new Animation(10000,Assets.logo);
         animLogo.setRandom(true);
-//        animBG = new UIAnimation(0,0,world.getWidth(), world.getHeight(),Assets.bg);
         animBG = new Animation(5000,Assets.bg);
         animBG.setRandom(true);
         uiManager.addObject(start);
@@ -68,9 +67,9 @@ public class MenuState extends State
     public void draw(Graphics g)
     {
         g.setColor(Color.BLACK);
-        if(world!= null)
-            g.fillRect(0,0,world.getWidth(), world.getWidth());
-        g.drawImage(animBG.getCurrentFrame(), 0,0,world.getWidth(), world.getHeight(), null);
+        if(game != null)
+            g.fillRect(0,0, game.getWidth(), game.getWidth());
+        g.drawImage(animBG.getCurrentFrame(), 0,0, game.getWidth(), game.getHeight(), null);
         uiManager.draw(g);
         g.drawImage(animLogo.getCurrentFrame(),256,64,512, 256, null);
     }

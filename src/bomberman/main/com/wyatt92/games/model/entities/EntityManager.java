@@ -1,6 +1,6 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,16 +17,14 @@ import java.util.Iterator;
  */
 public class EntityManager
 {
-    private World world;
-    private ArrayList<Player> players;
+    private Game game;
     private ArrayList<Entity> entities;
     private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? -1 : 1;
 
-    public EntityManager(World world) {
-        this.world = world;
+    public EntityManager(Game game) {
+        this.game = game;
 
         entities = new ArrayList<>();
-        players = new ArrayList<>();
     }
 
     public void update() {
@@ -34,23 +32,8 @@ public class EntityManager
         while(it.hasNext()){
             Entity e = it.next();
             e.update();
-            if(getPlayers().contains(e)){
-                Player p = (Player) e;
-                if(!checkEntityCollisions(p, p.getxMove(),0f)){
-                    p.moveX();
-                }
-                if(!checkEntityCollisions(p,0f, p.getyMove())) {
-                    p.moveY();
-                }
-            }
             if(!e.isActive()){
-                if(getPlayers().contains(e))
-                {
-                    players.remove(e);
-//                    world.setPlayerCount(world.getPlayerCount()-1);
-                }
                 it.remove();
-                System.out.println((e.getClass().getSimpleName()));
             }
         }
         entities.sort(drawSorter);
@@ -73,59 +56,17 @@ public class EntityManager
         entities.remove(e);
     }
 
-    public boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
-        for(Entity e : entities){
-            if(e.equals(e1)){
-                continue;
-            }
-            if(e.getCollisionBounds(0f, 0f).intersects(e1.getCollisionBounds(xOffset, yOffset))){
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     // GETTERS and SETTERS
 
-    public World getWorld()
+    public Game getGame()
     {
-        return world;
+        return game;
     }
 
-    public void setWorld(World world)
+    public void setGame(Game game)
     {
-        this.world = world;
-    }
-
-    public ArrayList<Player> getPlayers()
-    {
-        return players;
-    }
-
-    public void setPlayers(ArrayList<Player> players)
-    {
-        this.players = players;
-    }
-
-    public int getPlayerCount() {
-        return players.size();
-    }
-    public Player getPlayer(int id)
-    {
-        return players.get(id);
-    }
-
-    public void addPlayer(Player p)
-    {
-        p.setWorld(world);
-        players.add(p);
-        addEntity(p);
-    }
-
-    public void removePlayer(Player p) {
-        players.remove(p);
-        removeEntity(p);
+        this.game = game;
     }
 
     public ArrayList<Entity> getEntities()

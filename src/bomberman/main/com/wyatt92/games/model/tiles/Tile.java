@@ -38,6 +38,9 @@ public abstract class Tile implements Model
         this.y = y;
 
         tiles[id] = this;
+
+
+
     }
 
     public Tile(BufferedImage texture, int id)
@@ -46,6 +49,7 @@ public abstract class Tile implements Model
         this.id = id;
         tiles[id] = this;
     }
+
 
     @Override
     public void update(){
@@ -61,11 +65,11 @@ public abstract class Tile implements Model
         this.x = x;
         this.y = y;
     }
+
     // GETTERS and SETTERS
     public int getID() {
         return id;
     }
-
     public boolean isSolid() {
         return false;
     }
@@ -73,4 +77,6 @@ public abstract class Tile implements Model
     public Point getPosition(){
         return new Point(x, y);
     }
+
+
 }

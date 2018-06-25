@@ -2,7 +2,7 @@ package com.wyatt92.games.model.states;
 
 
 import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 
 import java.awt.*;
 
@@ -14,11 +14,11 @@ public abstract class State implements Model
 {
     private static State currentState = null;
     private static State gameState;
-    protected World world;
+    protected Game game;
     private int winner;
 
-    public State(World world) {
-        this.world = world;
+    public State(Game game) {
+        this.game = game;
     }
 
     protected State()

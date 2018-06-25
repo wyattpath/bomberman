@@ -1,7 +1,7 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.model.states.GameOverState;
 import com.wyatt92.games.model.states.GameState;
@@ -15,7 +15,7 @@ import com.wyatt92.games.view.View;
  * Controls and updates the view.
  * Keeps View and Model separated.
  */
-public class Game implements Runnable{
+public class Controller implements Runnable{
 
     private boolean running = false;
     private Thread thread1;
@@ -28,7 +28,7 @@ public class Game implements Runnable{
     private State gameOverState;
 
     // World
-    private World world;
+    private Game game;
 
     // Input
     private GameKeyListener gameKeyListener;
@@ -36,7 +36,7 @@ public class Game implements Runnable{
 
     private UIManager uiManager;
 
-    Game(View view) {
+    Controller(View view) {
         this.view = view;
         gameKeyListener = new GameKeyListener();
         gameMouseListener = new GameMouseListener();
@@ -55,10 +55,10 @@ public class Game implements Runnable{
         Assets.init();
 //        gamePanel.setDoubleBuffered(true);
 
-        world = new World("world2.txt");
-        gameState = new GameState(world);
+        game = new Game("world2.txt");
+        gameState = new GameState(game);
         State.setGameState(gameState);
-        menuState = new MenuState(world, uiManager);
+        menuState = new MenuState(game, uiManager);
 
         State.setCurrentState(menuState);
     }
@@ -121,55 +121,57 @@ public class Game implements Runnable{
 
     private void update(){
             gameKeyListener.update();
-            if(world.getEntityManager().getPlayers().size()>0){
-                for(int i = 0; i < world.getEntityManager().getPlayers().size(); i++){
-                    world.getEntityManager().getPlayer(i).setxMove(0);
-                    world.getEntityManager().getPlayer(i).setyMove(0);
+            if(game.getPlayerManager().getPlayers().size()>0){
+                for(int i = 0; i < game.getPlayerManager().getPlayers().size(); i++){
+                    game.getPlayerManager().getPlayer(i).setxMove(0);
+                    game.getPlayerManager().getPlayer(i).setyMove(0);
                 }
             }
 
-            if (world.getEntityManager().getPlayers().size()>=1){
+            if (game.getPlayerManager().getPlayers().size()>=1){
 
                 if (gameKeyListener.W)
-                    world.getEntityManager().getPlayer(0).moveUp();
+                    game.getPlayerManager().getPlayer(0).moveUp();
                 if (gameKeyListener.S)
-                    world.getEntityManager().getPlayer(0).moveDown();
+                    game.getPlayerManager().getPlayer(0).moveDown();
                 if (gameKeyListener.A)
-                    world.getEntityManager().getPlayer(0).moveLeft();
+                    game.getPlayerManager().getPlayer(0).moveLeft();
                 if (gameKeyListener.D)
-                    world.getEntityManager().getPlayer(0).moveRight();
+                    game.getPlayerManager().getPlayer(0).moveRight();
                 if (gameKeyListener.SPACE)
-                    world.getEntityManager().getPlayer(0).placeBomb();
+                    game.getPlayerManager().getPlayer(0).placeBomb();
             }
-            if (world.getEntityManager().getPlayers().size()> 1)
+            if (game.getPlayerManager().getPlayers().size()> 1)
             {
                 if (gameKeyListener.UP)
-                    world.getEntityManager().getPlayer(1).moveUp();
+                    game.getPlayerManager().getPlayer(1).moveUp();
                 if (gameKeyListener.DOWN)
-                    world.getEntityManager().getPlayer(1).moveDown();
+                    game.getPlayerManager().getPlayer(1).moveDown();
                 if (gameKeyListener.LEFT)
-                    world.getEntityManager().getPlayer(1).moveLeft();
+                    game.getPlayerManager().getPlayer(1).moveLeft();
                 if (gameKeyListener.RIGHT)
-                    world.getEntityManager().getPlayer(1).moveRight();
+                    game.getPlayerManager().getPlayer(1).moveRight();
                 if (gameKeyListener.CTRL)
-                    world.getEntityManager().getPlayer(1).placeBomb();
+                    game.getPlayerManager().getPlayer(1).placeBomb();
             }
 
             if(State.getCurrentState() != null)
             {
                 State.getCurrentState().update();
 
-                if(!world.isGameOver())
+                if(!game.isGameOver())
                 {
-                    if(world.getEntityManager().getPlayerCount()<2){
-                        world.setGameOver(true);
+                    System.out.println(game.getPlayerManager().getPlayerCount());
+                    if(game.getPlayerManager().getPlayerCount()<2){
+                        game.setGameOver(true);
+                        System.out.println("game over");
                         int winner = 0;
-                        for(Player p : world.getEntityManager().getPlayers()){
+                        for(Player p : game.getPlayerManager().getPlayers()){
                             if(p.isActive()) {
                                 winner = p.getId();
                             }
                         }
-                        gameOverState = new GameOverState(world, uiManager);
+                        gameOverState = new GameOverState(game, uiManager);
                         gameOverState.setWinner(winner);
                         State.setCurrentState(gameOverState);
 

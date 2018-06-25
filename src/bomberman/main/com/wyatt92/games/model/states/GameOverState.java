@@ -3,26 +3,23 @@ package com.wyatt92.games.model.states;
 
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.World;
-import com.wyatt92.games.model.ui.UIImageButton;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.ui.UIManager;
-import com.wyatt92.games.model.ui.UIObject;
 import com.wyatt92.games.model.utils.Animation;
 
 import javax.sound.sampled.Clip;
-import javax.swing.*;
 import java.awt.*;
 
 public class GameOverState extends State
 {
     private UIManager uiManager;
-    private World world;
+    private Game game;
     private Animation animGameOver;
 
-    public GameOverState(World world, UIManager uiManager)
+    public GameOverState(Game game, UIManager uiManager)
     {
-        super(world);
-        this.world = world;
+        super(game);
+        this.game = game;
         this.uiManager = uiManager;
         animGameOver = new Animation(10000, Assets.gameOver);
         animGameOver.setRandom(true);
@@ -38,17 +35,17 @@ public class GameOverState extends State
     @Override
     public void draw(Graphics g)
     {
-        if(world!= null)
+        if(game != null)
         {
             g.setColor(Color.BLACK);
-            g.fillRect(0,0,world.getWidth(), world.getHeight());
-            g.drawImage(animGameOver.getCurrentFrame(), 0,0, world.getWidth(), world.getHeight(), null);
+            g.fillRect(0,0, game.getWidth(), game.getHeight());
+            g.drawImage(animGameOver.getCurrentFrame(), 0,0, game.getWidth(), game.getHeight(), null);
 //            g.setFont(new Font("Unispace", Font.BOLD, 60));
 //            g.drawString("Game Over",world.getWidth()/3, world.getHeight()/2);
             uiManager.draw(g);
             g.setColor(Color.BLUE);
             g.setFont(new Font("Unispace", Font.BOLD, 40));
-            g.drawString("The Winner is Player " + getWinner(),world.getWidth()/4, 400);
+            g.drawString("The Winner is Player " + getWinner(), game.getWidth()/4, 400);
         }
 
 

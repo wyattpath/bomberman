@@ -1,20 +1,18 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.World;
-import com.wyatt92.games.model.tiles.Tile;
-import com.wyatt92.games.model.tiles.WallTile;
+import com.wyatt92.games.model.Game;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BombTest
 {
-    World world;
+    Game game;
     Bomb b;
 
     BombTest() {
-        world = new World("world1.txt");
-        b = new Bomb(world, 64, 64, 2);
+        game = new Game("world1.txt");
+        b = new Bomb(game, 64, 64, 2);
     }
 
     @Test
@@ -22,7 +20,7 @@ class BombTest
         assertEquals(64,b.getX());
         assertEquals(64,b.getY());
         assertEquals(2, b.getBombStrength());
-        assertEquals(world, b.getWorld());
+        assertEquals(game, b.getWorld());
     }
 /*
     @Test
@@ -51,14 +49,14 @@ class BombTest
     @Test
     void getWorld()
     {
-        assertEquals(world, b.getWorld());
+        assertEquals(game, b.getWorld());
     }
 
     @Test
     void setWorld()
     {
-        World newWorld = new World("world2.txt");
-        b.setWorld(newWorld);
-        assertEquals(newWorld,b.getWorld());
+        Game newGame = new Game("world2.txt");
+        b.setWorld(newGame);
+        assertEquals(newGame,b.getWorld());
     }
 }

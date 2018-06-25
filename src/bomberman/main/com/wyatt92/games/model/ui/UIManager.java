@@ -1,7 +1,6 @@
 package com.wyatt92.games.model.ui;
 
 import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.World;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 
 public class UIManager implements Model
 {
-    private World world;
     private ArrayList<UIObject> objects;
 
     public UIManager() {
@@ -52,16 +50,6 @@ public class UIManager implements Model
 
     // GETTERS and SETTERS
 
-
-    public World getWorld()
-    {
-        return world;
-    }
-
-    public void setWorld(World world)
-    {
-        this.world = world;
-    }
 
     public ArrayList<UIObject> getObjects()
     {

@@ -17,7 +17,7 @@ public class BombStrengthItem extends Item
     }
 
     @Override
-    protected void addEffect(Player player)
+    public void addEffect(Player player)
     {
         player.addBombStrength();
     }

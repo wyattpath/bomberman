@@ -3,7 +3,7 @@ package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -22,13 +22,13 @@ public class Blast extends StaticEntity
 
     /**
      *
-     * @param world
+     * @param game
      * @param x
      * @param y
      */
-    public Blast(World world, float x, float y)
+    public Blast(Game game, float x, float y)
     {
-        super(world, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+        super(game, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
         bounds = getCollisionBounds(0f,0f);
         lastTime = System.currentTimeMillis();
         waitTime = 2000f;
@@ -77,13 +77,13 @@ public class Blast extends StaticEntity
         bounds.y = y;
     }
 
-    public World getWorld() {
-        return world;
+    public Game getWorld() {
+        return game;
 
     }
 
-    public void setWorld(World world) {
-        super.world = world;
+    public void setWorld(Game game) {
+        super.game = game;
     }
 
 }

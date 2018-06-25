@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.entities;
 
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.Iterator;
  * This class manages all bomb blasts by adding, updating, removing and drawing blasts.
  */
 public class BombBlastManager {
-    private World world;
+    private Game game;
     private ArrayList<Blast> blasts;
 
-    public BombBlastManager(World world) {
-        this.world = world;
+    public BombBlastManager(Game game) {
+        this.game = game;
         blasts = new ArrayList<>();
     }
 
@@ -27,8 +27,8 @@ public class BombBlastManager {
             b.update();
 
             //checkCollision
-            for(Entity e : world.getEntityManager().getEntities()) {
-                if(e.equals(this))
+            for(Entity e : game.getEntityManager().getEntities()) {
+                if(e.equals(b))
                     continue;
                 if(e.getCollisionBounds(32,32).intersects(b.bounds)){
                     e.destroy();
@@ -55,7 +55,7 @@ public class BombBlastManager {
     }
 
     public void addBlast(Blast b) {
-        b.setWorld(world);
+        b.setWorld(game);
         blasts.add(b);
     }
 

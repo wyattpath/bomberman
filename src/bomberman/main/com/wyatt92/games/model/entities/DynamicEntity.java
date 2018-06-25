@@ -1,10 +1,8 @@
 package com.wyatt92.games.model.entities;
 
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.tiles.Tile;
-
-import java.awt.*;
 
 /**
  * The Dynamic Entity is an entity that can be moved around the world.
@@ -20,8 +18,8 @@ public abstract class DynamicEntity extends Entity
     protected float xMove, yMove;
 
 
-    public DynamicEntity(World world, float x, float y, int width, int height) {
-        super(world, x, y, width, height);
+    public DynamicEntity(Game game, float x, float y, int width, int height) {
+        super(game, x, y, width, height);
         speed = DEFAULT_SPEED;
     }
 
@@ -67,7 +65,7 @@ public abstract class DynamicEntity extends Entity
     }
 
     protected boolean collisionWithTile(int x, int y) {
-        return world.getTile(x,y).isSolid();
+        return game.getTile(x,y).isSolid();
     }
 
     public float getxMove()

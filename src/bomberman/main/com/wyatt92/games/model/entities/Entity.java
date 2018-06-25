@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 
 import java.awt.*;
 
@@ -16,7 +16,7 @@ import java.awt.*;
 public abstract class Entity implements Model
 {
     public static final int DEFAULT_HEALTH = 3;
-    protected World world;
+    protected Game game;
     protected float x,y,xOffset, yOffset;
     protected int width, height;
     protected int health;
@@ -27,14 +27,14 @@ public abstract class Entity implements Model
     /**
      * Constructor
      *
-     * @param world world where the entity should be created
+     * @param game world where the entity should be created
      * @param x x-coordinate of entity
      * @param y y-coordinate of entity
      * @param width width of entity
      * @param height height of entity
      */
-    public Entity(World world, float x, float y, int width, int height) {
-        this.world = world;
+    public Entity(Game game, float x, float y, int width, int height) {
+        this.game = game;
         this.x = x;
         this.y = y;
         this.width = width;

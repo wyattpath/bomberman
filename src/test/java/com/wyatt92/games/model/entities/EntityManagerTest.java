@@ -1,8 +1,7 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import org.junit.jupiter.api.Test;
-import sun.applet.AppletAudioClip;
 
 import java.util.ArrayList;
 
@@ -11,48 +10,48 @@ import static org.junit.jupiter.api.Assertions.*;
 class EntityManagerTest
 {
     private EntityManager entityManager;
-    World world;
+    Game game;
 
     EntityManagerTest() {
-        world = new World("world1.txt");
-        entityManager = new EntityManager(world);
+        game = new Game("world1.txt");
+        entityManager = new EntityManager(game);
     }
 
     @Test
     void addEntity()
     {
-        Stone stone = new Stone(world,3 ,4 );
-        world.getEntityManager().addEntity(stone);
-        assertTrue(world.getEntityManager().getEntities().contains(stone));
+        Stone stone = new Stone(game,3 ,4 );
+        game.getEntityManager().addEntity(stone);
+        assertTrue(game.getEntityManager().getEntities().contains(stone));
     }
 
     @Test
     void removeEntity()
     {
-        Stone stone = new Stone(world,3 ,4 );
-        world.getEntityManager().addEntity(stone);
-        world.getEntityManager().removeEntity(stone);
-        assertFalse(world.getEntityManager().getEntities().contains(stone));
+        Stone stone = new Stone(game,3 ,4 );
+        game.getEntityManager().addEntity(stone);
+        game.getEntityManager().removeEntity(stone);
+        assertFalse(game.getEntityManager().getEntities().contains(stone));
     }
 
     @Test
     void getWorld()
     {
-        assertEquals(world, entityManager.getWorld());
+        assertEquals(game, entityManager.getGame());
     }
 
     @Test
     void setWorld()
     {
-        World newWorld = new World("world2.txt");
-        entityManager.setWorld(newWorld);
-        assertEquals(newWorld, entityManager.getWorld());
+        Game newGame = new Game("world2.txt");
+        entityManager.setGame(newGame);
+        assertEquals(newGame, entityManager.getGame());
     }
 
     @Test
     void addPlayer()
     {
-        Player player = new Player(world, 3, 4, 0);
+        Player player = new Player(game, 3, 4, 0);
         entityManager.addPlayer(player);
         assertTrue(entityManager.getPlayers().contains(player));
         assertEquals(player,entityManager.getPlayer(0));
@@ -62,7 +61,7 @@ class EntityManagerTest
     void getPlayers()
     {
         assertEquals(0,entityManager.getPlayers().size());
-        Player player = new Player(world, 3, 4, 0);
+        Player player = new Player(game, 3, 4, 0);
         entityManager.addPlayer(player);
         assertEquals(1,entityManager.getPlayers().size());
     }
@@ -70,8 +69,8 @@ class EntityManagerTest
     @Test
     void getPlayer()
     {
-        Player player = new Player(world, 3, 4, 0);
-        Player player2 = new Player(world, 10, 4, 1);
+        Player player = new Player(game, 3, 4, 0);
+        Player player2 = new Player(game, 10, 4, 1);
         entityManager.addPlayer(player);
         entityManager.addPlayer(player2);
         assertEquals(player,entityManager.getPlayer(0));
@@ -81,7 +80,7 @@ class EntityManagerTest
     @Test
     void getEntities()
     {
-        Stone stone = new Stone(world,3 ,4 );
+        Stone stone = new Stone(game,3 ,4 );
         assertTrue(entityManager.getEntities().isEmpty());
         assertFalse(entityManager.getEntities().contains(stone));
         entityManager.addEntity(stone);
@@ -94,9 +93,9 @@ class EntityManagerTest
         assertTrue(entityManager.getEntities().isEmpty());
 
         ArrayList<Entity> entities = new ArrayList<>();
-        Stone stone1 = new Stone(world,30 ,4 );
-        Stone stone2 = new Stone(world,40 ,4 );
-        Stone stone3 = new Stone(world,70 ,4 );
+        Stone stone1 = new Stone(game,30 ,4 );
+        Stone stone2 = new Stone(game,40 ,4 );
+        Stone stone3 = new Stone(game,70 ,4 );
         entities.add(stone1);
         entities.add(stone2);
         entities.add(stone3);
@@ -111,7 +110,7 @@ class EntityManagerTest
     @Test
     void getPlayerCount() {
         assertEquals(0, entityManager.getPlayerCount());
-        Player p = new Player(world, 0, 0, 0);
+        Player p = new Player(game, 0, 0, 0);
         entityManager.addPlayer(p);
         assertEquals(1, entityManager.getPlayerCount());
     }

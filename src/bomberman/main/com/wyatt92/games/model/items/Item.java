@@ -2,14 +2,12 @@ package com.wyatt92.games.model.items;
 
 import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.utils.Animation;
-import com.wyatt92.games.model.utils.Sound;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.entities.Player;
 
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Iterator;
 
 /**
  * Grants a player additional abilities when picked up.
@@ -24,10 +22,20 @@ public abstract class Item implements Model
 
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 
-    protected World world;
+    protected Game game;
     protected Animation animation;
     protected String name;
     protected final int id;
+
+    public Rectangle getBounds()
+    {
+        return bounds;
+    }
+
+    public void setBounds(Rectangle bounds)
+    {
+        this.bounds = bounds;
+    }
 
     protected Rectangle bounds;
 
@@ -61,7 +69,7 @@ public abstract class Item implements Model
 
     @Override
     public void draw(Graphics g){
-        if(world != null)
+        if(game != null)
 //            draw(g, x, y);
         g.drawImage(animation.getCurrentFrame(),x, y, ITEMWIDTH, ITEMHEIGHT, null);
 
@@ -81,18 +89,18 @@ public abstract class Item implements Model
     }
 
 
-    protected abstract void addEffect(Player player);
+    public abstract void addEffect(Player player);
 
     // GETTERS and SETTERS
 
-    public World getWorld()
+    public Game getGame()
     {
-        return world;
+        return game;
     }
 
-    public void setWorld(World world)
+    public void setGame(Game game)
     {
-        this.world = world;
+        this.game = game;
     }
 
     public Animation getAnimation()

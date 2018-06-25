@@ -1,11 +1,9 @@
 package com.wyatt92.games.model.entities;
 
 
-import com.wyatt92.games.model.utils.Sound;
 import com.wyatt92.games.model.utils.Animation;
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.World;
-import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.games.model.Game;
 
 import java.awt.*;
 
@@ -28,14 +26,14 @@ public class Bomb extends StaticEntity{
      * After a specific time the bomb explodes and places blasts depending on the strength of the bomb in the four directions.
      * If a blast in a line hits a tile or an entity it will destroy that entity or tile and will not place another blast in the line.
      *
-     * @param world world where the bomb will be placed
+     * @param game world where the bomb will be placed
      * @param x x-coordinate of bomb
      * @param y y-coordinate of bomb
      * @param bombStrength strength of bomb
      */
-    public Bomb(World world, float x, float y, int bombStrength)
+    public Bomb(Game game, float x, float y, int bombStrength)
     {
-        super(world, x, y, BOMBWIDTH, BOMBHEIGHT);
+        super(game, x, y, BOMBWIDTH, BOMBHEIGHT);
         this.bombStrength = bombStrength;
         bounds = new Rectangle((int) x,(int) y, BOMBWIDTH, BOMBHEIGHT);
         lastTime = System.currentTimeMillis();
@@ -74,14 +72,14 @@ public class Bomb extends StaticEntity{
 
     // GETTERS and SETTERS
 
-    public World getWorld()
+    public Game getWorld()
     {
-        return super.world;
+        return super.game;
     }
 
-    public void setWorld(World world)
+    public void setWorld(Game game)
     {
-        super.world = world;
+        super.game = game;
     }
 
     public int getBombStrength()

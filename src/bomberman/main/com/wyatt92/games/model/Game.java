@@ -1,8 +1,10 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.model.entities.*;
+import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.items.ItemManager;
 import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.games.model.utils.Sound;
 import com.wyatt92.games.model.utils.Utils;
 
 import java.awt.*;
@@ -15,18 +17,14 @@ import java.util.Random;
  * This class loads the world from a file.
  * Creates and manages all entities, items, bombs, blasts.
  */
-public class World implements Model
+public class Game implements Model
 {
     private int width, height;
     private int playerCount;
-    private int playerSpawnX,playerSpawnY;
     private int[][] tiles;
-    private int xCenter;
-    private int yCenter;
     private static Map<Integer, Point> spawnMap;
     private boolean gameOver;
     private String path;
-
     //Entities
     private EntityManager entityManager;
     // Item
@@ -36,18 +34,31 @@ public class World implements Model
     // Blasts
     private BombBlastManager bombBlastManager;
 
+    public PlayerManager getPlayerManager()
+    {
+        return playerManager;
+    }
+
+    public void setPlayerManager(PlayerManager playerManager)
+    {
+        this.playerManager = playerManager;
+    }
+
+    private PlayerManager playerManager;
+
 
     /**
      * Constructor
      *
      * @param path path to the word file
      */
-    public World( String path) {
+    public Game(String path) {
         this.path = path;
         entityManager = new EntityManager(this);
         itemManager = new ItemManager(this);
         bombManager = new BombManager(this);
         bombBlastManager = new BombBlastManager(this);
+        playerManager = new PlayerManager(this);
         playerCount = 2;
         gameOver = false;
 
@@ -62,6 +73,7 @@ public class World implements Model
         itemManager = new ItemManager(this);
         bombManager = new BombManager(this);
         bombBlastManager = new BombBlastManager(this);
+        playerManager = new PlayerManager(this);
         playerCount = 2;
         gameOver = false;
 
@@ -108,11 +120,56 @@ public class World implements Model
 
     }
 
-    public void update() {
+    public void update()
+    {
         bombBlastManager.update();
         bombManager.update();
         itemManager.update();
         entityManager.update();
+        playerManager.update();
+
+        checkPlayerCollisions();
+        checkItemPickUp();
+
+    }
+
+    private void checkItemPickUp()
+    {
+        Iterator<Item> it = itemManager.getItems().iterator();
+        Iterator<Player> itp = playerManager.getPlayers().iterator();
+        while(it.hasNext()){
+            Item i = it.next();
+            while(itp.hasNext()) {
+                Player p = itp.next();
+                if(p.getCollisionBounds(0f,0f).intersects(i.getBounds())){
+                    Sound.playSound("item_get.wav");
+                    i.setPickedUp(true);
+                    i.addEffect(p);
+                }
+            }
+        }
+    }
+
+    private void checkPlayerCollisions()
+    {
+        Iterator<Entity> it = entityManager.getEntities().iterator();
+        while (it.hasNext())
+        {
+            Entity e = it.next();
+            e.update();
+            if (playerManager.getPlayers().contains(e))
+            {
+                Player p = (Player) e;
+                if (!checkEntityCollisions(p, p.getxMove(), 0f))
+                {
+                    p.moveX();
+                }
+                if (!checkEntityCollisions(p, 0f, p.getyMove()))
+                {
+                    p.moveY();
+                }
+            }
+        }
     }
 
 
@@ -132,6 +189,8 @@ public class World implements Model
         itemManager.draw(g);
         //entities
         entityManager.draw(g);
+        //players
+        playerManager.draw(g);
     }
 
     public Tile getTile(int x, int y)
@@ -146,13 +205,15 @@ public class World implements Model
         return t;
     }
 
-    private void loadWorld(String path)
+    public void loadWorld(String path)
     {
+        this.path = path;
         String file = Utils.loadFileAsString(path);
         String[] tokens = file.split("\\s+");
         width = Utils.parseInt(tokens[0]);
         height = Utils.parseInt(tokens[1]);
-
+        System.out.println(Tile.TILEWIDTH);
+        System.out.println(Tile.TILEHEIGHT);
         tiles = new int[width][height];
         for (int y = 0; y < height; y++)
         {
@@ -167,26 +228,21 @@ public class World implements Model
         for (int i = 1; i <= playerCount; i++) {
             final Point startingPoint = spawnMap.get(i);
             final Player player = new Player(this, startingPoint.x * Tile.TILEWIDTH -1, startingPoint.y * Tile.TILEHEIGHT -1, i);
-            entityManager.addPlayer(player);
+            playerManager.addPlayer(player);
+            entityManager.addEntity(player);
         }
     }
 
-    public void removePlayers() {
-            Iterator<Player> it = entityManager.getPlayers().iterator();
-            while(it.hasNext()) {
-                Player p = it.next();
-                if(p.isActive()){
-                    Iterator<Entity> its = entityManager.getEntities().iterator();
-                    while(its.hasNext()){
-                        Entity e = its.next();
-                        if(e.equals(p)){
-                            its.remove();
-                        }
-                    }
-                    it.remove();
-                }
+    public boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
+        for(Entity e : entityManager.getEntities()){
+            if(e.equals(e1)){
+                continue;
             }
-
+            if(e.getCollisionBounds(0f, 0f).intersects(e1.getCollisionBounds(xOffset, yOffset))){
+                return true;
+            }
+        }
+        return false;
     }
 
     // GETTERS and SETTERS

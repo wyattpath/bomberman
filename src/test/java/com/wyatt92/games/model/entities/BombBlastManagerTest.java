@@ -1,32 +1,32 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BombBlastManagerTest
 {
-    private World world;
+    private Game game;
     private BombBlastManager bombBlastManager;
 
     BombBlastManagerTest() {
-        world = new World("world1.txt");
+        game = new Game("world1.txt");
     }
 
     @Test
     void getBlasts()
     {
-        world.getBombBlastManager().getBlasts();
-        assertTrue(world.getBombBlastManager().getBlasts().isEmpty());
+        game.getBombBlastManager().getBlasts();
+        assertTrue(game.getBombBlastManager().getBlasts().isEmpty());
     }
 
     @Test
     void addBlast()
     {
-        Blast b = new Blast(world, 3, 54);
-        assertFalse(world.getBombBlastManager().getBlasts().contains(b));
-        world.getBombBlastManager().addBlast(b);
-        assertTrue(world.getBombBlastManager().getBlasts().contains(b));
+        Blast b = new Blast(game, 3, 54);
+        assertFalse(game.getBombBlastManager().getBlasts().contains(b));
+        game.getBombBlastManager().addBlast(b);
+        assertTrue(game.getBombBlastManager().getBlasts().contains(b));
     }
 }

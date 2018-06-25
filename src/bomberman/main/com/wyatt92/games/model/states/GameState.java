@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.states;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 
 import javax.sound.sampled.Clip;
 import java.awt.*;
@@ -10,21 +10,21 @@ public class GameState extends State
 {
 
 
-    public GameState(World world) {
-        this.world = world;
+    public GameState(Game game) {
+        this.game = game;
     }
 
     @Override
     public void update()
     {
-        world.update();
+        game.update();
 
     }
 
     @Override
     public void draw(Graphics g)
     {
-        world.draw(g);
+        game.draw(g);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.items;
 
 
-import com.wyatt92.games.model.World;
+import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.model.utils.Sound;
 
@@ -14,16 +14,27 @@ import java.util.Iterator;
  */
 public class ItemManager
 {
-    private World world;
+    private Game game;
+
+    public ArrayList<Item> getItems()
+    {
+        return items;
+    }
+
+    public void setItems(ArrayList<Item> items)
+    {
+        this.items = items;
+    }
+
     private ArrayList<Item> items;
 
     /**
      * Constructor
      *
-     * @param world world where the items will be managed
+     * @param game world where the items will be managed
      */
-    public ItemManager(World world) {
-        this.world = world;
+    public ItemManager(Game game) {
+        this.game = game;
         items = new ArrayList<>();
     }
 
@@ -34,15 +45,6 @@ public class ItemManager
         while(it.hasNext()) {
             Item i = it.next();
             i.update();
-            Iterator<Player> itp = world.getEntityManager().getPlayers().iterator();
-            while(itp.hasNext()) {
-                Player p = itp.next();
-                if(p.getCollisionBounds(0f,0f).intersects(i.bounds)){
-                    Sound.playSound("item_get.wav");
-                    i.setPickedUp(true);
-                    i.addEffect(p);
-                }
-            }
             if(i.isPickedUp()) {
                 it.remove();
             }
@@ -57,19 +59,19 @@ public class ItemManager
     }
 
     public void addItem(Item i) {
-        i.setWorld(world);
+        i.setGame(game);
         items.add(i);
     }
 
     // GETTERS and SETTERS
 
-    public World getWorld()
+    public Game getGame()
     {
-        return world;
+        return game;
     }
 
-    public void setWorld(World world)
+    public void setGame(Game game)
     {
-        this.world = world;
+        this.game = game;
     }
 }

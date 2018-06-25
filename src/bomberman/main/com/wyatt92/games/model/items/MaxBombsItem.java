@@ -15,7 +15,7 @@ public class MaxBombsItem extends Item
     }
 
     @Override
-    protected void addEffect(Player player)
+    public void addEffect(Player player)
     {
         player.addMaxBombs();
     }
