@@ -55,15 +55,6 @@ public abstract class Item implements Model
     @Override
     public void update() {
         animation.update();
-        Iterator<Player> it = world.getEntityManager().getPlayers().iterator();
-        while(it.hasNext()) {
-            Player p = it.next();
-            if(p.getCollisionBounds(0f,0f).intersects(bounds)){
-                Sound.playSound("item_get.wav");
-                pickedUp = true;
-                addEffect(p);
-            }
-        }
     }
 
 
@@ -71,12 +62,13 @@ public abstract class Item implements Model
     @Override
     public void draw(Graphics g){
         if(world != null)
-            draw(g, x, y);
+//            draw(g, x, y);
+        g.drawImage(animation.getCurrentFrame(),x, y, ITEMWIDTH, ITEMHEIGHT, null);
+
     }
 
     public void draw(Graphics g, int x, int y)
     {
-        g.drawImage(animation.getCurrentFrame(),x, y, ITEMWIDTH, ITEMHEIGHT, null);
     }
 
     public abstract Item createNew(int x, int y);
@@ -161,5 +153,10 @@ public abstract class Item implements Model
     public boolean isPickedUp()
     {
         return pickedUp;
+    }
+
+    public void setPickedUp(boolean pickedUp)
+    {
+        this.pickedUp = pickedUp;
     }
 }

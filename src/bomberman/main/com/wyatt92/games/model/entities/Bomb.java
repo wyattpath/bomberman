@@ -69,46 +69,11 @@ public class Bomb extends StaticEntity{
 
     protected void destroy()
     {
-        placeBlast((int)super.x,(int)super.y,0,0);
-        placeBlast((int)super.x, (int)super.y, Tile.TILEWIDTH,0); // nextTile on the right
-        placeBlast((int)super.x, (int)super.y, -Tile.TILEWIDTH, 0); // nextTile on the left
-        placeBlast((int)super.x, (int)super.y,0,-Tile.TILEHEIGHT); //nextTile above
-        placeBlast((int)super.x, (int)super.y,0,Tile.TILEHEIGHT); //nextTile below
+
 
     }
 
-    private void placeBlast(int x, int y, int xOffset, int yOffset) {
-        boolean stop = false;
-        String sound =
-                (bombStrength>5) ? "boom_L.wav" :
-                (bombStrength> 3)? "boom_M.wav" : "boom_S.wav";
-        Sound.playSound(sound);
 
-        for(int i = 0; i < bombStrength;i++)
-        {
-            if(stop || collisionWithTile(x + xOffset + i * xOffset, y + yOffset + i *yOffset))
-                return;
-
-            world.getBombBlastManager().addBlast(new Blast(world , x + xOffset + i*xOffset, y + yOffset + i *yOffset));
-
-            Rectangle tempBounds = new Rectangle();
-            tempBounds.x = x + xOffset + i * xOffset;
-            tempBounds.y = y + yOffset + i *yOffset;
-            tempBounds.setSize(BOMBWIDTH, BOMBHEIGHT);
-            for (Entity e : world.getEntityManager().getEntities())
-            {
-                if (e.equals(this))
-                    continue;
-                if (e.getCollisionBounds(32, 32).intersects(tempBounds))
-                {
-                    e.destroy();
-                    e.hurt(3);
-                    stop = true;
-                }
-            }
-
-        }
-    }
 
     protected boolean collisionWithTile(int x, int y) {
         return world.getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();

@@ -15,7 +15,7 @@ import java.util.Random;
 public class Assets {
 
     private static final int width = 32, height = 32;
-    private static int bgCount, logoCount;
+    private static int bgCount, logoCount, gameOverCount;
 
     public static BufferedImage dirt, grass, wall, tree;
     public static BufferedImage[] stone;
@@ -26,6 +26,8 @@ public class Assets {
     public static BufferedImage[] blast;
     public static BufferedImage[] bg;
     public static BufferedImage[] logo;
+    public static BufferedImage[] gameOver;
+
 
     public static Clip menu_bgMusic, menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
     public static Clip game_bgMusic, game_bombSet, game_bombBoomS, game_bombBoomM, game_bombBoomL;
@@ -106,6 +108,14 @@ public class Assets {
             SpriteSheet logoSheet = new SpriteSheet(ImageLoader.loadImage("/logo/logo"+i+".png"));
             logo[i] = logoSheet.crop(0,0,logoSheet.getWidth(), logoSheet.getHeight());
         }
+
+        gameOverCount = 7;
+        gameOver = new BufferedImage[gameOverCount];
+        for(int i = 0; i < gameOverCount; i++){
+            SpriteSheet logoSheet = new SpriteSheet(ImageLoader.loadImage("/gameover/go"+i+".png"));
+            gameOver[i] = logoSheet.crop(0,0,logoSheet.getWidth(), logoSheet.getHeight());
+        }
+
 
         //Sounds
         menu_selectFX = Sound.clipForLoopFactory("select.wav");

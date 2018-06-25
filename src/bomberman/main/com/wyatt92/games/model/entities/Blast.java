@@ -37,31 +37,10 @@ public class Blast extends StaticEntity
         animBlast = new Animation(200, Assets.blast);
     }
 
-    private void checkCollision()
-    {
-        for(Entity e : world.getEntityManager().getEntities()) {
-            if(e.equals(this))
-                continue;
-            if(e.getCollisionBounds(32,32).intersects(bounds)){
-                e.destroy();
-                e.hurt(3);
-            }
-        }
-    }
-
-
-
-    public Blast createNew(int x, int y){
-        Blast b = new Blast(super.world, x, y);
-        b.setPosition(x, y);
-        return b;
-    }
-
     @Override
     public void update()
     {
         animBlast.update();
-        checkCollision();
 
         countdown -= System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();

@@ -25,6 +25,17 @@ public class BombBlastManager {
         while(it.hasNext()) {
             Blast b = it.next();
             b.update();
+
+            //checkCollision
+            for(Entity e : world.getEntityManager().getEntities()) {
+                if(e.equals(this))
+                    continue;
+                if(e.getCollisionBounds(32,32).intersects(b.bounds)){
+                    e.destroy();
+                    e.hurt(3);
+                }
+            }
+
             if(!b.isActive()) {
                 it.remove();
             }
@@ -49,4 +60,6 @@ public class BombBlastManager {
     {
         return blasts;
     }
+
+
 }

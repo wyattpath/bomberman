@@ -166,7 +166,7 @@ public class World implements Model
     public void addPlayers() {
         for (int i = 1; i <= playerCount; i++) {
             final Point startingPoint = spawnMap.get(i);
-            final Player player = new Player(this, startingPoint.x * Tile.TILEWIDTH, startingPoint.y * Tile.TILEHEIGHT, i);
+            final Player player = new Player(this, startingPoint.x * Tile.TILEWIDTH -1, startingPoint.y * Tile.TILEHEIGHT -1, i);
             entityManager.addPlayer(player);
         }
     }

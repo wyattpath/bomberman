@@ -41,6 +41,7 @@ public class EntityManager
 //                    world.setPlayerCount(world.getPlayerCount()-1);
                 }
                 it.remove();
+                System.out.println((e.getClass().getSimpleName()));
             }
         }
         entities.sort(drawSorter);
