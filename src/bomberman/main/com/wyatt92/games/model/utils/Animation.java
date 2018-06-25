@@ -2,6 +2,7 @@ package com.wyatt92.games.model.utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 /**
  * This class is responsible for Animation.
@@ -12,6 +13,7 @@ public class Animation
     private int animSpeed, index;
     private long lastTime, timer;
     private BufferedImage[] frames;
+    private boolean random;
 
     /**
      * Constructor
@@ -25,6 +27,7 @@ public class Animation
     index = 0;
     timer = 0;
     lastTime = System.currentTimeMillis();
+    random = false;
     }
 
     public void update(){
@@ -32,7 +35,7 @@ public class Animation
         lastTime = System.currentTimeMillis();
 
         if(timer > animSpeed) {
-            index++;
+            index = random ? new Random().nextInt(frames.length) : index+1;
             timer = 0;
             if(index >= frames.length){
                 index = 0;
@@ -53,5 +56,16 @@ public class Animation
     public void setAnimSpeed(int animSpeed)
     {
         this.animSpeed = animSpeed;
+    }
+
+
+    public boolean isRandom()
+    {
+        return random;
+    }
+
+    public void setRandom(boolean random)
+    {
+        this.random = random;
     }
 }

@@ -38,7 +38,7 @@ public class EntityManager
                 if(getPlayers().contains(e))
                 {
                     players.remove(e);
-                    world.setPlayerCount(world.getPlayerCount()-1);
+//                    world.setPlayerCount(world.getPlayerCount()-1);
                 }
                 it.remove();
             }

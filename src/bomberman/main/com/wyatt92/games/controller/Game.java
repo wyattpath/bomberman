@@ -55,7 +55,7 @@ public class Game implements Runnable{
         Assets.init();
 //        gamePanel.setDoubleBuffered(true);
 
-        world = new World("world1.txt");
+        world = new World("world2.txt");
         gameState = new GameState(world);
         State.setGameState(gameState);
         menuState = new MenuState(world, uiManager);
@@ -121,14 +121,14 @@ public class Game implements Runnable{
 
     private void update(){
             gameKeyListener.update();
-            if(world.getPlayerCount()>0){
-                for(int i = 0; i < world.getPlayerCount(); i++){
+            if(world.getEntityManager().getPlayers().size()>0){
+                for(int i = 0; i < world.getEntityManager().getPlayers().size(); i++){
                     world.getEntityManager().getPlayer(i).xMove = 0;
                     world.getEntityManager().getPlayer(i).yMove = 0;
                 }
             }
 
-            if (world.getPlayerCount()>=1){
+            if (world.getEntityManager().getPlayers().size()>=1){
 
                 if (gameKeyListener.W)
                     world.getEntityManager().getPlayer(0).moveUp();
@@ -141,7 +141,7 @@ public class Game implements Runnable{
                 if (gameKeyListener.SPACE)
                     world.getEntityManager().getPlayer(0).placeBomb();
             }
-            if (world.getPlayerCount()> 1)
+            if (world.getEntityManager().getPlayers().size()> 1)
             {
                 if (gameKeyListener.UP)
                     world.getEntityManager().getPlayer(1).moveUp();

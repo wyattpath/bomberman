@@ -3,8 +3,10 @@ package com.wyatt92.games.model.states;
 import com.wyatt92.games.model.World;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.entities.Player;
+import com.wyatt92.games.model.ui.UIAnimation;
 import com.wyatt92.games.model.ui.UIImageButton;
 import com.wyatt92.games.model.ui.UIManager;
+import com.wyatt92.games.model.utils.Animation;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -21,6 +23,8 @@ public class MenuState extends State
     private UIManager uiManager;
     private UIImageButton start;
     private UIImageButton quit;
+    private UIAnimation animBG;
+    private UIAnimation animLogo;
     private World world;
 
 
@@ -35,7 +39,7 @@ public class MenuState extends State
         this.world = world;
         this.uiManager = uiManager;
 
-        start = new UIImageButton(400, 400, 228, 35, Assets.btn_start, () ->
+        start = new UIImageButton(400, 600, 228, 35, Assets.btn_start, () ->
         {
             if(world.isGameOver()){
 
@@ -43,7 +47,17 @@ public class MenuState extends State
             }
             State.setCurrentState(State.getGameState());
         });
-        quit = new UIImageButton(400, 435, 228, 35, Assets.btn_quit, () -> System.exit(0));
+        quit = new UIImageButton(400, 635, 228, 35, Assets.btn_quit, () ->
+        {
+            System.exit(0);
+        });
+        animLogo = new UIAnimation(256,64,512, 256,Assets.logo);
+        animLogo.getAnim().setAnimSpeed(10000);
+        animLogo.getAnim().setRandom(true);
+        animBG = new UIAnimation(0,0,world.getWidth(), world.getHeight(),Assets.bg);
+        animBG.getAnim().setRandom(true);
+        uiManager.addObject(animBG);
+        uiManager.addObject(animLogo);
         uiManager.addObject(start);
         uiManager.addObject(quit);
     }

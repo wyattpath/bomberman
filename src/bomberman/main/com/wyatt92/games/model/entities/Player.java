@@ -63,7 +63,7 @@ public class Player extends DynamicEntity
         if(bombCount < maxBombs)
         {
             bombCount++;
-            System.out.println("bombCount = " + bombCount);
+            System.out.println(id + " : bombCount = " + bombCount);
             attackTimer = 0;
         }
     }
@@ -72,19 +72,19 @@ public class Player extends DynamicEntity
     @Override
     protected void destroy()
     {
-        System.out.println("You lose!");
+        System.out.println(id + " : You died!");
     }
 
     public void addMaxBombs()
     {
         maxBombs++;
-        System.out.println("You can now deploy " + maxBombs + " bombs at the same time.");
+        System.out.println(id + ": You can now deploy " + maxBombs + " bombs at the same time.");
     }
 
     public void addBombStrength()
     {
         bombStrength++;
-        System.out.println("Your bombblasts now covers " + bombStrength + " tiles in each direction.");
+        System.out.println(id + ": Your bombblasts now covers " + bombStrength + " tiles in each direction.");
     }
 
     public void addPlayerSpeed() {
@@ -101,7 +101,6 @@ public class Player extends DynamicEntity
         if (bombCount > 0)
         {
             Sound.playSound("bomb_Set.wav");
-            System.out.println("placing Bomb");
             Bomb b = new Bomb(world, super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
             world.getBombManager().addBomb(b);
             bombCount--;

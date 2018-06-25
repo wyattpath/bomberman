@@ -15,6 +15,7 @@ import java.util.Random;
 public class Assets {
 
     private static final int width = 32, height = 32;
+    private static int bgCount, logoCount;
 
     public static BufferedImage dirt, grass, wall, tree;
     public static BufferedImage[] stone;
@@ -23,6 +24,8 @@ public class Assets {
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] bomb;
     public static BufferedImage[] blast;
+    public static BufferedImage[] bg;
+    public static BufferedImage[] logo;
 
     public static Clip menu_bgMusic, menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
     public static Clip game_bgMusic, game_bombSet, game_bombBoomS, game_bombBoomM, game_bombBoomL;
@@ -35,6 +38,14 @@ public class Assets {
         SpriteSheet powerUpsSheet = new SpriteSheet(ImageLoader.loadImage("powerups.png"));
         SpriteSheet menuSheet = new SpriteSheet(ImageLoader.loadImage("menu.png"));
 
+
+
+        dirt = sheet.crop(width, 0, width, height);
+        grass = sheet.crop(width * 2, 0, width, height);
+        wall = sheet.crop(width * 3, 0, width, height);
+        tree = sheet.crop(0, height, width, height);
+
+        //Animation
         player_down = new BufferedImage[2];
         player_up = new BufferedImage[2];
         player_left = new BufferedImage[2];
@@ -49,10 +60,6 @@ public class Assets {
         player_left[0] = sheet.crop(width * 6, height, width, height);
         player_left[1] = sheet.crop(width * 7, height, width, height);
 
-        dirt = sheet.crop(width, 0, width, height);
-        grass = sheet.crop(width * 2, 0, width, height);
-        wall = sheet.crop(width * 3, 0, width, height);
-        tree = sheet.crop(0, height, width, height);
         stone = new BufferedImage[2];
         stone[0] = sheet.crop(0, width * 2, width-1, height-1);
         stone[1] = sheet.crop(1, width * 2+1, width-1, height-1);
@@ -86,6 +93,19 @@ public class Assets {
         playerSpeed[0] = powerUpsSheet.crop(315, 0, 150, 150);
         playerSpeed[1] = powerUpsSheet.crop(320, 2, 150, 150);
 
+        bgCount = 25;
+        bg = new BufferedImage[bgCount];
+        for(int i = 0; i < bgCount; i++){
+            SpriteSheet bgSheet = new SpriteSheet(ImageLoader.loadImage("/bg/bg"+i+".png"));
+            bg[i] = bgSheet.crop(0,0,bgSheet.getWidth(), bgSheet.getHeight());
+        }
+
+        logoCount = 6;
+        logo = new BufferedImage[logoCount];
+        for(int i = 0; i < logoCount; i++){
+            SpriteSheet logoSheet = new SpriteSheet(ImageLoader.loadImage("/logo/logo"+i+".png"));
+            logo[i] = logoSheet.crop(0,0,logoSheet.getWidth(), logoSheet.getHeight());
+        }
 
         //Sounds
         menu_selectFX = Sound.clipForLoopFactory("select.wav");
