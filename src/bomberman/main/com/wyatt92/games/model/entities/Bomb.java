@@ -64,16 +64,8 @@ public class Bomb extends StaticEntity{
         g.drawImage(animBomb.getCurrentFrame(), (int)super.x - BOMBWIDTH/2, (int)super.y-BOMBHEIGHT/2, BOMBWIDTH, BOMBHEIGHT, null);
     }
 
-    public void destroy()
-    {
-
-
-    }
 
     // GETTERS and SETTERS
-    public void setWorld(Model model){
-        this.model = model;
-    }
 
     public int getBombStrength()
     {

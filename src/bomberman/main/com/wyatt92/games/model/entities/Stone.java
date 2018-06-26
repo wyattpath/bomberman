@@ -31,12 +31,4 @@ public class Stone extends StaticEntity {
         g.drawImage(animStone.getCurrentFrame(), (int) x, (int) y, width, height, null);
     }
 
-    @Override
-    public void destroy()
-    {
-//        int randInt = new Random().nextInt(Item.items.length);
-//        if(randInt != 0 && randInt < 4)
-//            model.addItem(Item.items[randInt].createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
-//        handler.getWorld().getItemManager().addItem(Item.powerUpItem.createNew((int) x + Tile.TILEWIDTH/4,(int) y + Tile.TILEHEIGHT/4));
-    }
 }

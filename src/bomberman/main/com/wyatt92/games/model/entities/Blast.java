@@ -19,15 +19,7 @@ public class Blast extends StaticEntity
     private float waitTime;
     private static Animation animBlast;
 
-    public Rectangle getBounds()
-    {
-        return bounds;
-    }
 
-    public void setBounds(Rectangle bounds)
-    {
-        this.bounds = bounds;
-    }
 
     protected Rectangle bounds;
 
@@ -57,7 +49,7 @@ public class Blast extends StaticEntity
 
         if(countdown < 0) {
             countdown = waitTime;
-            destroy();
+            setActive(false);
         }
     }
 
@@ -67,33 +59,19 @@ public class Blast extends StaticEntity
         g.drawImage(animBlast.getCurrentFrame(),(int)super.x- Tile.TILEWIDTH/2,(int)super.y- Tile.TILEHEIGHT/2,Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
     }
 
-    @Override
-    public void destroy()
-    {
-        setActive(false);
-    }
 
 
     // GETTERS and SETTERS
-    public Point getPosition() {
-        return new Point((int)super.x,(int)super.y);
-    }
 
-    public void setPosition(int x, int y)
+    public Rectangle getBounds()
     {
-        this.x = x;
-        this.y = y;
-        bounds.x = x;
-        bounds.y = y;
+        return bounds;
     }
 
-    public Model getWorld() {
-        return model;
-
+    public void setBounds(Rectangle bounds)
+    {
+        this.bounds = bounds;
     }
 
-    public void setWorld(Model model) {
-        this.model = model;
-    }
 
 }

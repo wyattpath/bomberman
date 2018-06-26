@@ -69,12 +69,6 @@ public class Player extends DynamicEntity
     }
 
 
-    @Override
-    public void destroy()
-    {
-        System.out.println(id + " : You died!");
-    }
-
     public void addMaxBombs()
     {
         maxBombs++;

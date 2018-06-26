@@ -57,11 +57,9 @@ public abstract class Entity
         health -= amount;
         if(health <= 0) {
             setActive(false);
-            destroy();
         }
     }
 
-    public abstract void destroy();
 
 
 

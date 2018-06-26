@@ -309,7 +309,6 @@ public class Game implements Model
     }
 
     public void addBomb(Bomb b) {
-        b.setWorld(this);
         bombs.add(b);
     }
 
@@ -327,11 +326,9 @@ public class Game implements Model
             if(!collisionWithTile(tx, y + bounds.y) &&
                     !collisionWithTile(tx, (y + bounds.y + bounds.height))){
                 x += xMove;
-                System.out.println(x);
                 p.setX(x);
             } else {
                 x = tx - bounds.x - bounds.width - xMove;
-                System.out.println(x);
                 p.setX(x);
             }
         } else if(xMove < 0) {//moving left
@@ -339,17 +336,12 @@ public class Game implements Model
             if(!collisionWithTile(tx, y + bounds.y )&&
                     !collisionWithTile(tx, y + bounds.y + bounds.height)){
                 x += xMove;
-                System.out.println(x);
-//                System.out.println(xMove);
                 p.setX(x);
             } else {
                 x = tx  - bounds.x -xMove;
-                System.out.println(x);
-//                System.out.println(xMove);
                 p.setX(x);
             }
         }
-//        System.out.println(x);
     }
 
     @Override
@@ -492,7 +484,6 @@ public class Game implements Model
                 placeBlast(b, 0,-Tile.TILEHEIGHT); //nextTile above
                 placeBlast(b, 0,Tile.TILEHEIGHT); //nextTile below
 
-                b.destroy();
                 bombIterator.remove();
             }
         }
@@ -547,7 +538,6 @@ public class Game implements Model
                     continue;
                 if (e.getCollisionBounds(32, 32).intersects(tempBounds))
                 {
-                    e.destroy();
                     e.hurt(3);
                     stop = true;
                 }
@@ -564,7 +554,6 @@ public class Game implements Model
                 if(e.equals(b))
                     continue;
                 if(e.getCollisionBounds(32,32).intersects(b.getBounds())){
-                    e.destroy();
                     e.hurt(3);
                 }
             }

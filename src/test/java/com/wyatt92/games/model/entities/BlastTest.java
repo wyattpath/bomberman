@@ -9,18 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BlastTest
 {
-    private static Game game;
 
-    BlastTest() {
-
-        game = new Game("world1.txt");
-        assertNotNull(game);
-    }
 
     @Test
     void constructor(){
-        Blast blast = new Blast(game, 3, 4);
-        assertEquals(game, blast.getWorld());
+        Blast blast = new Blast(3, 4);
         assertEquals(3,blast.getX());
         assertEquals(4, blast.getY());
     }
@@ -28,7 +21,7 @@ class BlastTest
     @Test
     void destroy()
     {
-        Blast blast = new Blast(game,3, 4);
+        Blast blast = new Blast(3, 4);
         blast.destroy();
         assertFalse(blast.isActive());
     }
@@ -36,26 +29,18 @@ class BlastTest
     @Test
     void getPosition()
     {
-        Blast blast = new Blast(game,3, 4);
-        game.getBombBlastManager().addBlast(blast);
+        Blast blast = new Blast(3, 4);
         assertEquals(new Point(3,4), blast.getPosition());
     }
 
     @Test
     void setPosition()
     {
-        Blast blast = new Blast(game,3, 4);
-        game.getBombBlastManager().addBlast(blast);
+        Blast blast = new Blast(3, 4);
         blast.setPosition(6 , 7);
         assertEquals(new Point(6,7), blast.getPosition());
     }
 
-    @Test
-    void getWorld()
-    {
-        Blast blast = new Blast(game,3, 4);
-        assertEquals(game,blast.getWorld());
-    }
 
 /*    @Test
     void setWorld()
