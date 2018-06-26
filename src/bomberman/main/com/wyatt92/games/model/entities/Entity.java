@@ -16,7 +16,7 @@ import java.awt.*;
 public abstract class Entity
 {
     public static final int DEFAULT_HEALTH = 3;
-    protected Game game;
+    protected Model model;
     protected float x,y,xOffset, yOffset;
     protected int width, height;
     protected int health;
@@ -27,14 +27,14 @@ public abstract class Entity
     /**
      * Constructor
      *
-     * @param game world where the entity should be created
+     * @param model world where the entity should be created
      * @param x x-coordinate of entity
      * @param y y-coordinate of entity
      * @param width width of entity
      * @param height height of entity
      */
-    public Entity(Game game, float x, float y, int width, int height) {
-        this.game = game;
+    public Entity(Model model, float x, float y, int width, int height) {
+        this.model = model;
         this.x = x;
         this.y = y;
         this.width = width;

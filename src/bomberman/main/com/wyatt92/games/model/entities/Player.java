@@ -102,7 +102,7 @@ public class Player extends DynamicEntity
         {
             Sound.playSound("bomb_Set.wav");
             Bomb b = new Bomb(game, super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
-            game.getBombManager().addBomb(b);
+            model.addBomb(b);
             bombCount--;
             attackTimer = 0;
         }

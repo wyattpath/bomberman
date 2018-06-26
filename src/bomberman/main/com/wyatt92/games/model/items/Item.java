@@ -70,8 +70,6 @@ public abstract class Item
 
     }
 
-
-
     public abstract Item createNew(int x, int y);
 
     public void setPosition(int x, int y){

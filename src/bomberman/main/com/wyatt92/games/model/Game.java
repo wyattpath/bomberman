@@ -2,7 +2,6 @@ package com.wyatt92.games.model;
 
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.items.Item;
-import com.wyatt92.games.model.items.ItemManager;
 import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.model.utils.Utils;
 
@@ -22,17 +21,22 @@ public class Game implements Model
     private boolean gameOver;
     private String path;
     private int winner;
+    private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? -1 : 1;
 
     //Entities
-    private EntityManager entityManager;
+    private ArrayList<Entity> entities;
     // Item
-    private ItemManager itemManager;
+    private ArrayList<Item> items;
+
     // Bombs
-    private BombManager bombManager;
+    private ArrayList<Bomb> bombs;
     // Blasts
-    private BombBlastManager bombBlastManager;
+    private ArrayList<Blast> blasts;
     // Player
-    private PlayerManager playerManager;
+    private ArrayList<Player> players;
+
+    private ArrayList<Stone> stones;
+
 
 
     /**
@@ -40,23 +44,38 @@ public class Game implements Model
      *
      */
     public Game() {
+
+
     }
 
 
 
     public void resetWorld() {
-        entityManager = new EntityManager(this);
-        itemManager = new ItemManager(this);
-        bombManager = new BombManager(this);
-        bombBlastManager = new BombBlastManager(this);
-        playerManager = new PlayerManager(this);
+        stones = new ArrayList<>();
+        entities = new ArrayList<>();
+        items = new ArrayList<>();
+        blasts = new ArrayList<>();
+        bombs = new ArrayList<>();
+        players = new ArrayList<>();
+
         playerCount = 2;
-        gameOver = false;
 
         loadWorld(path);
+        loadTiles();
         loadSpawnPoints();
         addPlayers();
         loadEntities();
+    }
+
+    private void loadTiles()
+    {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                getTile(x, y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
+            }
+        }
     }
 
     private void loadSpawnPoints()
@@ -86,7 +105,9 @@ public class Game implements Model
                             ){
                         int r = new Random().nextInt(3);
                         if(r != 0){
-                            entityManager.addEntity(new Stone(this, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT));
+                            Stone s = new Stone(this, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT);
+                            entities.add(s);
+                            stones.add(s);
                         }
                     }
                 }
@@ -98,11 +119,74 @@ public class Game implements Model
 
     public void update()
     {
-        bombBlastManager.update();
-        bombManager.update();
-        itemManager.update();
-        entityManager.update();
-        playerManager.update();
+        Iterator<Entity> entityIterator = entities.iterator();
+        while(entityIterator.hasNext()){
+            Entity e = entityIterator.next();
+            e.update();
+            if(!e.isActive()){
+                entityIterator.remove();
+            }
+        }
+        entities.sort(drawSorter);
+
+        Iterator<Player> playerIterator = players.iterator();
+        while (playerIterator.hasNext())
+        {
+            Player p = playerIterator.next();
+            p.update();
+            if (!p.isActive())
+            {
+                playerIterator.remove();
+            }
+        }
+
+        Iterator<Blast> blastIterator = blasts.iterator();
+        while(blastIterator.hasNext()) {
+            Blast blast = blastIterator.next();
+            blast.update();
+
+            if(!blast.isActive()) {
+                blastIterator.remove();
+            }
+        }
+
+        Iterator<Item> itemIterator = items.iterator();
+        while(itemIterator.hasNext()) {
+            Item item = itemIterator.next();
+            item.update();
+            if(item.isPickedUp()) {
+                itemIterator.remove();
+            }
+        }
+
+        Iterator<Bomb> bombIterator = bombs.iterator();
+        while(bombIterator.hasNext()) {
+            Bomb b = bombIterator.next();
+            b.update();
+            if(!b.isActive()) {
+                String sound = (b.getBombStrength()>5) ? "boom_L.wav" : (b.getBombStrength()> 3)? "boom_M.wav" : "boom_S.wav";
+                Sound.playSound(sound);
+
+                placeBlast(b,0,0);
+                placeBlast(b, Tile.TILEWIDTH,0); // nextTile on the right
+                placeBlast(b,  -Tile.TILEWIDTH, 0); // nextTile on the left
+                placeBlast(b, 0,-Tile.TILEHEIGHT); //nextTile above
+                placeBlast(b, 0,Tile.TILEHEIGHT); //nextTile below
+
+                b.destroy();
+                bombIterator.remove();
+            }
+        }
+
+        Iterator<Stone> stoneIterator = stones.iterator();
+        while(stoneIterator.hasNext()) {
+            Stone stone = stoneIterator.next();
+            stone.update();
+
+            if(!stone.isActive()) {
+                stoneIterator.remove();
+            }
+        }
 
         checkItemPickUp();
         checkPlayerCollisions();
@@ -110,11 +194,41 @@ public class Game implements Model
 
     }
 
+    private void placeBlast(Bomb b, int xOffset, int yOffset) {
+        boolean stop = false;
+        for(int i = 0; i < b.getBombStrength();i++)
+        {
+            if(stop || collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
+                return;
+
+            Blast blast = new Blast(this, b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset);
+            blasts.add(blast);
+//            addBlast(blast);
+
+            Rectangle tempBounds = new Rectangle();
+            tempBounds.x = (int)b.getX() + xOffset + i * xOffset;
+            tempBounds.y = (int)b.getY() + yOffset + i *yOffset;
+            tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
+            for (Entity e : entities)
+            {
+                if (e.equals(this))
+                    continue;
+                if (e.getCollisionBounds(32, 32).intersects(tempBounds))
+                {
+                    e.destroy();
+                    e.hurt(3);
+                    stop = true;
+                }
+            }
+
+        }
+    }
+
     private void checkBlastCollisions()
     {
         //checkCollision
-        for(Blast b : bombBlastManager.getBlasts()) {
-            for(Entity e : entityManager.getEntities()) {
+        for(Blast b : blasts) {
+            for(Entity e : entities) {
                 if(e.equals(b))
                     continue;
                 if(e.getCollisionBounds(32,32).intersects(b.getBounds())){
@@ -125,12 +239,16 @@ public class Game implements Model
         }
     }
 
+    protected boolean collisionWithTile(int x, int y) {
+        return getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
+    }
+
     private void checkItemPickUp()
     {
-        Iterator<Item> it = itemManager.getItems().iterator();
+        Iterator<Item> it = items.iterator();
         while(it.hasNext()){
             Item i = it.next();
-            Iterator<Player> itp = playerManager.getPlayers().iterator();
+            Iterator<Player> itp = players.iterator();
             while(itp.hasNext()) {
                 Player p = itp.next();
                 if(p.getCollisionBounds(0f,0f).intersects(i.getBounds())){
@@ -145,12 +263,12 @@ public class Game implements Model
 
     private void checkPlayerCollisions()
     {
-        Iterator<Entity> it = entityManager.getEntities().iterator();
+        Iterator<Entity> it = entities.iterator();
         while (it.hasNext())
         {
             Entity e = it.next();
             e.update();
-            if (playerManager.getPlayers().contains(e))
+            if (players.contains(e))
             {
                 Player p = (Player) e;
                 if (!checkEntityCollisions(p, p.getxMove(), 0f))
@@ -168,22 +286,22 @@ public class Game implements Model
 
     public void draw(Graphics g)
     {
-        for (int y = 0; y < height; y++){
-            for (int x = 0; x < width; x++){
-                getTile(x,y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
-                getTile(x, y).draw(g);
-            }
-        }
-        // Blasts
-        bombBlastManager.draw(g);
-        // Bombs
-        bombManager.draw(g);
-        // Items
-        itemManager.draw(g);
-        //entities
-        entityManager.draw(g);
-        //players
-        playerManager.draw(g);
+//        for (int y = 0; y < height; y++){
+//            for (int x = 0; x < width; x++){
+//                getTile(x,y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
+////                getTile(x, y).draw(g);
+//            }
+//        }
+//        // Blasts
+//        bombBlastManager.draw(g);
+//        // Bombs
+//        bombManager.draw(g);
+//        // Items
+//        itemManager.draw(g);
+//        //entities
+//        entityManager.draw(g);
+//        //players
+//        playerManager.draw(g);
     }
 
     public Tile getTile(int x, int y)
@@ -219,13 +337,20 @@ public class Game implements Model
         for (int i = 1; i <= playerCount; i++) {
             final Point startingPoint = spawnMap.get(i);
             final Player player = new Player(this, startingPoint.x * Tile.TILEWIDTH -1, startingPoint.y * Tile.TILEHEIGHT -1, i);
-            playerManager.addPlayer(player);
-            entityManager.addEntity(player);
+            players.add(player);
+            entities.add(player);
         }
     }
 
+    public void addPlayer(Player p)
+    {
+        p.setGame(this);
+        players.add(p);
+        entities.add(p);
+    }
+
     public boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
-        for(Entity e : entityManager.getEntities()){
+        for(Entity e : entities){
             if(e.equals(e1)){
                 continue;
             }
@@ -236,23 +361,20 @@ public class Game implements Model
         return false;
     }
 
+    @Override
+    public void addItem(Item i)
+    {
+        items.add(i);
+    }
+
+    public ArrayList<Blast> getBlasts()
+    {
+        return blasts;
+    }
+
     // GETTERS and SETTERS
 
-    public EntityManager getEntityManager()
-    {
-        return entityManager;
-    }
 
-    public ItemManager getItemManager()
-    {
-        return itemManager;
-    }
-
-
-    public BombManager getBombManager()
-    {
-        return bombManager;
-    }
 
     public int getWidth()
     {
@@ -264,13 +386,17 @@ public class Game implements Model
         return height*Tile.TILEHEIGHT;
     }
 
+    public int getTileColums(){
+        return width;
+    }
+
+    public int getTileRows(){
+        return height;
+    }
+
     public int[][] getTiles()
     {
         return tiles;
-    }
-
-    public BombBlastManager getBombBlastManager() {
-        return bombBlastManager;
     }
 
 
@@ -288,13 +414,13 @@ public class Game implements Model
 
     @Override
     public ArrayList<Player> getPlayers() {
-        return playerManager.getPlayers();
+        return players;
     }
 
     @Override
     public Player getPlayer(int id)
     {
-        return playerManager.getPlayer(id);
+        return players.get(id);
     }
 
     @Override
@@ -317,9 +443,37 @@ public class Game implements Model
     @Override
     public int getPlayerAlive()
     {
-        return playerManager.getPlayers().size();
+        return players.size();
     }
 
+
+    @Override
+    public ArrayList<Bomb> getBombs()
+    {
+        return bombs;
+    }
+
+    @Override
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
+
+    @Override
+    public ArrayList<Item> getItems()
+    {
+        return items;
+    }
+
+    @Override
+    public ArrayList<Stone> getStones()
+    {
+        return stones;
+    }
+
+    public void addBomb(Bomb b) {
+        b.setWorld(this);
+        bombs.add(b);
+    }
 
 }
 

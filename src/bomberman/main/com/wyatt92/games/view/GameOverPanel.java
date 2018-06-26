@@ -7,7 +7,7 @@ import com.wyatt92.games.model.Model;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameOverPanel extends ViewPanel
+public class GameOverPanel extends JPanel
 {
     private Animation animGameOver;
 
@@ -15,6 +15,7 @@ public class GameOverPanel extends ViewPanel
 
     private JButton startButton;
     private JButton optionsButton;
+    private Model model;
 
 
 
@@ -22,7 +23,7 @@ public class GameOverPanel extends ViewPanel
     Icon startIcon, startIconEntered, quitIcon, quitIconEntered;
 
     public GameOverPanel(Model model) {
-        super(model);
+        this.model = model;
         animGameOver = new Animation(10000, Assets.gameOver);
         animGameOver.setRandom(true);
 

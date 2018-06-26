@@ -1,6 +1,7 @@
 package com.wyatt92.games.model;
 
-import com.wyatt92.games.model.entities.Player;
+import com.wyatt92.games.model.entities.*;
+import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.tiles.Tile;
 
 import javax.swing.*;
@@ -46,4 +47,24 @@ public interface Model
     int getWinner();
 
     int getPlayerAlive();
+
+    ArrayList<Blast> getBlasts();
+
+    ArrayList<Bomb> getBombs();
+
+    ArrayList<Entity> getEntities();
+
+    ArrayList<Item> getItems();
+
+    ArrayList<Stone> getStones();
+
+    int getTileRows();
+
+    int getTileColums();
+
+    void addItem(Item i);
+
+    void addBomb(Bomb b);
+
+
 }

@@ -2,6 +2,7 @@ package com.wyatt92.games.model.entities;
 
 
 import com.wyatt92.games.model.Game;
+import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.tiles.Tile;
 
 /**
@@ -18,8 +19,8 @@ public abstract class DynamicEntity extends Entity
     protected float xMove, yMove;
 
 
-    public DynamicEntity(Game game, float x, float y, int width, int height) {
-        super(game, x, y, width, height);
+    public DynamicEntity(Model model, float x, float y, int width, int height) {
+        super(model, x, y, width, height);
         speed = DEFAULT_SPEED;
     }
 
@@ -65,7 +66,7 @@ public abstract class DynamicEntity extends Entity
     }
 
     protected boolean collisionWithTile(int x, int y) {
-        return game.getTile(x,y).isSolid();
+        return model.getTile(x,y).isSolid();
     }
 
     public float getxMove()

@@ -1,7 +1,6 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Game;
-import com.wyatt92.games.model.Model;
 import com.wyatt92.games.view.View;
 
 import java.awt.*;
