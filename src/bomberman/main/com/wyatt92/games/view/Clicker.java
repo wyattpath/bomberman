@@ -1,4 +1,4 @@
-package com.wyatt92.games.model.ui;
+package com.wyatt92.games.view;
 
 public interface Clicker
 {

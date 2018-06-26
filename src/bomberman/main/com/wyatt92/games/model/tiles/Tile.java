@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  * A square where the players can walk on if it is not solid.
  * They can not be destroyed.
  */
-public abstract class Tile implements Model
+public abstract class Tile
 {
     public static Tile[] tiles = new Tile[256];
     public static Tile grassTile = new GrassTile(0);
@@ -51,12 +51,12 @@ public abstract class Tile implements Model
     }
 
 
-    @Override
+
     public void update(){
 
     }
 
-    @Override
+
     public void draw(Graphics g){
         g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
     }

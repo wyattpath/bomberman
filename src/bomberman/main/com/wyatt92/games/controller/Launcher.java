@@ -1,5 +1,7 @@
 package com.wyatt92.games.controller;
 
+import com.wyatt92.games.model.Game;
+import com.wyatt92.games.model.Model;
 import com.wyatt92.games.view.View;
 
 import java.awt.*;
@@ -16,9 +18,9 @@ public class Launcher {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    View view = new View(TITLE, WIDTH, HEIGHT);
-
-                    Controller controller = new Controller(view);
+                    Game model = new Game();
+                    View view = new View(model);
+                    Controller controller = new Controller(view, model);
                     controller.start();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -1,12 +1,10 @@
-package com.wyatt92.games.model.ui;
-
-import com.wyatt92.games.model.Model;
+package com.wyatt92.games.view;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class UIManager implements Model
+public class UIManager
 {
     private ArrayList<UIObject> objects;
 
@@ -14,14 +12,14 @@ public class UIManager implements Model
         objects = new ArrayList<UIObject>();
     }
 
-    @Override
+
     public void update(){
         for(UIObject o : objects){
             o.update();
         }
     }
 
-    @Override
+
     public void draw(Graphics g) {
         for(UIObject o : objects){
             o.draw(g);

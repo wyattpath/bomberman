@@ -1,6 +1,6 @@
 package com.wyatt92.games.controller;
 
-import com.wyatt92.games.model.ui.UIManager;
+import com.wyatt92.games.view.UIManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

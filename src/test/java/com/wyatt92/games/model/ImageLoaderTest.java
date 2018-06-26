@@ -1,6 +1,6 @@
 package com.wyatt92.games.model;
 
-import com.wyatt92.games.model.utils.ImageLoader;
+import com.wyatt92.games.view.ImageLoader;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;

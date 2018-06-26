@@ -1,14 +1,13 @@
 package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.Game;
+import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.entities.Player;
-import com.wyatt92.games.model.states.GameOverState;
-import com.wyatt92.games.model.states.GameState;
-import com.wyatt92.games.model.states.MenuState;
-import com.wyatt92.games.model.states.State;
-import com.wyatt92.games.model.ui.UIManager;
-import com.wyatt92.games.view.View;
+import com.wyatt92.games.view.*;
+
+import javax.sound.sampled.Clip;
+import javax.swing.*;
+import java.util.Random;
 
 
 /**
@@ -18,49 +17,104 @@ import com.wyatt92.games.view.View;
 public class Controller implements Runnable{
 
     private boolean running = false;
+    private boolean paused = false;
+    private boolean playing = false;
+    private boolean gameOver = false;
     private Thread thread1;
 
     private View view;
+    private Model model;
 
-    // States
-    private State gameState;
-    private State menuState;
-    private State gameOverState;
+    private static GamePanel gamePanel;
+    private static MenuPanel menuPanel;
+    private static GameOverPanel gameOverPanel;
+    private final MenuOptionsPanel menuOptionsPanel;
+    private JPanel currentPanel;
 
-    // World
-    private Game game;
+    private int r;
+
+
 
     // Input
     private GameKeyListener gameKeyListener;
     private GameMouseListener gameMouseListener;
 
-    private UIManager uiManager;
 
-    Controller(View view) {
+    Controller(View view, Model model) {
+        this.model = model;
         this.view = view;
+        Assets.init();
+
         gameKeyListener = new GameKeyListener();
         gameMouseListener = new GameMouseListener();
-        uiManager = new UIManager();
-        gameMouseListener.setUiManager(uiManager);
-        init();
+
+        gamePanel = new GamePanel(model);
+
+        menuPanel = new MenuPanel();
+        gameOverPanel = new GameOverPanel(model);
+        menuOptionsPanel = new MenuOptionsPanel();
+
+        switchPanel(menuPanel);
+
+        addActionListener();
+        view.makeVisible();
+
+        r = new Random().nextInt(Assets.menu_bgMusic.length);
+        Assets.menu_bgMusic[r].start();
+        Assets.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+
         run();
+    }
+
+    private void addActionListener()
+    {
+        menuPanel.getStartButton().addActionListener(e -> setUpStartButton());
+
+        menuPanel.getOptionsButton().addActionListener(e -> switchPanel(menuOptionsPanel));
+
+        menuPanel.getQuitButton().addActionListener(e -> System.exit(0));
+
+        gameOverPanel.getStartButton().addActionListener(e -> setUpStartButton());
+
+        gameOverPanel.getQuitButton().addActionListener(e -> System.exit(0));
+
+        view.getFrame().addKeyListener(gameKeyListener);
+        view.getFrame().addMouseListener(gameMouseListener);
+        view.getFrame().addMouseMotionListener(gameMouseListener);
     }
 
     // METHODS
 
-    public void init() {
-        view.getGamePanel().addKeyListener(gameKeyListener);
-        view.getGamePanel().addMouseListener(gameMouseListener);
-        view.getGamePanel().addMouseMotionListener(gameMouseListener);
-        Assets.init();
-//        gamePanel.setDoubleBuffered(true);
+    public void setUpStartButton(){
+        model.loadWorld("world1.txt");
+        model.resetWorld();
+        switchPanel(gamePanel);
+        playMusic();
+        gameOver = false;
+        playing = true;
+        view.getFrame().addKeyListener(gameKeyListener);
+    }
 
-        game = new Game("world2.txt");
-        gameState = new GameState(game);
-        State.setGameState(gameState);
-        menuState = new MenuState(game, uiManager);
+    private void playMusic(){
+        if(!gameOver && playing) {
+            Assets.game_bgMusic[r].stop();
+            r = new Random().nextInt(Assets.gameOver_bgMusic.length);
+            Assets.gameOver_bgMusic[r].setFramePosition(0);
+            Assets.gameOver_bgMusic[r].start();
+        } else if(!gameOver && !playing){
+            Assets.menu_bgMusic[r].stop();
+            r = new Random().nextInt(Assets.game_bgMusic.length);
+            Assets.game_bgMusic[r].setFramePosition(0);
+            Assets.game_bgMusic[r].start();
+            Assets.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+        } else {
+            Assets.gameOver_bgMusic[r].stop();
+            r = new Random().nextInt(Assets.game_bgMusic.length);
+            Assets.game_bgMusic[r].setFramePosition(0);
+            Assets.game_bgMusic[r].start();
+            Assets.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+        }
 
-        State.setCurrentState(menuState);
     }
 
     public void run() {
@@ -81,10 +135,8 @@ public class Controller implements Runnable{
             timer += now - lastTime;
             lastTime = now;
 
-
             if(delta >= 1) {
                 update();
-//                gamePanel.draw(gamePanel.getGraphics());
                 view.repaint();
                 ticks++;
                 delta--;
@@ -121,62 +173,73 @@ public class Controller implements Runnable{
 
     private void update(){
             gameKeyListener.update();
-            if(game.getPlayerManager().getPlayers().size()>0){
-                for(int i = 0; i < game.getPlayerManager().getPlayers().size(); i++){
-                    game.getPlayerManager().getPlayer(i).setxMove(0);
-                    game.getPlayerManager().getPlayer(i).setyMove(0);
-                }
-            }
+        menuPanel.getAnimLogo().update();
+        menuPanel.getAnimBG().update();
+        if(playing)
+        {
 
-            if (game.getPlayerManager().getPlayers().size()>=1){
+                for (int i = 0; i < model.getPlayers().size(); i++)
+                {
+                    model.getPlayer(i).setxMove(0);
+                    model.getPlayer(i).setyMove(0);
+                }
 
                 if (gameKeyListener.W)
-                    game.getPlayerManager().getPlayer(0).moveUp();
+                    model.getPlayer(0).moveUp();
                 if (gameKeyListener.S)
-                    game.getPlayerManager().getPlayer(0).moveDown();
+                    model.getPlayer(0).moveDown();
                 if (gameKeyListener.A)
-                    game.getPlayerManager().getPlayer(0).moveLeft();
+                    model.getPlayer(0).moveLeft();
                 if (gameKeyListener.D)
-                    game.getPlayerManager().getPlayer(0).moveRight();
+                    model.getPlayer(0).moveRight();
                 if (gameKeyListener.SPACE)
-                    game.getPlayerManager().getPlayer(0).placeBomb();
-            }
-            if (game.getPlayerManager().getPlayers().size()> 1)
+                    model.getPlayer(0).placeBomb();
+
+            if (model.getPlayers().size() > 1)
             {
                 if (gameKeyListener.UP)
-                    game.getPlayerManager().getPlayer(1).moveUp();
+                    model.getPlayer(1).moveUp();
                 if (gameKeyListener.DOWN)
-                    game.getPlayerManager().getPlayer(1).moveDown();
+                    model.getPlayer(1).moveDown();
                 if (gameKeyListener.LEFT)
-                    game.getPlayerManager().getPlayer(1).moveLeft();
+                    model.getPlayer(1).moveLeft();
                 if (gameKeyListener.RIGHT)
-                    game.getPlayerManager().getPlayer(1).moveRight();
+                    model.getPlayer(1).moveRight();
                 if (gameKeyListener.CTRL)
-                    game.getPlayerManager().getPlayer(1).placeBomb();
+                    model.getPlayer(1).placeBomb();
             }
 
-            if(State.getCurrentState() != null)
+
+            if (!gameOver)
             {
-                State.getCurrentState().update();
-
-                if(!game.isGameOver())
+                model.update();
+                if (model.getPlayerAlive() < 2)
                 {
-                    if(game.getPlayerManager().getPlayerCount()<2){
-                        game.setGameOver(true);
-                        int winner = 0;
-                        for(Player p : game.getPlayerManager().getPlayers()){
-                            if(p.isActive()) {
-                                winner = p.getId();
-                            }
+                    playMusic();
+                    gameOver = true;
+                    playing = false;
+                    int winner = 0;
+                    for (Player p : model.getPlayers())
+                    {
+                        if (p.isActive())
+                        {
+                            winner = p.getId();
                         }
-                        gameOverState = new GameOverState(game, uiManager);
-                        gameOverState.setWinner(winner);
-                        State.setCurrentState(gameOverState);
-
                     }
+                    model.setWinner(winner);
+
+
+                    switchPanel(gameOverPanel);
+
+
                 }
             }
         }
 
+        }
 
+    private void switchPanel(JPanel panel) {
+        view.setPanel(panel);
+        currentPanel = panel;
+    }
 }

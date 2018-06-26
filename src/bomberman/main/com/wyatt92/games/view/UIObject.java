@@ -1,11 +1,11 @@
-package com.wyatt92.games.model.ui;
+package com.wyatt92.games.view;
 
 import com.wyatt92.games.model.Model;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public abstract class UIObject implements Model
+public abstract class UIObject
 {
     protected float x, y;
     protected int width, height;
@@ -20,10 +20,8 @@ public abstract class UIObject implements Model
         bounds = new Rectangle((int) x, (int) y, width, height);
     }
 
-    @Override
     public abstract void update();
 
-    @Override
     public abstract void draw(Graphics g);
 
     public abstract void onClick();

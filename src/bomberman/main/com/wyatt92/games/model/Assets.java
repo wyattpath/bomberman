@@ -1,12 +1,10 @@
 package com.wyatt92.games.model;
 
-import com.wyatt92.games.model.utils.ImageLoader;
-import com.wyatt92.games.model.utils.Sound;
-import com.wyatt92.games.model.utils.SpriteSheet;
+import com.wyatt92.games.view.ImageLoader;
+import com.wyatt92.games.view.SpriteSheet;
 
 import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 /**
  * An asset is the representation of any object that can be used.
@@ -15,7 +13,7 @@ import java.util.Random;
 public class Assets {
 
     private static final int width = 32, height = 32;
-    private static int bgCount, logoCount, gameOverCount;
+    private static int bgCount, bgMusicCount, goMusicCount, gMusicCount, logoCount, gameOverCount;
 
     public static BufferedImage dirt, grass, wall, tree;
     public static BufferedImage[] stone;
@@ -29,9 +27,8 @@ public class Assets {
     public static BufferedImage[] gameOver;
 
 
-    public static Clip menu_bgMusic, menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
-    public static Clip game_bgMusic, game_bombSet, game_bombBoomS, game_bombBoomM, game_bombBoomL;
-    public static Clip gameOver_bgMusic;
+    public static Clip menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
+    public static Clip[] menu_bgMusic,game_bgMusic, gameOver_bgMusic;
 
     public static void init() {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("sheet.png"));
@@ -63,25 +60,26 @@ public class Assets {
         player_left[1] = sheet.crop(width * 7, height, width, height);
 
         stone = new BufferedImage[2];
-        stone[0] = sheet.crop(0, width * 2, width-1, height-1);
-        stone[1] = sheet.crop(1, width * 2+1, width-1, height-1);
+        stone[0] = sheet.crop(0, height * 2, width-1, height-1);
+        stone[1] = sheet.crop(1, height * 2+1, width-1, height-1);
 
 
         bomb = new BufferedImage[2];
         bomb[0] = bombSheet.crop(0, 0, width*8, height*8);
         bomb[1] = bombSheet.crop(width*8, 0, width*8, height*8);
 
-        blast = new BufferedImage[2];
+        blast = new BufferedImage[3];
         blast[0] = blastSheet.crop(0,0,width,height);
-        blast[1] = blastSheet.crop(0,width,width,height);
+        blast[1] = blastSheet.crop(width,0,width,height);
+        blast[2] = blastSheet.crop(0,height,width,height);
 
         btn_start = new BufferedImage[2];
-        btn_start[0] = menuSheet.crop(0, 0, 228, 35);
-        btn_start[1] = menuSheet.crop(230, 0, 228, 35);
+        btn_start[0] = menuSheet.crop(0, 0, 228, 32);
+        btn_start[1] = menuSheet.crop(230, 0, 228, 32);
 
         btn_quit = new BufferedImage[2];
-        btn_quit[0] = menuSheet.crop(0, 70, 228, 35);
-        btn_quit[1] = menuSheet.crop(230, 70, 228, 35);
+        btn_quit[0] = menuSheet.crop(0, 70, 228, 32);
+        btn_quit[1] = menuSheet.crop(230, 70, 228, 32);
 
         bombCount = new BufferedImage[2];
         bombCount[0] = powerUpsSheet.crop(5, 0, 150, 150);
@@ -120,12 +118,21 @@ public class Assets {
         //Sounds
         menu_selectFX = Sound.clipForLoopFactory("select.wav");
         menu_cursorMoveFX = Sound.clipForLoopFactory("cursor_move.wav");
-        int r = new Random().nextInt(2);
-        menu_bgMusic = Sound.clipForLoopFactory("Undertale00"+ r +".wav");
-        r = new Random().nextInt(9);
-        game_bgMusic = Sound.clipForLoopFactory("music0"+ r +".wav");
-        r = new Random().nextInt(2);
-        gameOver_bgMusic  = Sound.clipForLoopFactory("gomusic0"+ r +".wav");
+
+        bgMusicCount = 2;
+        menu_bgMusic = new Clip[bgMusicCount];
+        for(int i = 0 ; i < bgMusicCount;i++)
+            menu_bgMusic[i] = Sound.clipForLoopFactory("Undertale00"+ i +".wav");
+
+        gMusicCount = 9;
+        game_bgMusic = new Clip[gMusicCount];
+        for(int i = 0 ; i < gMusicCount;i++)
+            game_bgMusic[i] = Sound.clipForLoopFactory("music0"+ i +".wav");
+
+        goMusicCount = 2;
+        gameOver_bgMusic = new Clip[goMusicCount];
+        for(int i = 0 ; i < goMusicCount;i++)
+            gameOver_bgMusic[i]  = Sound.clipForLoopFactory("gomusic0"+ i +".wav");
 
 
     }

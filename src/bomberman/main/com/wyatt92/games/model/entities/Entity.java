@@ -13,7 +13,7 @@ import java.awt.*;
  * All entities have a default health that can be changed individually for subclasses.
  * Can collide with Tiles and other Entities.
  */
-public abstract class Entity implements Model
+public abstract class Entity
 {
     public static final int DEFAULT_HEALTH = 3;
     protected Game game;
@@ -47,10 +47,10 @@ public abstract class Entity implements Model
         bounds = new Rectangle(0,0, width, height);
     }
 
-    @Override
+
     public abstract void update();
 
-    @Override
+
     public abstract void draw(Graphics g);
 
     public void hurt(int amount) {

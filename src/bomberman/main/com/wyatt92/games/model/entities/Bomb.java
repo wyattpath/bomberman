@@ -1,7 +1,7 @@
 package com.wyatt92.games.model.entities;
 
 
-import com.wyatt92.games.model.utils.Animation;
+import com.wyatt92.games.view.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.Game;
 

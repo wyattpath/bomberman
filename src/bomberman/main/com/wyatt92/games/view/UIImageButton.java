@@ -1,7 +1,7 @@
-package com.wyatt92.games.model.ui;
+package com.wyatt92.games.view;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.utils.Sound;
+import com.wyatt92.games.model.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

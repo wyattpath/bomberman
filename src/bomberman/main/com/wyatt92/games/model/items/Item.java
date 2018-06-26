@@ -1,8 +1,6 @@
 package com.wyatt92.games.model.items;
 
-import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.utils.Animation;
-import com.wyatt92.games.model.Game;
+import com.wyatt92.games.view.Animation;
 import com.wyatt92.games.model.entities.Player;
 
 
@@ -12,7 +10,7 @@ import java.awt.image.BufferedImage;
 /**
  * Grants a player additional abilities when picked up.
  */
-public abstract class Item implements Model
+public abstract class Item
 {
     public static Item[] items = new Item[10];
     public static Item bombStrengthItem = new BombStrengthItem(1);
@@ -22,7 +20,6 @@ public abstract class Item implements Model
 
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 
-    protected Game game;
     protected Animation animation;
     protected String name;
     protected final int id;
@@ -60,24 +57,20 @@ public abstract class Item implements Model
         items[id] = this;
     }
 
-    @Override
+
     public void update() {
         animation.update();
     }
 
 
 
-    @Override
+
     public void draw(Graphics g){
-        if(game != null)
-//            draw(g, x, y);
-        g.drawImage(animation.getCurrentFrame(),x, y, ITEMWIDTH, ITEMHEIGHT, null);
+            g.drawImage(animation.getCurrentFrame(),x, y, ITEMWIDTH, ITEMHEIGHT, null);
 
     }
 
-    public void draw(Graphics g, int x, int y)
-    {
-    }
+
 
     public abstract Item createNew(int x, int y);
 
@@ -92,16 +85,6 @@ public abstract class Item implements Model
     public abstract void addEffect(Player player);
 
     // GETTERS and SETTERS
-
-    public Game getGame()
-    {
-        return game;
-    }
-
-    public void setGame(Game game)
-    {
-        this.game = game;
-    }
 
     public Animation getAnimation()
     {

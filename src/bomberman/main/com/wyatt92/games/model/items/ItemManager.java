@@ -2,8 +2,6 @@ package com.wyatt92.games.model.items;
 
 
 import com.wyatt92.games.model.Game;
-import com.wyatt92.games.model.entities.Player;
-import com.wyatt92.games.model.utils.Sound;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -54,12 +52,12 @@ public class ItemManager
 
     public void draw(Graphics g)
     {
-        for(Item i : items)
+        for(Item i : items){
             i.draw(g);
+        }
     }
 
     public void addItem(Item i) {
-        i.setGame(game);
         items.add(i);
     }
 

@@ -4,14 +4,10 @@ import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.items.ItemManager;
 import com.wyatt92.games.model.tiles.Tile;
-import com.wyatt92.games.model.utils.Sound;
 import com.wyatt92.games.model.utils.Utils;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This class loads the world from a file.
@@ -25,6 +21,8 @@ public class Game implements Model
     private static Map<Integer, Point> spawnMap;
     private boolean gameOver;
     private String path;
+    private int winner;
+
     //Entities
     private EntityManager entityManager;
     // Item
@@ -33,40 +31,18 @@ public class Game implements Model
     private BombManager bombManager;
     // Blasts
     private BombBlastManager bombBlastManager;
-
-    public PlayerManager getPlayerManager()
-    {
-        return playerManager;
-    }
-
-    public void setPlayerManager(PlayerManager playerManager)
-    {
-        this.playerManager = playerManager;
-    }
-
+    // Player
     private PlayerManager playerManager;
 
 
     /**
      * Constructor
      *
-     * @param path path to the word file
      */
-    public Game(String path) {
-        this.path = path;
-        entityManager = new EntityManager(this);
-        itemManager = new ItemManager(this);
-        bombManager = new BombManager(this);
-        bombBlastManager = new BombBlastManager(this);
-        playerManager = new PlayerManager(this);
-        playerCount = 2;
-        gameOver = false;
-
-        loadWorld(path);
-        loadSpawnPoints();
-        addPlayers();
-        loadEntities();
+    public Game() {
     }
+
+
 
     public void resetWorld() {
         entityManager = new EntityManager(this);
@@ -128,9 +104,9 @@ public class Game implements Model
         entityManager.update();
         playerManager.update();
 
+        checkItemPickUp();
         checkPlayerCollisions();
         checkBlastCollisions();
-        checkItemPickUp();
 
     }
 
@@ -152,9 +128,9 @@ public class Game implements Model
     private void checkItemPickUp()
     {
         Iterator<Item> it = itemManager.getItems().iterator();
-        Iterator<Player> itp = playerManager.getPlayers().iterator();
         while(it.hasNext()){
             Item i = it.next();
+            Iterator<Player> itp = playerManager.getPlayers().iterator();
             while(itp.hasNext()) {
                 Player p = itp.next();
                 if(p.getCollisionBounds(0f,0f).intersects(i.getBounds())){
@@ -229,8 +205,6 @@ public class Game implements Model
         String[] tokens = file.split("\\s+");
         width = Utils.parseInt(tokens[0]);
         height = Utils.parseInt(tokens[1]);
-        System.out.println(Tile.TILEWIDTH);
-        System.out.println(Tile.TILEHEIGHT);
         tiles = new int[width][height];
         for (int y = 0; y < height; y++)
         {
@@ -269,20 +243,11 @@ public class Game implements Model
         return entityManager;
     }
 
-    public void setEntityManager(EntityManager entityManager)
-    {
-        this.entityManager = entityManager;
-    }
-
     public ItemManager getItemManager()
     {
         return itemManager;
     }
 
-    public void setItemManager(ItemManager itemManager)
-    {
-        this.itemManager = itemManager;
-    }
 
     public BombManager getBombManager()
     {
@@ -308,29 +273,54 @@ public class Game implements Model
         return bombBlastManager;
     }
 
-    public void setBombBlastManager(BombBlastManager bombBlastManager) {
-        this.bombBlastManager = bombBlastManager;
-    }
 
     public int getPlayerCount()
     {
         return playerCount;
     }
 
-    public void setPlayerCount(int playerCount)
-    {
-        this.playerCount = playerCount;
-    }
 
     public boolean isGameOver()
     {
         return gameOver;
     }
 
-    public void setGameOver(boolean gameOver)
-    {
-        this.gameOver = gameOver;
+
+    @Override
+    public ArrayList<Player> getPlayers() {
+        return playerManager.getPlayers();
     }
+
+    @Override
+    public Player getPlayer(int id)
+    {
+        return playerManager.getPlayer(id);
+    }
+
+    @Override
+    public void setGameOver(boolean b)
+    {
+        gameOver = b;
+    }
+
+    @Override
+    public void setWinner(int winner)
+    {
+        this.winner = winner;
+    }
+
+    public int getWinner()
+    {
+        return winner;
+    }
+
+    @Override
+    public int getPlayerAlive()
+    {
+        return playerManager.getPlayers().size();
+    }
+
+
 }
 
 
