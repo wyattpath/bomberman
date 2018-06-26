@@ -72,5 +72,8 @@ public interface Model
 
     void addBomb(Bomb b);
 
+    void moveX(Player p);
+
+    void moveY(Player p);
 
 }

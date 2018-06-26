@@ -37,7 +37,6 @@ public class GamePanel extends JPanel
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-//        model.draw(g);
 
         for(int x = 0; x < model.getTileRows(); x++){
             for(int y = 0; y < model.getTileColumns(); y++){
@@ -54,15 +53,6 @@ public class GamePanel extends JPanel
 
         for(Stone stone : model.getStones())
             stone.draw(g);
-
-
-//        for(Entity e : model.getEntities())
-//            e.draw(g);
-//        Iterator<Entity>it = model.getEntities().iterator();
-//        while(it.hasNext()){
-//            Entity e = it.next();
-//            e.draw(g);
-//        }
 
         for(Player p : model.getPlayers())
             p.draw(g);

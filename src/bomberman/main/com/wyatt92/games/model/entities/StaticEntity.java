@@ -8,8 +8,8 @@ import com.wyatt92.games.model.Model;
  */
 public abstract class StaticEntity extends Entity
 {
-    public StaticEntity(Model model, float x, float y, int width, int height) {
-        super(model, x, y, width, height);
+    public StaticEntity(float x, float y, int width, int height) {
+        super(x, y, width, height);
     }
 
 }

@@ -27,14 +27,14 @@ public abstract class Entity
     /**
      * Constructor
      *
-     * @param model world where the entity should be created
+
      * @param x x-coordinate of entity
      * @param y y-coordinate of entity
      * @param width width of entity
      * @param height height of entity
      */
-    public Entity(Model model, float x, float y, int width, int height) {
-        this.model = model;
+    public Entity(float x, float y, int width, int height) {
+
         this.x = x;
         this.y = y;
         this.width = width;
@@ -128,5 +128,10 @@ public abstract class Entity
 
     public Point getCenterPoint(){
         return new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);
+    }
+
+    public Rectangle getBounds()
+    {
+        return bounds;
     }
 }

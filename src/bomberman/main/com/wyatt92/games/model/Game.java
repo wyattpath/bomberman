@@ -49,7 +49,7 @@ public class Game implements Model
     }
 
 
-
+    @Override
     public void resetWorld() {
         stones = new ArrayList<>();
         entities = new ArrayList<>();
@@ -67,126 +67,15 @@ public class Game implements Model
         loadEntities();
     }
 
-    private void loadTiles()
-    {
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                getTile(x, y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
-            }
-        }
-    }
-
-    private void loadSpawnPoints()
-    {
-        spawnMap = new HashMap<Integer, Point>() {
-            {
-                put(1, new Point(1, 1));
-                put(2, new Point(width - 2, height - 2));
-                put(3, new Point(width - 2, 0));
-                put(4, new Point(0, height - 2));
-            }
-        };
-    }
-
-    private void loadEntities()
-    {
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if(!getTile(x,y).isSolid())
-                {
-                    if(
-                            (x*Tile.TILEWIDTH > Tile.TILEWIDTH*2 || y *Tile.TILEHEIGHT > Tile.TILEHEIGHT*2) &&
-                                    (x*Tile.TILEWIDTH < width*Tile.TILEWIDTH - Tile.TILEWIDTH*3 || y*Tile.TILEHEIGHT < height*Tile.TILEHEIGHT - Tile.TILEHEIGHT*3)
-                            ){
-                        int r = new Random().nextInt(3);
-                        if(r != 0){
-                            Stone s = new Stone(this, x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT);
-                            entities.add(s);
-                            stones.add(s);
-                        }
-                    }
-                }
-            }
-        }
-
-
-    }
-
+    @Override
     public void update()
     {
-        Iterator<Entity> entityIterator = entities.iterator();
-        while(entityIterator.hasNext()){
-            Entity e = entityIterator.next();
-            e.update();
-            if(!e.isActive()){
-                entityIterator.remove();
-            }
-        }
-        entities.sort(drawSorter);
-
-        Iterator<Player> playerIterator = players.iterator();
-        while (playerIterator.hasNext())
-        {
-            Player p = playerIterator.next();
-            p.update();
-            if (!p.isActive())
-            {
-                playerIterator.remove();
-            }
-        }
-
-        Iterator<Blast> blastIterator = blasts.iterator();
-        while(blastIterator.hasNext()) {
-            Blast blast = blastIterator.next();
-            blast.update();
-
-            if(!blast.isActive()) {
-                blastIterator.remove();
-            }
-        }
-
-        Iterator<Item> itemIterator = items.iterator();
-        while(itemIterator.hasNext()) {
-            Item item = itemIterator.next();
-            item.update();
-            if(item.isPickedUp()) {
-                itemIterator.remove();
-            }
-        }
-
-        Iterator<Bomb> bombIterator = bombs.iterator();
-        while(bombIterator.hasNext()) {
-            Bomb b = bombIterator.next();
-            b.update();
-            if(!b.isActive()) {
-                String sound = (b.getBombStrength()>5) ? "boom_L.wav" : (b.getBombStrength()> 3)? "boom_M.wav" : "boom_S.wav";
-                Sound.playSound(sound);
-
-                placeBlast(b,0,0);
-                placeBlast(b, Tile.TILEWIDTH,0); // nextTile on the right
-                placeBlast(b,  -Tile.TILEWIDTH, 0); // nextTile on the left
-                placeBlast(b, 0,-Tile.TILEHEIGHT); //nextTile above
-                placeBlast(b, 0,Tile.TILEHEIGHT); //nextTile below
-
-                b.destroy();
-                bombIterator.remove();
-            }
-        }
-
-        Iterator<Stone> stoneIterator = stones.iterator();
-        while(stoneIterator.hasNext()) {
-            Stone stone = stoneIterator.next();
-            stone.update();
-
-            if(!stone.isActive()) {
-                stoneIterator.remove();
-            }
-        }
+        updateEntities();
+        updatePlayers();
+        updateBlasts();
+        updateItems();
+        updateBombs();
+        updateStones();
 
         checkItemPickUp();
         checkPlayerCollisions();
@@ -194,50 +83,7 @@ public class Game implements Model
 
     }
 
-    private void placeBlast(Bomb b, int xOffset, int yOffset) {
-        boolean stop = false;
-        for(int i = 0; i < b.getBombStrength();i++)
-        {
-            if(stop || collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
-                return;
 
-            Blast blast = new Blast(this, b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset);
-            blasts.add(blast);
-//            addBlast(blast);
-
-            Rectangle tempBounds = new Rectangle();
-            tempBounds.x = (int)b.getX() + xOffset + i * xOffset;
-            tempBounds.y = (int)b.getY() + yOffset + i *yOffset;
-            tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
-            for (Entity e : entities)
-            {
-                if (e.equals(this))
-                    continue;
-                if (e.getCollisionBounds(32, 32).intersects(tempBounds))
-                {
-                    e.destroy();
-                    e.hurt(3);
-                    stop = true;
-                }
-            }
-
-        }
-    }
-
-    private void checkBlastCollisions()
-    {
-        //checkCollision
-        for(Blast b : blasts) {
-            for(Entity e : entities) {
-                if(e.equals(b))
-                    continue;
-                if(e.getCollisionBounds(32,32).intersects(b.getBounds())){
-                    e.destroy();
-                    e.hurt(3);
-                }
-            }
-        }
-    }
 
     protected boolean collisionWithTile(int x, int y) {
         return getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
@@ -260,28 +106,6 @@ public class Game implements Model
         }
     }
 
-
-    private void checkPlayerCollisions()
-    {
-        Iterator<Entity> it = entities.iterator();
-        while (it.hasNext())
-        {
-            Entity e = it.next();
-            e.update();
-            if (players.contains(e))
-            {
-                Player p = (Player) e;
-                if (!checkEntityCollisions(p, p.getxMove(), 0f))
-                {
-                    p.moveX();
-                }
-                if (!checkEntityCollisions(p, 0f, p.getyMove()))
-                {
-                    p.moveY();
-                }
-            }
-        }
-    }
 
     @Override
     public void moveLeft(int id)
@@ -318,7 +142,7 @@ public class Game implements Model
         if (p.getBombCount() > 0)
         {
             Sound.playSound("bomb_Set.wav");
-            Bomb b = new Bomb(this, p.getCenterPoint().x, p.getCenterPoint().y, p.getBombStrength());
+            Bomb b = new Bomb(p.getCenterPoint().x, p.getCenterPoint().y, p.getBombStrength());
             addBomb(b);
             p.decrementBombCount();
             p.setAttackTimer(0);
@@ -357,17 +181,10 @@ public class Game implements Model
     public void addPlayers() {
         for (int i = 1; i <= playerCount; i++) {
             final Point startingPoint = spawnMap.get(i);
-            final Player player = new Player(this, startingPoint.x * Tile.TILEWIDTH -1, startingPoint.y * Tile.TILEHEIGHT -1, i);
+            final Player player = new Player(startingPoint.x * Tile.TILEWIDTH -1, startingPoint.y * Tile.TILEHEIGHT -1, i);
             players.add(player);
             entities.add(player);
         }
-    }
-
-    public void addPlayer(Player p)
-    {
-        p.setGame(this);
-        players.add(p);
-        entities.add(p);
     }
 
     public boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
@@ -496,6 +313,279 @@ public class Game implements Model
         bombs.add(b);
     }
 
+    @Override
+    public void moveX(Player p)
+    {
+        Rectangle bounds = p.getBounds();
+        int x =(int) p.getX();
+        int y = (int) p.getY();
+        int xMove = (int) p.getxMove();
+
+        if(xMove > 0){ //moving right
+            int tx = (x + xMove + bounds.x + bounds.width);
+
+            if(!collisionWithTile(tx, y + bounds.y) &&
+                    !collisionWithTile(tx, (y + bounds.y + bounds.height))){
+                x += xMove;
+                System.out.println(x);
+                p.setX(x);
+            } else {
+                x = tx - bounds.x - bounds.width - xMove;
+                System.out.println(x);
+                p.setX(x);
+            }
+        } else if(xMove < 0) {//moving left
+            int tx =  (x + xMove + bounds.x) ;
+            if(!collisionWithTile(tx, y + bounds.y )&&
+                    !collisionWithTile(tx, y + bounds.y + bounds.height)){
+                x += xMove;
+                System.out.println(x);
+//                System.out.println(xMove);
+                p.setX(x);
+            } else {
+                x = tx  - bounds.x -xMove;
+                System.out.println(x);
+//                System.out.println(xMove);
+                p.setX(x);
+            }
+        }
+//        System.out.println(x);
+    }
+
+    @Override
+    public void moveY(Player p)
+    {
+        Rectangle bounds = p.getBounds();
+        int x =(int) p.getX();
+        int y = (int) p.getY();
+        int yMove = (int) p.getyMove();
+
+        if(yMove < 0){ //Up
+            int ty =  y + yMove + bounds.y;
+            if(!collisionWithTile(x + bounds.x, ty) &&
+                    !collisionWithTile(x + bounds.x + bounds.width, ty)){
+                y += yMove;
+                p.setY(y);
+            } else {
+                y = ty - bounds.y - yMove;
+                p.setY(y);
+            }
+        }else if(yMove > 0) {//Down
+            int ty = y + yMove + bounds.y + bounds.height;
+            if(!collisionWithTile(x + bounds.x, ty) &&
+                    !collisionWithTile(x + bounds.x + bounds.width, ty)){
+                y += yMove;
+                p.setY(y);
+            } else {
+                y = ty - bounds.y - bounds.height - yMove;
+                p.setY(y);
+            }
+        }
+    }
+
+    private void loadTiles()
+    {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                getTile(x, y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
+            }
+        }
+    }
+
+    private void loadSpawnPoints()
+    {
+        spawnMap = new HashMap<Integer, Point>() {
+            {
+                put(1, new Point(1, 1));
+                put(2, new Point(width - 2, height - 2));
+                put(3, new Point(width - 2, 0));
+                put(4, new Point(0, height - 2));
+            }
+        };
+    }
+
+    private void loadEntities()
+    {
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if(!getTile(x,y).isSolid())
+                {
+                    if(
+                            (x*Tile.TILEWIDTH > Tile.TILEWIDTH*2 || y *Tile.TILEHEIGHT > Tile.TILEHEIGHT*2) &&
+                                    (x*Tile.TILEWIDTH < width*Tile.TILEWIDTH - Tile.TILEWIDTH*3 || y*Tile.TILEHEIGHT < height*Tile.TILEHEIGHT - Tile.TILEHEIGHT*3)
+                            ){
+                        int r = new Random().nextInt(3);
+                        if(r != 0){
+                            Stone s = new Stone(x * Tile.TILEWIDTH , y * Tile.TILEHEIGHT);
+                            entities.add(s);
+                            stones.add(s);
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
+
+    private void updateStones()
+    {
+        Iterator<Stone> stoneIterator = stones.iterator();
+        while(stoneIterator.hasNext()) {
+            Stone stone = stoneIterator.next();
+            stone.update();
+
+            if(!stone.isActive()) {
+                int randInt = new Random().nextInt(Item.items.length);
+                if(randInt != 0 && randInt < 4)
+                    addItem(Item.items[randInt].createNew((int) stone.getX() + Tile.TILEWIDTH/4,(int) stone.getY() + Tile.TILEHEIGHT/4));
+                stoneIterator.remove();
+            }
+        }
+    }
+
+    private void updateItems()
+    {
+        Iterator<Item> itemIterator = items.iterator();
+        while(itemIterator.hasNext()) {
+            Item item = itemIterator.next();
+            item.update();
+            if(item.isPickedUp()) {
+                itemIterator.remove();
+            }
+        }
+    }
+
+    private void updateBlasts()
+    {
+        Iterator<Blast> blastIterator = blasts.iterator();
+        while(blastIterator.hasNext()) {
+            Blast blast = blastIterator.next();
+            blast.update();
+
+            if(!blast.isActive()) {
+                blastIterator.remove();
+            }
+        }
+    }
+
+    private void updateBombs()
+    {
+        Iterator<Bomb> bombIterator = bombs.iterator();
+        while(bombIterator.hasNext()) {
+            Bomb b = bombIterator.next();
+            b.update();
+            if(!b.isActive()) {
+                String sound = (b.getBombStrength()>5) ? "boom_L.wav" : (b.getBombStrength()> 3)? "boom_M.wav" : "boom_S.wav";
+                Sound.playSound(sound);
+
+                placeBlast(b,0,0);
+                placeBlast(b, Tile.TILEWIDTH,0); // nextTile on the right
+                placeBlast(b,  -Tile.TILEWIDTH, 0); // nextTile on the left
+                placeBlast(b, 0,-Tile.TILEHEIGHT); //nextTile above
+                placeBlast(b, 0,Tile.TILEHEIGHT); //nextTile below
+
+                b.destroy();
+                bombIterator.remove();
+            }
+        }
+    }
+
+    private void updatePlayers()
+    {
+        Iterator<Player> playerIterator = players.iterator();
+        while (playerIterator.hasNext())
+        {
+            Player p = playerIterator.next();
+            p.update();
+
+            if (!p.isActive())
+            {
+                playerIterator.remove();
+            }
+        }
+    }
+
+    private void updateEntities()
+    {
+        Iterator<Entity> entityIterator = entities.iterator();
+        while(entityIterator.hasNext()){
+            Entity e = entityIterator.next();
+            e.update();
+            if(!e.isActive()){
+                entityIterator.remove();
+            }
+        }
+        entities.sort(drawSorter);
+    }
+
+    private void placeBlast(Bomb b, int xOffset, int yOffset) {
+        boolean stop = false;
+        for(int i = 0; i < b.getBombStrength();i++)
+        {
+            if(stop || collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
+                return;
+
+            Blast blast = new Blast(b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset);
+            blasts.add(blast);
+//            addBlast(blast);
+
+            Rectangle tempBounds = new Rectangle();
+            tempBounds.x = (int)b.getX() + xOffset + i * xOffset;
+            tempBounds.y = (int)b.getY() + yOffset + i *yOffset;
+            tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
+            for (Entity e : entities)
+            {
+                if (e.equals(this))
+                    continue;
+                if (e.getCollisionBounds(32, 32).intersects(tempBounds))
+                {
+                    e.destroy();
+                    e.hurt(3);
+                    stop = true;
+                }
+            }
+
+        }
+    }
+
+    private void checkBlastCollisions()
+    {
+        //checkCollision
+        for(Blast b : blasts) {
+            for(Entity e : entities) {
+                if(e.equals(b))
+                    continue;
+                if(e.getCollisionBounds(32,32).intersects(b.getBounds())){
+                    e.destroy();
+                    e.hurt(3);
+                }
+            }
+        }
+    }
+
+    private void checkPlayerCollisions()
+    {
+        for(Player p : players){
+            if (!checkEntityCollisions(p, p.getxMove(), 0f)){
+                moveX(p);
+            }
+            if (!checkEntityCollisions(p, 0f, p.getyMove())){
+                moveY(p);
+            }
+
+            p.setxMove(0);
+            p.setyMove(0);
+        }
+
+    }
 }
 
 

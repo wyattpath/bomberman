@@ -33,13 +33,12 @@ public class Blast extends StaticEntity
 
     /**
      *
-     * @param model
      * @param x
      * @param y
      */
-    public Blast(Model model, float x, float y)
+    public Blast(float x, float y)
     {
-        super(model, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+        super( x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
         bounds = getCollisionBounds(0f,0f);
         lastTime = System.currentTimeMillis();
         waitTime = 2000f;

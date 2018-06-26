@@ -66,7 +66,7 @@ public class MenuPanel extends JPanel
         g.fillRect(0, 0, getWidth(), getHeight());
 //        System.out.println(model.getWidth());
         g.drawImage(animBG.getCurrentFrame(), 0, 0, getWidth(), getHeight(), null);
-        g.drawImage(animLogo.getCurrentFrame(), 16, 16, 256, 128, null);
+        g.drawImage(animLogo.getCurrentFrame(), 0, getHeight()- animLogo.getCurrentFrame().getHeight(), 256, 128, null);
 
     }
 

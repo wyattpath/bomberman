@@ -17,25 +17,23 @@ import java.util.Random;
  * Controls and updates the view.
  * Keeps View and Model separated.
  */
-public class Controller implements Runnable{
-
-    private boolean running = false;
-    private boolean paused = false;
-    private boolean playing = false;
-    private boolean gameOver = false;
-    private Thread thread1;
-
-    private View view;
-    private Model model;
+public class Controller implements Runnable
+{
 
     private static GamePanel gamePanel;
     private static MenuPanel menuPanel;
     private static GameOverPanel gameOverPanel;
     private final MenuOptionsPanel menuOptionsPanel;
+    private boolean running = false;
+    private boolean paused = false;
+    private boolean playing = false;
+    private boolean gameOver = false;
+    private Thread thread1;
+    private View view;
+    private Model model;
     private JPanel currentPanel;
 
     private int r;
-
 
 
     // Input
@@ -43,7 +41,8 @@ public class Controller implements Runnable{
     private GameMouseListener gameMouseListener;
 
 
-    Controller(View view, Model model) {
+    Controller(View view, Model model)
+    {
         this.model = model;
         this.view = view;
         Assets.init();
@@ -89,7 +88,8 @@ public class Controller implements Runnable{
 
     // METHODS
 
-    public void setUpActionButton(){
+    public void setUpActionButton()
+    {
         model.loadWorld("world1.txt");
         model.resetWorld();
         switchPanel(gamePanel);
@@ -99,29 +99,36 @@ public class Controller implements Runnable{
         view.getFrame().addKeyListener(gameKeyListener);
     }
 
-    public MouseAdapter addEnterSound() {
-        return new MouseAdapter(){
+    public MouseAdapter addEnterSound()
+    {
+        return new MouseAdapter()
+        {
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(MouseEvent e)
+            {
                 super.mouseEntered(e);
                 Sound.playSound("cursor_move.wav");
             }
         };
     }
 
-    private void playMusic(){
-        if(!gameOver && playing) {
+    private void playMusic()
+    {
+        if (!gameOver && playing)
+        {
             Assets.game_bgMusic[r].stop();
             r = new Random().nextInt(Assets.gameOver_bgMusic.length);
             Assets.gameOver_bgMusic[r].setFramePosition(0);
             Assets.gameOver_bgMusic[r].start();
-        } else if(!gameOver && !playing){
+        } else if (!gameOver && !playing)
+        {
             Assets.menu_bgMusic[r].stop();
             r = new Random().nextInt(Assets.game_bgMusic.length);
             Assets.game_bgMusic[r].setFramePosition(0);
             Assets.game_bgMusic[r].start();
             Assets.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
-        } else {
+        } else
+        {
             Assets.gameOver_bgMusic[r].stop();
             r = new Random().nextInt(Assets.game_bgMusic.length);
             Assets.game_bgMusic[r].setFramePosition(0);
@@ -131,25 +138,28 @@ public class Controller implements Runnable{
 
     }
 
-    public void run() {
+    public void run()
+    {
 
         // init Timer
         int fps = 60;
-        double timePerTick = 1000000000 /fps;
-        double delta = 0 ;
+        double timePerTick = 1000000000 / fps;
+        double delta = 0;
         long now;
         long lastTime = System.nanoTime();
         long timer = 0;
         int ticks = 0;
 
-        while(running) {
+        while (running)
+        {
             // update Time and delta
             now = System.nanoTime();
             delta += (now - lastTime) / timePerTick; // number between 0 and 1
             timer += now - lastTime;
             lastTime = now;
 
-            if(delta >= 1) {
+            if (delta >= 1)
+            {
                 update();
                 view.repaint();
                 ticks++;
@@ -157,7 +167,8 @@ public class Controller implements Runnable{
             }
 
             // reset Timer
-            if(timer >= 1000000000) {
+            if (timer >= 1000000000)
+            {
 //                System.out.println("Ticks and Frames: " + ticks); // shows FPS
 
                 ticks = 0;
@@ -167,36 +178,43 @@ public class Controller implements Runnable{
 
         stop();
     }
-    synchronized void start(){
-        if(running) return;
+
+    synchronized void start()
+    {
+        if (running) return;
         running = true;
         thread1 = new Thread(this);
         thread1.start();
 
     }
 
-    private synchronized void stop(){
-        if(!running) return;
+    private synchronized void stop()
+    {
+        if (!running) return;
         running = false;
-        try {
+        try
+        {
             thread1.join();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
     }
 
-    private void update(){
-            gameKeyListener.update();
-        menuPanel.getAnimLogo().update();
-        menuPanel.getAnimBG().update();
-        if(playing)
+    private void update()
+    {
+//        menuPanel.getAnimLogo().update();
+//        menuPanel.getAnimBG().update();
+        if (playing)
         {
+            if (!gameOver)
+            {
 
-                for (int i = 0; i < model.getPlayers().size(); i++)
-                {
-                    model.getPlayer(i).setxMove(0);
-                    model.getPlayer(i).setyMove(0);
-                }
+
+
+                gameKeyListener.update();
+                model.update();
+
 
                 if (gameKeyListener.W)
                     model.moveUp(0);
@@ -209,8 +227,7 @@ public class Controller implements Runnable{
                 if (gameKeyListener.SPACE)
                     model.placeBomb(0);
 
-            if (model.getPlayers().size() > 1)
-            {
+
                 if (gameKeyListener.UP)
                     model.moveUp(1);
                 if (gameKeyListener.DOWN)
@@ -221,12 +238,10 @@ public class Controller implements Runnable{
                     model.moveRight(1);
                 if (gameKeyListener.CTRL)
                     model.placeBomb(1);
-            }
 
 
-            if (!gameOver)
-            {
-                model.update();
+
+
                 if (model.getPlayerAlive() < 2)
                 {
                     playMusic();
@@ -247,12 +262,14 @@ public class Controller implements Runnable{
 
 
                 }
+
             }
         }
+    }
 
-        }
 
-    private void switchPanel(JPanel panel) {
+    private void switchPanel(JPanel panel)
+    {
         view.setPanel(panel);
         currentPanel = panel;
     }

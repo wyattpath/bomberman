@@ -27,18 +27,18 @@ public class Player extends DynamicEntity
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private long bombCooldown = 2000;
 
-    protected Game game;
+
 
     /**
      * Constructor
      *
-     * @param game world of the player
+
      * @param x x-coordinate of player
      * @param y y-coordinate of player
      */
-    public Player(Game game, float x, float y, int id)
+    public Player(float x, float y, int id)
     {
-        super(game, x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
+        super(x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
         this.id = id;
         bounds.x = 16;
         bounds.y = 32;
@@ -78,25 +78,19 @@ public class Player extends DynamicEntity
     public void addMaxBombs()
     {
         maxBombs++;
-        System.out.println(id + ": You can now deploy " + maxBombs + " bombs at the same time.");
+        System.out.println(id + ": maxBombs " + maxBombs);
     }
 
     public void addBombStrength()
     {
         bombStrength++;
-        System.out.println(id + ": Your bombblasts now covers " + bombStrength + " tiles in each direction.");
+        System.out.println(id + ": bombStrength " + bombStrength);
     }
 
     public void addPlayerSpeed() {
         speed+=1.0f;
     }
 
-    public void placeBomb()
-    {
-
-
-
-    }
 
     public void moveUp(){
         yMove = -speed;
@@ -117,6 +111,7 @@ public class Player extends DynamicEntity
     @Override
     public void update()
     {
+
         animDown.update();
         animUp.update();
         animRight.update();
@@ -158,15 +153,6 @@ public class Player extends DynamicEntity
         return new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);
     }
 
-    public Game getGame()
-    {
-        return game;
-    }
-
-    public void setGame(Game game)
-    {
-        this.game = game;
-    }
 
     public int getId()
     {
@@ -205,4 +191,6 @@ public class Player extends DynamicEntity
     {
         this.attackTimer = attackTimer;
     }
+
+
 }

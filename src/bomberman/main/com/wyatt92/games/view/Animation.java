@@ -58,7 +58,6 @@ public class Animation
         this.animSpeed = animSpeed;
     }
 
-
     public boolean isRandom()
     {
         return random;

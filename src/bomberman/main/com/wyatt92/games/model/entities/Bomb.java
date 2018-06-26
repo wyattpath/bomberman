@@ -27,14 +27,13 @@ public class Bomb extends StaticEntity{
      * After a specific time the bomb explodes and places blasts depending on the strength of the bomb in the four directions.
      * If a blast in a line hits a tile or an entity it will destroy that entity or tile and will not place another blast in the line.
      *
-     * @param model world where the bomb will be placed
      * @param x x-coordinate of bomb
      * @param y y-coordinate of bomb
      * @param bombStrength strength of bomb
      */
-    public Bomb(Model model, float x, float y, int bombStrength)
+    public Bomb(float x, float y, int bombStrength)
     {
-        super(model, x, y, BOMBWIDTH, BOMBHEIGHT);
+        super(x, y, BOMBWIDTH, BOMBHEIGHT);
         this.bombStrength = bombStrength;
         bounds = new Rectangle((int) x,(int) y, BOMBWIDTH, BOMBHEIGHT);
         lastTime = System.currentTimeMillis();
