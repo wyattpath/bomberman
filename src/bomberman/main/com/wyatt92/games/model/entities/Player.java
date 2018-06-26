@@ -94,18 +94,7 @@ public class Player extends DynamicEntity
     public void placeBomb()
     {
 
-        // attack cooldown
-        if (attackTimer < attackCooldown)
-            return;
 
-        if (bombCount > 0)
-        {
-            Sound.playSound("bomb_Set.wav");
-            Bomb b = new Bomb(game, super.getCenterPoint().x, super.getCenterPoint().y, bombStrength);
-            model.addBomb(b);
-            bombCount--;
-            attackTimer = 0;
-        }
 
     }
 
@@ -166,7 +155,7 @@ public class Player extends DynamicEntity
     public Point getCenterPoint()
     {
 
-        return centerPoint;
+        return new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);
     }
 
     public Game getGame()
@@ -182,5 +171,38 @@ public class Player extends DynamicEntity
     public int getId()
     {
         return id;
+    }
+
+    public long getAttackTimer()
+    {
+        return attackTimer;
+    }
+
+    public long getAttackCooldown()
+    {
+        return attackCooldown;
+    }
+
+    public int getBombCount()
+    {
+        return bombCount;
+    }
+
+    public int getBombStrength()
+    {
+        return bombStrength;
+    }
+
+    public void decrementBombCount(){
+        bombCount--;
+    }
+
+    public void incrementBombCouunt() {
+        bombCount++;
+    }
+
+    public void setAttackTimer(long attackTimer)
+    {
+        this.attackTimer = attackTimer;
     }
 }

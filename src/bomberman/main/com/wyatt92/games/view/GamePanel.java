@@ -7,7 +7,6 @@ import com.wyatt92.games.model.tiles.Tile;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 
 /**
  * Creates a GameFrame and a GamePanel. Configures the GamePanel
@@ -41,7 +40,7 @@ public class GamePanel extends JPanel
 //        model.draw(g);
 
         for(int x = 0; x < model.getTileRows(); x++){
-            for(int y = 0 ; y < model.getTileColums(); y++){
+            for(int y = 0; y < model.getTileColumns(); y++){
                 model.getTile(x,y).setPosition(x*Tile.TILEWIDTH, y*Tile.TILEHEIGHT);
                 model.getTile(x,y).draw(g);
             }

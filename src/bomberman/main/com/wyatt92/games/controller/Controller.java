@@ -2,11 +2,14 @@ package com.wyatt92.games.controller;
 
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.Model;
+import com.wyatt92.games.model.Sound;
 import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.view.*;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 
@@ -68,15 +71,16 @@ public class Controller implements Runnable{
 
     private void addActionListener()
     {
-        menuPanel.getStartButton().addActionListener(e -> setUpStartButton());
-
+        menuPanel.getStartButton().addActionListener(e -> setUpActionButton());
+        menuPanel.getStartButton().addMouseListener(addEnterSound());
         menuPanel.getOptionsButton().addActionListener(e -> switchPanel(menuOptionsPanel));
-
         menuPanel.getQuitButton().addActionListener(e -> System.exit(0));
+        menuPanel.getQuitButton().addMouseListener(addEnterSound());
 
-        gameOverPanel.getStartButton().addActionListener(e -> setUpStartButton());
-
+        gameOverPanel.getStartButton().addActionListener(e -> setUpActionButton());
+        gameOverPanel.getStartButton().addMouseListener(addEnterSound());
         gameOverPanel.getQuitButton().addActionListener(e -> System.exit(0));
+        gameOverPanel.getQuitButton().addMouseListener(addEnterSound());
 
         view.getFrame().addKeyListener(gameKeyListener);
         view.getFrame().addMouseListener(gameMouseListener);
@@ -85,7 +89,7 @@ public class Controller implements Runnable{
 
     // METHODS
 
-    public void setUpStartButton(){
+    public void setUpActionButton(){
         model.loadWorld("world1.txt");
         model.resetWorld();
         switchPanel(gamePanel);
@@ -93,6 +97,16 @@ public class Controller implements Runnable{
         gameOver = false;
         playing = true;
         view.getFrame().addKeyListener(gameKeyListener);
+    }
+
+    public MouseAdapter addEnterSound() {
+        return new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                Sound.playSound("cursor_move.wav");
+            }
+        };
     }
 
     private void playMusic(){
@@ -185,28 +199,28 @@ public class Controller implements Runnable{
                 }
 
                 if (gameKeyListener.W)
-                    model.getPlayer(0).moveUp();
+                    model.moveUp(0);
                 if (gameKeyListener.S)
-                    model.getPlayer(0).moveDown();
+                    model.moveDown(0);
                 if (gameKeyListener.A)
-                    model.getPlayer(0).moveLeft();
+                    model.moveLeft(0);
                 if (gameKeyListener.D)
-                    model.getPlayer(0).moveRight();
+                    model.moveRight(0);
                 if (gameKeyListener.SPACE)
-                    model.getPlayer(0).placeBomb();
+                    model.placeBomb(0);
 
             if (model.getPlayers().size() > 1)
             {
                 if (gameKeyListener.UP)
-                    model.getPlayer(1).moveUp();
+                    model.moveUp(1);
                 if (gameKeyListener.DOWN)
-                    model.getPlayer(1).moveDown();
+                    model.moveDown(1);
                 if (gameKeyListener.LEFT)
-                    model.getPlayer(1).moveLeft();
+                    model.moveLeft(1);
                 if (gameKeyListener.RIGHT)
-                    model.getPlayer(1).moveRight();
+                    model.moveRight(1);
                 if (gameKeyListener.CTRL)
-                    model.getPlayer(1).placeBomb();
+                    model.placeBomb(1);
             }
 
 

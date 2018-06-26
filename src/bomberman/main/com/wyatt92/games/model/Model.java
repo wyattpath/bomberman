@@ -4,8 +4,6 @@ import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.tiles.Tile;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +13,15 @@ public interface Model
 {
     void update();
 
-    void draw(Graphics g);
+    void moveLeft(int id);
+
+    void moveRight(int id);
+
+    void moveUp(int id);
+
+    void moveDown(int id);
+
+    void placeBomb(int id);
 
     void resetWorld();
 
@@ -60,7 +66,7 @@ public interface Model
 
     int getTileRows();
 
-    int getTileColums();
+    int getTileColumns();
 
     void addItem(Item i);
 

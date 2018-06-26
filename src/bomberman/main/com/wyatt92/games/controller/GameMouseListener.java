@@ -14,15 +14,11 @@ public class GameMouseListener implements MouseListener, MouseMotionListener
 {
     private boolean leftPressed, rightPressed;
     private int mouseX, mouseY;
-    private UIManager uiManager;
 
     public GameMouseListener() {
 
     }
 
-    public void setUiManager (UIManager uiManager) {
-        this.uiManager = uiManager;
-    }
     // Getters
 
     public boolean isLeftPressed() {
@@ -66,10 +62,6 @@ public class GameMouseListener implements MouseListener, MouseMotionListener
             leftPressed = false;
         } else if(e.getButton() == MouseEvent.BUTTON3)
             rightPressed = false;
-
-        if(uiManager != null){
-            uiManager.onMouseRelease(e);
-        }
     }
 
     @Override
@@ -95,9 +87,5 @@ public class GameMouseListener implements MouseListener, MouseMotionListener
     {
         mouseX = e.getX();
         mouseY = e.getY();
-
-        if(uiManager != null) {
-            uiManager.onMouseMove(e);
-        }
     }
 }

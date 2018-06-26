@@ -283,25 +283,46 @@ public class Game implements Model
         }
     }
 
-
-    public void draw(Graphics g)
+    @Override
+    public void moveLeft(int id)
     {
-//        for (int y = 0; y < height; y++){
-//            for (int x = 0; x < width; x++){
-//                getTile(x,y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
-////                getTile(x, y).draw(g);
-//            }
-//        }
-//        // Blasts
-//        bombBlastManager.draw(g);
-//        // Bombs
-//        bombManager.draw(g);
-//        // Items
-//        itemManager.draw(g);
-//        //entities
-//        entityManager.draw(g);
-//        //players
-//        playerManager.draw(g);
+        getPlayer(id).moveLeft();
+    }
+
+    @Override
+    public void moveRight(int id)
+    {
+        getPlayer(id).moveRight();
+    }
+
+    @Override
+    public void moveUp(int id)
+    {
+        getPlayer(id).moveUp();
+    }
+
+    @Override
+    public void moveDown(int id)
+    {
+        getPlayer(id).moveDown();
+    }
+
+    @Override
+    public void placeBomb(int id)
+    {
+        Player p = getPlayer(id);
+        // attack cooldown
+        if (p.getAttackTimer() < p.getAttackCooldown())
+            return;
+
+        if (p.getBombCount() > 0)
+        {
+            Sound.playSound("bomb_Set.wav");
+            Bomb b = new Bomb(this, p.getCenterPoint().x, p.getCenterPoint().y, p.getBombStrength());
+            addBomb(b);
+            p.decrementBombCount();
+            p.setAttackTimer(0);
+        }
     }
 
     public Tile getTile(int x, int y)
@@ -386,7 +407,7 @@ public class Game implements Model
         return height*Tile.TILEHEIGHT;
     }
 
-    public int getTileColums(){
+    public int getTileColumns(){
         return width;
     }
 

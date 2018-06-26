@@ -80,4 +80,6 @@ public class Bomb extends StaticEntity{
     {
         return bombStrength;
     }
+
+
 }
