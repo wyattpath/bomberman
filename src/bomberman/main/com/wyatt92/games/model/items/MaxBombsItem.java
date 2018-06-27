@@ -9,22 +9,24 @@ import com.wyatt92.games.model.entities.Player;
 public class MaxBombsItem extends Item
 {
 
-    public MaxBombsItem(int id)
+    private int id;
+    public MaxBombsItem(int id )
     {
-        super(Assets.bombCount, "Powerup", id);
+        super(0, 0,  Assets.bombCount, id);
+        this.id = id;
+    }
+
+    public Item createNew(int x, int y)
+    {
+        Item item = new MaxBombsItem(id);
+        item.setPosition(x, y);
+        return item;
     }
 
     @Override
     public void addEffect(Player player)
     {
         player.addMaxBombs();
-    }
-
-    @Override
-    public Item createNew(int x, int y){
-        Item i = new MaxBombsItem(id);
-        i.setPosition(x,y);
-        return i;
     }
 
 }

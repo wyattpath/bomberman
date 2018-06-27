@@ -216,34 +216,30 @@ public class Controller implements Runnable
                 model.update();
 
 
-                if (gameKeyListener.W)
-                    model.moveUp(0);
-                if (gameKeyListener.S)
-                    model.moveDown(0);
-                if (gameKeyListener.A)
-                    model.moveLeft(0);
-                if (gameKeyListener.D)
-                    model.moveRight(0);
-                if (gameKeyListener.SPACE)
-                    model.placeBomb(0);
+                if(model.getPlayerAlive()>1){
+                    if (gameKeyListener.W)
+                        model.moveUp(0);
+                    if (gameKeyListener.S)
+                        model.moveDown(0);
+                    if (gameKeyListener.A)
+                        model.moveLeft(0);
+                    if (gameKeyListener.D)
+                        model.moveRight(0);
+                    if (gameKeyListener.SPACE)
+                        model.placeBomb(0);
 
 
-                if (gameKeyListener.UP)
-                    model.moveUp(1);
-                if (gameKeyListener.DOWN)
-                    model.moveDown(1);
-                if (gameKeyListener.LEFT)
-                    model.moveLeft(1);
-                if (gameKeyListener.RIGHT)
-                    model.moveRight(1);
-                if (gameKeyListener.CTRL)
-                    model.placeBomb(1);
-
-
-
-
-                if (model.getPlayerAlive() < 2)
-                {
+                    if (gameKeyListener.UP)
+                        model.moveUp(1);
+                    if (gameKeyListener.DOWN)
+                        model.moveDown(1);
+                    if (gameKeyListener.LEFT)
+                        model.moveLeft(1);
+                    if (gameKeyListener.RIGHT)
+                        model.moveRight(1);
+                    if (gameKeyListener.CTRL)
+                        model.placeBomb(1);
+                } else {
                     playMusic();
                     gameOver = true;
                     playing = false;

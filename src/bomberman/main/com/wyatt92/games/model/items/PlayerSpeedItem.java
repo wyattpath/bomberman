@@ -6,22 +6,17 @@ import com.wyatt92.games.model.entities.Player;
 
 public class PlayerSpeedItem extends Item
 {
-    /**
-     * Constructor
-     *
-     * @param id id of Item
-     */
     public PlayerSpeedItem(int id)
     {
-        super(Assets.playerSpeed, "Powerup", id);
+        super(0, 0,  Assets.playerSpeed, id);
+
     }
 
-    @Override
     public Item createNew(int x, int y)
     {
-        Item i = new PlayerSpeedItem(id);
-        i.setPosition(x,y);
-        return i;
+        Item item = new PlayerSpeedItem(id);
+        item.setPosition(x, y);
+        return item;
     }
 
     @Override

@@ -38,17 +38,6 @@ public class Game implements Model
     private ArrayList<Stone> stones;
 
 
-
-    /**
-     * Constructor
-     *
-     */
-    public Game() {
-
-
-    }
-
-
     @Override
     public void resetWorld() {
         stones = new ArrayList<>();
@@ -64,7 +53,7 @@ public class Game implements Model
         loadTiles();
         loadSpawnPoints();
         addPlayers();
-        loadEntities();
+        loadStones();
     }
 
     @Override
@@ -203,111 +192,12 @@ public class Game implements Model
     public void addItem(Item i)
     {
         items.add(i);
+        entities.add(i);
     }
 
-    public ArrayList<Blast> getBlasts()
-    {
-        return blasts;
-    }
-
-    // GETTERS and SETTERS
-
-
-
-    public int getWidth()
-    {
-        return width* Tile.TILEWIDTH;
-    }
-
-    public int getHeight()
-    {
-        return height*Tile.TILEHEIGHT;
-    }
-
-    public int getTileColumns(){
-        return width;
-    }
-
-    public int getTileRows(){
-        return height;
-    }
-
-    public int[][] getTiles()
-    {
-        return tiles;
-    }
-
-
-    public int getPlayerCount()
-    {
-        return playerCount;
-    }
-
-
-    public boolean isGameOver()
-    {
-        return gameOver;
-    }
 
 
     @Override
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    @Override
-    public Player getPlayer(int id)
-    {
-        return players.get(id);
-    }
-
-    @Override
-    public void setGameOver(boolean b)
-    {
-        gameOver = b;
-    }
-
-    @Override
-    public void setWinner(int winner)
-    {
-        this.winner = winner;
-    }
-
-    public int getWinner()
-    {
-        return winner;
-    }
-
-    @Override
-    public int getPlayerAlive()
-    {
-        return players.size();
-    }
-
-
-    @Override
-    public ArrayList<Bomb> getBombs()
-    {
-        return bombs;
-    }
-
-    @Override
-    public ArrayList<Entity> getEntities() {
-        return entities;
-    }
-
-    @Override
-    public ArrayList<Item> getItems()
-    {
-        return items;
-    }
-
-    @Override
-    public ArrayList<Stone> getStones()
-    {
-        return stones;
-    }
-
     public void addBomb(Bomb b) {
         bombs.add(b);
     }
@@ -398,7 +288,7 @@ public class Game implements Model
         };
     }
 
-    private void loadEntities()
+    private void loadStones()
     {
 
         for (int y = 0; y < height; y++)
@@ -421,11 +311,7 @@ public class Game implements Model
                 }
             }
         }
-
-
     }
-
-
 
     private void updateStones()
     {
@@ -435,10 +321,10 @@ public class Game implements Model
             stone.update();
 
             if(!stone.isActive()) {
-                int randInt = new Random().nextInt(Item.items.length);
-                if(randInt != 0 && randInt < 4)
-                    addItem(Item.items[randInt].createNew((int) stone.getX() + Tile.TILEWIDTH/4,(int) stone.getY() + Tile.TILEHEIGHT/4));
+                int randInt = new Random().nextInt(Item.getItems().length);
+                addItem(Item.items[randInt].createNew( (int)stone.getX() + Tile.TILEWIDTH/4,(int) stone.getY() + Tile.TILEHEIGHT/4));
                 stoneIterator.remove();
+                entities.remove(stone);
             }
         }
     }
@@ -574,6 +460,108 @@ public class Game implements Model
             p.setyMove(0);
         }
 
+    }
+
+
+    // GETTERS and SETTERS
+
+    @Override
+    public int getWidth()
+    {
+        return width* Tile.TILEWIDTH;
+    }
+    @Override
+    public int getHeight()
+    {
+        return height*Tile.TILEHEIGHT;
+    }
+
+    @Override
+    public int getTileColumns(){
+        return width;
+    }
+    @Override
+    public int getTileRows(){
+        return height;
+    }
+    @Override
+    public int[][] getTiles()
+    {
+        return tiles;
+    }
+
+    @Override
+    public int getPlayerCount()
+    {
+        return playerCount;
+    }
+
+    @Override
+    public boolean isGameOver()
+    {
+        return gameOver;
+    }
+
+    @Override
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    @Override
+    public Player getPlayer(int id)
+    {
+        return players.get(id);
+    }
+
+    @Override
+    public void setGameOver(boolean b)
+    {
+        gameOver = b;
+    }
+
+    @Override
+    public void setWinner(int winner)
+    {
+        this.winner = winner;
+    }
+    @Override
+    public int getWinner()
+    {
+        return winner;
+    }
+
+    @Override
+    public int getPlayerAlive()
+    {
+        return players.size();
+    }
+
+    @Override
+    public ArrayList<Bomb> getBombs()
+    {
+        return bombs;
+    }
+
+    @Override
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
+
+    @Override
+    public ArrayList<Item> getItems()
+    {
+        return items;
+    }
+
+    @Override
+    public ArrayList<Stone> getStones()
+    {
+        return stones;
+    }
+
+    public ArrayList<Blast> getBlasts()
+    {
+        return blasts;
     }
 }
 

@@ -9,23 +9,27 @@ import com.wyatt92.games.model.entities.Player;
  */
 public class BombStrengthItem extends Item
 {
+    private int id;
 
     public BombStrengthItem(int id)
     {
-        super(Assets.bombStrength, "Powerup", id);
+        super(0, 0,  Assets.bombStrength, id);
+        this.id = id;
+    }
+
+    @Override
+    public Item createNew(int x, int y)
+    {
+        Item item = new BombStrengthItem(id);
+        item.setPosition(x, y);
+
+        return item;
     }
 
     @Override
     public void addEffect(Player player)
     {
         player.addBombStrength();
-    }
-
-    @Override
-    public Item createNew(int x, int y){
-        Item i = new BombStrengthItem(id);
-        i.setPosition(x,y);
-        return i;
     }
 
 }
