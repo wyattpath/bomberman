@@ -46,12 +46,10 @@ public class Controller implements Runnable
         this.model = model;
         this.view = view;
         Assets.init();
-
         gameKeyListener = new GameKeyListener();
         gameMouseListener = new GameMouseListener();
 
         gamePanel = new GamePanel(model);
-
         menuPanel = new MenuPanel();
         gameOverPanel = new GameOverPanel(model);
         menuOptionsPanel = new MenuOptionsPanel();
@@ -66,6 +64,7 @@ public class Controller implements Runnable
         Assets.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
 
         run();
+        this.start();
     }
 
     private void addActionListener()
@@ -92,14 +91,15 @@ public class Controller implements Runnable
     {
         model.loadWorld("world1.txt");
         model.resetWorld();
-        switchPanel(gamePanel);
         playMusic();
+        switchPanel(gamePanel);
         gameOver = false;
         playing = true;
         view.getFrame().addKeyListener(gameKeyListener);
+//        gamePanel.addKeyListener(gameKeyListener);
     }
 
-    public MouseAdapter addEnterSound()
+    private MouseAdapter addEnterSound()
     {
         return new MouseAdapter()
         {
@@ -114,13 +114,14 @@ public class Controller implements Runnable
 
     private void playMusic()
     {
-        if (!gameOver && playing)
+
+        if (currentPanel == gamePanel)
         {
             Assets.game_bgMusic[r].stop();
             r = new Random().nextInt(Assets.gameOver_bgMusic.length);
             Assets.gameOver_bgMusic[r].setFramePosition(0);
             Assets.gameOver_bgMusic[r].start();
-        } else if (!gameOver && !playing)
+        } else if (currentPanel == menuPanel)
         {
             Assets.menu_bgMusic[r].stop();
             r = new Random().nextInt(Assets.game_bgMusic.length);
@@ -138,6 +139,15 @@ public class Controller implements Runnable
 
     }
 
+    private void switchPanel(JPanel panel)
+    {
+        view.setPanel(panel);
+        currentPanel = panel;
+        gameKeyListener = new GameKeyListener();
+        view.getFrame().addKeyListener(gameKeyListener);
+    }
+
+    @Override
     public void run()
     {
 
@@ -179,44 +189,16 @@ public class Controller implements Runnable
         stop();
     }
 
-    synchronized void start()
-    {
-        if (running) return;
-        running = true;
-        thread1 = new Thread(this);
-        thread1.start();
-
-    }
-
-    private synchronized void stop()
-    {
-        if (!running) return;
-        running = false;
-        try
-        {
-            thread1.join();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     private void update()
     {
-//        menuPanel.getAnimLogo().update();
-//        menuPanel.getAnimBG().update();
         if (playing)
         {
             if (!gameOver)
             {
 
-
-
-                gameKeyListener.update();
                 model.update();
-
-
-                if(model.getPlayerAlive()>1){
+                if (model.getPlayersAlive() > 1)
+                {
                     if (gameKeyListener.W)
                         model.moveUp(0);
                     if (gameKeyListener.S)
@@ -228,7 +210,6 @@ public class Controller implements Runnable
                     if (gameKeyListener.SPACE)
                         model.placeBomb(0);
 
-
                     if (gameKeyListener.UP)
                         model.moveUp(1);
                     if (gameKeyListener.DOWN)
@@ -239,34 +220,45 @@ public class Controller implements Runnable
                         model.moveRight(1);
                     if (gameKeyListener.CTRL)
                         model.placeBomb(1);
-                } else {
+
+                } else
+                {
                     playMusic();
                     gameOver = true;
                     playing = false;
-                    int winner = 0;
-                    for (Player p : model.getPlayers())
-                    {
-                        if (p.isActive())
-                        {
-                            winner = p.getId();
-                        }
-                    }
-                    model.setWinner(winner);
-
-
                     switchPanel(gameOverPanel);
-
-
                 }
+            } else {
 
             }
         }
     }
 
 
-    private void switchPanel(JPanel panel)
+
+    synchronized void start()
     {
-        view.setPanel(panel);
-        currentPanel = panel;
+        if (!running)
+        {
+            running = true;
+            thread1 = new Thread(this);
+            thread1.start();
+        }
     }
+
+    private synchronized void stop()
+    {
+        if (running){
+            running = false;
+            try
+            {
+                thread1.join();
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }

@@ -1,10 +1,5 @@
 package com.wyatt92.games.model.entities;
 
-
-import com.wyatt92.games.model.Game;
-import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.tiles.Tile;
-
 /**
  * The Dynamic Entity is an entity that can be moved around the world.
  *

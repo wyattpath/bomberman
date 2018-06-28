@@ -1,7 +1,7 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.model.entities.*;
-import com.wyatt92.games.model.items.Item;
+import com.wyatt92.games.model.entities.Item;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.util.ArrayList;
@@ -11,7 +11,11 @@ import java.util.ArrayList;
  */
 public interface Model
 {
+    /**
+     * Updates timer for animation and player bombCooldown
+     */
     void update();
+
 
     void moveLeft(int id);
 
@@ -48,11 +52,10 @@ public interface Model
 
     void setGameOver(boolean b);
 
-    void setWinner(int winner);
-
-    int getWinner();
 
     int getPlayerAlive();
+
+    int getPlayersAlive();
 
     ArrayList<Blast> getBlasts();
 
@@ -67,13 +70,5 @@ public interface Model
     int getTileRows();
 
     int getTileColumns();
-
-    void addItem(Item i);
-
-    void addBomb(Bomb b);
-
-    void moveX(Player p);
-
-    void moveY(Player p);
 
 }

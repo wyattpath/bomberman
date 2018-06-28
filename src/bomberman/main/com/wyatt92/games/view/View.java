@@ -30,6 +30,7 @@ public class View
 		frame.setLocationRelativeTo(null);
 		frame.setFocusable(true);
 		frame.setVisible(true);
+        frame.requestFocus();
     }
 
     public void setPanel(JPanel panel) {

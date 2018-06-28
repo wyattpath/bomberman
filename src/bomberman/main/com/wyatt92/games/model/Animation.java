@@ -1,6 +1,5 @@
-package com.wyatt92.games.view;
+package com.wyatt92.games.model;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -13,7 +12,7 @@ public class Animation
     private int animSpeed, index;
     private long lastTime, timer;
     private BufferedImage[] frames;
-    private boolean random;
+    private boolean randomized;
 
     /**
      * Constructor
@@ -27,7 +26,7 @@ public class Animation
     index = 0;
     timer = 0;
     lastTime = System.currentTimeMillis();
-    random = false;
+    randomized = false;
     }
 
     public void update(){
@@ -35,7 +34,7 @@ public class Animation
         lastTime = System.currentTimeMillis();
 
         if(timer > animSpeed) {
-            index = random ? new Random().nextInt(frames.length) : index+1;
+            index = randomized ? new Random().nextInt(frames.length) : index+1;
             timer = 0;
             if(index >= frames.length){
                 index = 0;
@@ -58,13 +57,14 @@ public class Animation
         this.animSpeed = animSpeed;
     }
 
-    public boolean isRandom()
+    public boolean isRandomized()
     {
-        return random;
+        return randomized;
     }
 
-    public void setRandom(boolean random)
+    public void setRandomized(boolean randomized)
     {
-        this.random = random;
+        index = new Random().nextInt(frames.length);
+        this.randomized = randomized;
     }
 }

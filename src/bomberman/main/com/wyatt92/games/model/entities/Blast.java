@@ -1,10 +1,7 @@
 package com.wyatt92.games.model.entities;
 
-
-import com.wyatt92.games.model.Model;
-import com.wyatt92.games.view.Animation;
+import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.Game;
 import com.wyatt92.games.model.tiles.Tile;
 
 import java.awt.*;
@@ -72,6 +69,8 @@ public class Blast extends StaticEntity
     {
         this.bounds = bounds;
     }
+
+
 
 
 }

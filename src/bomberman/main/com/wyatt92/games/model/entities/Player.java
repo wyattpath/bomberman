@@ -1,11 +1,7 @@
 package com.wyatt92.games.model.entities;
 
-
-import com.wyatt92.games.model.Sound;
-import com.wyatt92.games.view.Animation;
+import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.Game;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -24,7 +20,7 @@ public class Player extends DynamicEntity
     private int id;
 
     // AttackTimer
-    private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
+    private long lastTime, attackCooldown = 400, timer = attackCooldown;
     private long bombCooldown = 2000;
 
 
@@ -53,10 +49,10 @@ public class Player extends DynamicEntity
 
     private void updateBombCount()
     {
-        attackTimer += System.currentTimeMillis() - lastAttackTimer;
-        lastAttackTimer = System.currentTimeMillis();
+        timer += System.currentTimeMillis() - lastTime;
+        lastTime = System.currentTimeMillis();
 
-        if (attackTimer < bombCooldown)
+        if (timer < bombCooldown)
         {
             return;
         }
@@ -64,7 +60,7 @@ public class Player extends DynamicEntity
         {
             bombCount++;
             System.out.println(id + " : bombCount = " + bombCount);
-            attackTimer = 0;
+            timer = 0;
         }
     }
 
@@ -153,9 +149,9 @@ public class Player extends DynamicEntity
         return id;
     }
 
-    public long getAttackTimer()
+    public long getTimer()
     {
-        return attackTimer;
+        return timer;
     }
 
     public long getAttackCooldown()
@@ -181,10 +177,24 @@ public class Player extends DynamicEntity
         bombCount++;
     }
 
-    public void setAttackTimer(long attackTimer)
+    public void setTimer(long timer)
     {
-        this.attackTimer = attackTimer;
+        this.timer = timer;
     }
 
 
+    public void addEffect(int id)
+    {
+        switch(id){
+            case 0 :
+                addBombStrength();
+                break;
+            case 1 :
+                addPlayerSpeed();
+                break;
+            case 2:
+                addMaxBombs();
+                break;
+        }
+    }
 }

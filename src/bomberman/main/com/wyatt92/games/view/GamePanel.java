@@ -2,7 +2,7 @@ package com.wyatt92.games.view;
 
 import com.wyatt92.games.model.*;
 import com.wyatt92.games.model.entities.*;
-import com.wyatt92.games.model.items.Item;
+import com.wyatt92.games.model.entities.Item;
 import com.wyatt92.games.model.tiles.Tile;
 
 import javax.swing.*;

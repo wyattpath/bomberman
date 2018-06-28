@@ -1,6 +1,6 @@
 package com.wyatt92.games.view;
 
-import com.wyatt92.games.controller.Controller;
+import com.wyatt92.games.model.Animation;
 import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.Model;
 
@@ -9,19 +9,17 @@ import java.awt.*;
 
 public class MenuPanel extends JPanel
 {
-    private Model model;
     private Animation animBG;
     private Animation animLogo;
     private JButton startButton, optionsButton, quitButton;
     Icon startIcon, startIconEntered, quitIcon, quitIconEntered;
 
     public MenuPanel() {
-        this.model = model;
 
         animLogo = new Animation(10000, Assets.logo);
-        animLogo.setRandom(true);
+        animLogo.setRandomized(true);
         animBG = new Animation(5000, Assets.bg);
-        animBG.setRandom(true);
+        animBG.setRandomized(true);
 
         startButton = new JButton();
         startIcon = new ImageIcon(Assets.btn_start[0]);
@@ -58,9 +56,9 @@ public class MenuPanel extends JPanel
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        g.create();
         animLogo.update();
         animBG.update();
+        g.create();
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());

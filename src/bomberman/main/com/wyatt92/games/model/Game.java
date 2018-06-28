@@ -1,9 +1,8 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.model.entities.*;
-import com.wyatt92.games.model.items.Item;
+import com.wyatt92.games.model.entities.Item;
 import com.wyatt92.games.model.tiles.Tile;
-import com.wyatt92.games.model.utils.Utils;
 
 import java.awt.*;
 import java.util.*;
@@ -20,23 +19,15 @@ public class Game implements Model
     private static Map<Integer, Point> spawnMap;
     private boolean gameOver;
     private String path;
-    private int winner;
     private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? -1 : 1;
 
     //Entities
     private ArrayList<Entity> entities;
-    // Item
     private ArrayList<Item> items;
-
-    // Bombs
     private ArrayList<Bomb> bombs;
-    // Blasts
     private ArrayList<Blast> blasts;
-    // Player
     private ArrayList<Player> players;
-
     private ArrayList<Stone> stones;
-
 
     @Override
     public void resetWorld() {
@@ -67,34 +58,10 @@ public class Game implements Model
         updateStones();
 
         checkItemPickUp();
-        checkPlayerCollisions();
-        checkBlastCollisions();
+        checkPlayerEntityCollisions();
+        checkBlastEntityCollisions();
 
     }
-
-
-
-    protected boolean collisionWithTile(int x, int y) {
-        return getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
-    }
-
-    private void checkItemPickUp()
-    {
-        Iterator<Item> it = items.iterator();
-        while(it.hasNext()){
-            Item i = it.next();
-            Iterator<Player> itp = players.iterator();
-            while(itp.hasNext()) {
-                Player p = itp.next();
-                if(p.getCollisionBounds(0f,0f).intersects(i.getBounds())){
-                    Sound.playSound("item_get.wav");
-                    i.setPickedUp(true);
-                    i.addEffect(p);
-                }
-            }
-        }
-    }
-
 
     @Override
     public void moveLeft(int id)
@@ -120,21 +87,45 @@ public class Game implements Model
         getPlayer(id).moveDown();
     }
 
+    private boolean collisionWithTile(int x, int y) {
+        return getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
+    }
+
+    private void checkItemPickUp()
+    {
+        Iterator<Item> it = items.iterator();
+        while(it.hasNext()){
+            Item i = it.next();
+            Iterator<Player> itp = players.iterator();
+            while(itp.hasNext()) {
+                Player p = itp.next();
+                if(p.getCollisionBounds(0f,0f).intersects(i.getBounds())){
+                    Sound.playSound("item_get.wav");
+                    i.setPickedUp(true);
+                    p.addEffect(i.getId());
+                }
+            }
+        }
+    }
+
     @Override
     public void placeBomb(int id)
     {
+
+
         Player p = getPlayer(id);
         // attack cooldown
-        if (p.getAttackTimer() < p.getAttackCooldown())
+        if (p.getTimer() < p.getAttackCooldown())
             return;
 
         if (p.getBombCount() > 0)
         {
+            System.out.println("placedBomb");
             Sound.playSound("bomb_Set.wav");
             Bomb b = new Bomb(p.getCenterPoint().x, p.getCenterPoint().y, p.getBombStrength());
-            addBomb(b);
+            bombs.add(b);
             p.decrementBombCount();
-            p.setAttackTimer(0);
+            p.setTimer(0);
         }
     }
 
@@ -167,15 +158,6 @@ public class Game implements Model
         }
     }
 
-    public void addPlayers() {
-        for (int i = 1; i <= playerCount; i++) {
-            final Point startingPoint = spawnMap.get(i);
-            final Player player = new Player(startingPoint.x * Tile.TILEWIDTH -1, startingPoint.y * Tile.TILEHEIGHT -1, i);
-            players.add(player);
-            entities.add(player);
-        }
-    }
-
     public boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
         for(Entity e : entities){
             if(e.equals(e1)){
@@ -188,22 +170,21 @@ public class Game implements Model
         return false;
     }
 
-    @Override
-    public void addItem(Item i)
-    {
-        items.add(i);
-        entities.add(i);
+
+
+
+    private void addPlayers() {
+        for (int i = 1; i <= playerCount; i++) {
+            final Point startingPoint = spawnMap.get(i);
+            final Player player = new Player(startingPoint.x * Tile.TILEWIDTH -1, startingPoint.y * Tile.TILEHEIGHT -1, i);
+            players.add(player);
+            entities.add(player);
+        }
     }
 
 
 
-    @Override
-    public void addBomb(Bomb b) {
-        bombs.add(b);
-    }
-
-    @Override
-    public void moveX(Player p)
+    private void moveX(Player p)
     {
         Rectangle bounds = p.getBounds();
         int x =(int) p.getX();
@@ -234,8 +215,7 @@ public class Game implements Model
         }
     }
 
-    @Override
-    public void moveY(Player p)
+    private void moveY(Player p)
     {
         Rectangle bounds = p.getBounds();
         int x =(int) p.getX();
@@ -313,6 +293,35 @@ public class Game implements Model
         }
     }
 
+    private void checkBlastEntityCollisions()
+    {
+        //checkCollision
+        for(Blast b : blasts) {
+            for(Entity e : entities) {
+                if(e.equals(b))
+                    continue;
+                if(e.getCollisionBounds(32,32).intersects(b.getBounds())){
+                    e.hurt(3);
+                }
+            }
+        }
+    }
+
+    private void checkPlayerEntityCollisions()
+    {
+        for(Player p : players){
+            if (!checkEntityCollisions(p, p.getxMove(), 0f)){
+                moveX(p);
+            }
+            if (!checkEntityCollisions(p, 0f, p.getyMove())){
+                moveY(p);
+            }
+
+            p.setxMove(0);
+            p.setyMove(0);
+        }
+
+    }
     private void updateStones()
     {
         Iterator<Stone> stoneIterator = stones.iterator();
@@ -321,8 +330,17 @@ public class Game implements Model
             stone.update();
 
             if(!stone.isActive()) {
-                int randInt = new Random().nextInt(Item.getItems().length);
-                addItem(Item.items[randInt].createNew( (int)stone.getX() + Tile.TILEWIDTH/4,(int) stone.getY() + Tile.TILEHEIGHT/4));
+                //placeItem
+                int randInt = new Random().nextInt(10);
+                if(randInt <3)
+                {
+                    float x = stone.getX() + Tile.TILEWIDTH/4;
+                    float y = stone.getY() + Tile.TILEHEIGHT/4;
+                    Item item = new Item(x, y, randInt);
+                    items.add(item);
+                    entities.add(item);
+                }
+
                 stoneIterator.remove();
                 entities.remove(stone);
             }
@@ -375,6 +393,34 @@ public class Game implements Model
         }
     }
 
+    private void placeBlast(Bomb b, int xOffset, int yOffset) {
+        boolean stop = false;
+        for(int i = 0; i < b.getBombStrength();i++)
+        {
+            if(stop || collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
+                return;
+
+            Blast blast = new Blast(b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset);
+            blasts.add(blast);
+
+            Rectangle tempBounds = new Rectangle();
+            tempBounds.x = (int)b.getX() + xOffset + i * xOffset;
+            tempBounds.y = (int)b.getY() + yOffset + i *yOffset;
+            tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
+            for (Entity e : entities)
+            {
+                if (e.equals(this))
+                    continue;
+                if (e.getCollisionBounds(32, 32).intersects(tempBounds))
+                {
+                    e.hurt(3);
+                    stop = true;
+                }
+            }
+
+        }
+    }
+
     private void updatePlayers()
     {
         Iterator<Player> playerIterator = players.iterator();
@@ -401,65 +447,6 @@ public class Game implements Model
             }
         }
         entities.sort(drawSorter);
-    }
-
-    private void placeBlast(Bomb b, int xOffset, int yOffset) {
-        boolean stop = false;
-        for(int i = 0; i < b.getBombStrength();i++)
-        {
-            if(stop || collisionWithTile((int)b.getX() + xOffset + i * xOffset, (int)b.getY()+ yOffset + i *yOffset))
-                return;
-
-            Blast blast = new Blast(b.getX() + xOffset + i*xOffset, b.getY() + yOffset + i *yOffset);
-            blasts.add(blast);
-//            addBlast(blast);
-
-            Rectangle tempBounds = new Rectangle();
-            tempBounds.x = (int)b.getX() + xOffset + i * xOffset;
-            tempBounds.y = (int)b.getY() + yOffset + i *yOffset;
-            tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
-            for (Entity e : entities)
-            {
-                if (e.equals(this))
-                    continue;
-                if (e.getCollisionBounds(32, 32).intersects(tempBounds))
-                {
-                    e.hurt(3);
-                    stop = true;
-                }
-            }
-
-        }
-    }
-
-    private void checkBlastCollisions()
-    {
-        //checkCollision
-        for(Blast b : blasts) {
-            for(Entity e : entities) {
-                if(e.equals(b))
-                    continue;
-                if(e.getCollisionBounds(32,32).intersects(b.getBounds())){
-                    e.hurt(3);
-                }
-            }
-        }
-    }
-
-    private void checkPlayerCollisions()
-    {
-        for(Player p : players){
-            if (!checkEntityCollisions(p, p.getxMove(), 0f)){
-                moveX(p);
-            }
-            if (!checkEntityCollisions(p, 0f, p.getyMove())){
-                moveY(p);
-            }
-
-            p.setxMove(0);
-            p.setyMove(0);
-        }
-
     }
 
 
@@ -520,18 +507,20 @@ public class Game implements Model
     }
 
     @Override
-    public void setWinner(int winner)
+    public int getPlayerAlive()
     {
-        this.winner = winner;
-    }
-    @Override
-    public int getWinner()
-    {
-        return winner;
+        for (Player p : players)
+        {
+            if (p.isActive())
+            {
+                return p.getId();
+            }
+        }
+        return 0;
     }
 
     @Override
-    public int getPlayerAlive()
+    public int getPlayersAlive()
     {
         return players.size();
     }

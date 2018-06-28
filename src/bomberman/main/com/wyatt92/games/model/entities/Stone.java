@@ -1,13 +1,10 @@
 package com.wyatt92.games.model.entities;
 
 import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.Game;
-import com.wyatt92.games.model.items.Item;
 import com.wyatt92.games.model.tiles.Tile;
-import com.wyatt92.games.view.Animation;
+import com.wyatt92.games.model.Animation;
 
 import java.awt.*;
-import java.util.Random;
 
 /**
  * This class represents a Stone.

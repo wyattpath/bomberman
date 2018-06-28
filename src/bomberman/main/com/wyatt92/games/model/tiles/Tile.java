@@ -51,12 +51,6 @@ public abstract class Tile
     }
 
 
-
-    public void update(){
-
-    }
-
-
     public void draw(Graphics g){
         g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
     }
