@@ -34,7 +34,8 @@ public class Controller implements Runnable
     private JPanel currentPanel;
 
     private int r;
-
+    private long gameOverTimer;
+    private long gameOverLastTime;
 
     // Input
     private GameKeyListener gameKeyListener;
@@ -62,6 +63,9 @@ public class Controller implements Runnable
         r = new Random().nextInt(Assets.menu_bgMusic.length);
         Assets.menu_bgMusic[r].start();
         Assets.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+
+        gameOverTimer = 0;
+        gameOverLastTime = System.currentTimeMillis();
 
         run();
         this.start();
@@ -121,6 +125,7 @@ public class Controller implements Runnable
             r = new Random().nextInt(Assets.gameOver_bgMusic.length);
             Assets.gameOver_bgMusic[r].setFramePosition(0);
             Assets.gameOver_bgMusic[r].start();
+            Assets.gameOver_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
         } else if (currentPanel == menuPanel)
         {
             Assets.menu_bgMusic[r].stop();
@@ -193,10 +198,10 @@ public class Controller implements Runnable
     {
         if (playing)
         {
+            gameKeyListener.update();
+            model.update();
             if (!gameOver)
             {
-
-                model.update();
                 if (model.getPlayersAlive() > 1)
                 {
                     if (gameKeyListener.W)
@@ -221,14 +226,20 @@ public class Controller implements Runnable
                     if (gameKeyListener.CTRL)
                         model.placeBomb(1);
 
-                } else
+                } else{
+                        gameOver = true;
+                        gameOverTimer = 0;
+                    gameOverLastTime = System.currentTimeMillis();
+                }
+            } else {
+                gameOverTimer += System.currentTimeMillis() - gameOverLastTime;
+                gameOverLastTime = System.currentTimeMillis();
+                if(gameOverTimer > 5000f)
                 {
                     playMusic();
-                    gameOver = true;
                     playing = false;
                     switchPanel(gameOverPanel);
                 }
-            } else {
 
             }
         }

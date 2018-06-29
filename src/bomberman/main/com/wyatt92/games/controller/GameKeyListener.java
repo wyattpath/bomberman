@@ -39,7 +39,6 @@ public class GameKeyListener extends KeyAdapter{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        update();
         if(e.getKeyCode() >= 0 && e.getKeyCode() < keys.length)
         {
             keys[e.getKeyCode()] = true;
@@ -48,14 +47,14 @@ public class GameKeyListener extends KeyAdapter{
 
     @Override
     public void keyReleased(KeyEvent e) {
-        update();
+
         if(e.getKeyCode() >= 0 && e.getKeyCode() < keys.length)
         {
             keys[e.getKeyCode()] = false;
         }
     }
 
-    private void update(){
+    void update(){
 
         for(int i = 0; i < keys.length; i++){
             if(cantPress[i] && !keys[i]){

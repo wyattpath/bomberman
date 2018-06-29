@@ -409,7 +409,7 @@ public class Game implements Model
             tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
             for (Entity e : entities)
             {
-                if (e.equals(this))
+                if (e.equals(b))
                     continue;
                 if (e.getCollisionBounds(32, 32).intersects(tempBounds))
                 {

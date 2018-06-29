@@ -15,10 +15,7 @@ public class Blast extends StaticEntity
     private float countdown;
     private float waitTime;
     private static Animation animBlast;
-
-
-
-    protected Rectangle bounds;
+    private Rectangle bounds;
 
     /**
      *
