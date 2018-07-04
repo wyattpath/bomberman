@@ -29,8 +29,8 @@ public class Item extends StaticEntity
         super((int)x, (int)y, ITEMWIDTH, ITEMHEIGHT);
         this.id = id;
         images = new ArrayList<>();
-        images.add(Assets.playerSpeed);
         images.add(Assets.bombStrength);
+        images.add(Assets.playerSpeed);
         images.add(Assets.bombCount);
 
         this.animation = new Animation(500,images.get(id));
@@ -50,6 +50,11 @@ public class Item extends StaticEntity
     public int getId()
     {
         return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     public boolean isPickedUp()

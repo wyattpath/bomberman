@@ -7,31 +7,65 @@ import com.wyatt92.games.model.tiles.Tile;
 import java.util.ArrayList;
 
 /**
- *  Base Interface of all models. Updates and draws objects.
+ *  Base Interface of all models. Updates entities.
  */
 public interface Model
 {
     /**
-     * Updates timer for animation and player bombCooldown
+     * Updates entities
      */
     void update();
 
-
-    void moveLeft(int id);
-
-    void moveRight(int id);
-
-    void moveUp(int id);
-
-    void moveDown(int id);
-
-    void placeBomb(int id);
+    /**
+     * Loads world map
+     *
+     * @param path path to world file as .txt
+     */
+    void loadWorld(String path);
 
     void resetWorld();
 
-    Tile getTile(int x, int y);
+    /**
+     * Moves specified player to the left.
+     *
+     * @param id player id
+     */
+    void moveLeft(int id);
 
-    void loadWorld(String path);
+    /** Moves specified player to the right.
+     *
+     * @param id player id
+     */
+    void moveRight(int id);
+
+    /**
+     * Moves specified player up.
+     *
+     * @param id player id
+     */
+    void moveUp(int id);
+
+    /**
+     * Moves specified player down.
+     *
+     * @param id
+     */
+    void moveDown(int id);
+
+    /**
+     * Places bomb at player position.
+     *
+     * @param id player id.
+     */
+    void placeBomb(int id);
+
+    /**
+     *  get Tile
+     * @param x
+     * @param y
+     * @return
+     */
+    Tile getTile(int x, int y);
 
     // GETTERS and SETTERS
 

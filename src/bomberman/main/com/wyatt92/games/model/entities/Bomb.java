@@ -5,7 +5,12 @@ import com.wyatt92.games.model.Assets;
 
 import java.awt.*;
 
-
+/**
+ * A Bomb can be placed by a player in the world.
+ * After a specific time the bomb explodes and places blasts depending on the strength of the bomb in the four directions.
+ * If a blast in a line hits a tile or an entity it will destroy that entity or tile and will not place another blast in the line.
+ *
+ */
 public class Bomb extends StaticEntity{
     private long lastTime;
     private float countdown;
@@ -20,9 +25,7 @@ public class Bomb extends StaticEntity{
 
 
     /**
-     * A Bomb can be placed by a player in the world.
-     * After a specific time the bomb explodes and places blasts depending on the strength of the bomb in the four directions.
-     * If a blast in a line hits a tile or an entity it will destroy that entity or tile and will not place another blast in the line.
+     * Constructor
      *
      * @param x x-coordinate of bomb
      * @param y y-coordinate of bomb

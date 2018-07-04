@@ -34,8 +34,8 @@ public class Controller implements Runnable
     private JPanel currentPanel;
 
     private int r;
-    private long gameOverTimer;
-    private long gameOverLastTime;
+//    private long gameOverTimer;
+//    private long gameOverLastTime;
 
     // Input
     private GameKeyListener gameKeyListener;
@@ -64,8 +64,8 @@ public class Controller implements Runnable
         Assets.menu_bgMusic[r].start();
         Assets.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
 
-        gameOverTimer = 0;
-        gameOverLastTime = System.currentTimeMillis();
+//        gameOverTimer = 0;
+//        gameOverLastTime = System.currentTimeMillis();
 
         run();
         this.start();
@@ -228,18 +228,19 @@ public class Controller implements Runnable
 
                 } else{
                         gameOver = true;
-                        gameOverTimer = 0;
-                    gameOverLastTime = System.currentTimeMillis();
-                }
-            } else {
-                gameOverTimer += System.currentTimeMillis() - gameOverLastTime;
-                gameOverLastTime = System.currentTimeMillis();
-                if(gameOverTimer > 5000f)
-                {
+//                        gameOverTimer = 0;
+//                    gameOverLastTime = System.currentTimeMillis();
                     playMusic();
                     playing = false;
                     switchPanel(gameOverPanel);
                 }
+            } else {
+//                gameOverTimer += System.currentTimeMillis() - gameOverLastTime;
+//                gameOverLastTime = System.currentTimeMillis();
+//                if(gameOverTimer > 5000f)
+//                {
+//
+//                }
 
             }
         }

@@ -102,6 +102,7 @@ public class Game implements Model
                 if(p.getCollisionBounds(0f,0f).intersects(i.getBounds())){
                     Sound.playSound("item_get.wav");
                     i.setPickedUp(true);
+                    System.out.println(i.getId());
                     p.addEffect(i.getId());
                 }
             }
@@ -406,7 +407,7 @@ public class Game implements Model
             Rectangle tempBounds = new Rectangle();
             tempBounds.x = (int)b.getX() + xOffset + i * xOffset;
             tempBounds.y = (int)b.getY() + yOffset + i *yOffset;
-            tempBounds.setSize(b.BOMBWIDTH, b.BOMBHEIGHT);
+            tempBounds.setSize(Bomb.BOMBWIDTH, Bomb.BOMBHEIGHT);
             for (Entity e : entities)
             {
                 if (e.equals(b))

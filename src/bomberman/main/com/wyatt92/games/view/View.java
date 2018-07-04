@@ -9,7 +9,7 @@ public class View
 {
     private JFrame frame;
     private JPanel panel;
-    private static final int FRAMEWIDTH = 13 * 64;
+    private static final int FRAMEWIDTH = 13 * 64 + 32;
     private static final int FRAMEHEIGHT = 13 * 64 + 32;
     private static final String TITLE = "Bomberman";
     private Model model;

@@ -79,6 +79,7 @@ public class Player extends DynamicEntity
 
     public void addPlayerSpeed() {
         speed+=1.0f;
+        System.out.println(id + ": playerSpeed " + speed);
     }
 
 

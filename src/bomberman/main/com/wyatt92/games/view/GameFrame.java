@@ -28,7 +28,8 @@ public class GameFrame extends JFrame {
     }
 
     //Component initialization
-    private void initGameFrame() throws Exception {
+    private void initGameFrame()
+    {
         this.pack();
         this.setSize(width, height);
         this.setTitle(title);
