@@ -1,9 +1,6 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.Animation;
-import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.tiles.Tile;
-
 import java.awt.*;
 
 /**
@@ -14,7 +11,7 @@ public class Blast extends StaticEntity
     private long lastTime;
     private float countdown;
     private float waitTime;
-    private static Animation animBlast;
+
     private Rectangle bounds;
 
     /**
@@ -30,13 +27,13 @@ public class Blast extends StaticEntity
         waitTime = 2000f;
         countdown = waitTime;
 
-        animBlast = new Animation(200, Assets.blast);
+
     }
 
     @Override
     public void update()
     {
-        animBlast.update();
+
 
         countdown -= System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
@@ -47,11 +44,6 @@ public class Blast extends StaticEntity
         }
     }
 
-    @Override
-    public void draw(Graphics g)
-    {
-        g.drawImage(animBlast.getCurrentFrame(),(int)super.x- Tile.TILEWIDTH/2,(int)super.y- Tile.TILEHEIGHT/2,Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
-    }
 
 
 

@@ -7,6 +7,8 @@ import com.wyatt92.games.model.tiles.Tile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * Creates a GameFrame and a GamePanel. Configures the GamePanel
@@ -15,6 +17,13 @@ import java.awt.*;
 public class GamePanel extends JPanel
 {
     private Model model;
+    private static Animation animBlast;
+    private static Animation animBomb;
+    private Animation animStone;
+    private Animation animItemBombStrength;
+    private Animation animItemPlayerSpeed;
+    private Animation animItemBombCount;
+    private ArrayList<Animation> itemAnimations;
 
     /**
      * Constructor
@@ -23,6 +32,24 @@ public class GamePanel extends JPanel
     public GamePanel(Model model) {
         this.model = model;
         configureGamePanel();
+        setupAnimation();
+    }
+
+    private void setupAnimation()
+    {
+        animBlast = new Animation(200, Assets.blast);
+        animBomb = new Animation(500, Assets.bomb);
+        animStone = new Animation(1000, Assets.stone);
+
+        itemAnimations = new ArrayList<>();
+
+        animItemBombStrength = new Animation(500, Assets.bombStrength);
+        animItemPlayerSpeed = new Animation(500, Assets.playerSpeed);
+        animItemBombCount = new Animation(500, Assets.bombCount);
+        itemAnimations.add(animItemBombStrength);
+        itemAnimations.add(animItemPlayerSpeed );
+        itemAnimations.add(animItemBombCount);
+
     }
 
     private void configureGamePanel() {
@@ -38,6 +65,8 @@ public class GamePanel extends JPanel
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        updateAnimation();
+
         for(int x = 0; x < model.getTileRows(); x++){
             for(int y = 0; y < model.getTileColumns(); y++){
                 model.getTile(x,y).setPosition(x*Tile.TILEWIDTH, y*Tile.TILEHEIGHT);
@@ -46,19 +75,41 @@ public class GamePanel extends JPanel
         }
 
         for(Blast b : model.getBlasts()){
-            b.draw(g);
+            g.drawImage(animBlast.getCurrentFrame(),(int)b.getX()- Tile.TILEWIDTH/2,(int)b.getY()- Tile.TILEHEIGHT/2,Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
+
         }
-        for(Bomb i : model.getBombs())
-            i.draw(g);
+
+        for(Bomb bomb : model.getBombs()){
+            g.drawImage(animBomb.getCurrentFrame(), (int)bomb.getX() - bomb.getWidth()/2, (int)bomb.getY()-bomb.getHeight()/2, bomb.getWidth(), bomb.getHeight(), null);
+        }
+
 
         for(Stone stone : model.getStones())
-            stone.draw(g);
+            g.drawImage(animStone.getCurrentFrame(), (int) stone.getX(), (int) stone.getY(), stone.getWidth(), stone.getHeight(), null);
+
+
+        for(Item i: model.getItems()){
+                g.drawImage(itemAnimations.get(i.getId()).getCurrentFrame(),(int)i.getX(), (int)i.getY(), i.getWidth(), i.getHeight(), null);
+        }
+
 
         for(Player p : model.getPlayers())
             p.draw(g);
 
-        for(Item i: model.getItems())
-            i.draw(g);
+
+
         g.dispose();
     }
+
+    private void updateAnimation()
+    {
+        animBlast.update();
+        animBomb.update();
+        animStone.update();
+        for(Animation a : itemAnimations){
+            a.update();
+        }
+    }
+
+
 }

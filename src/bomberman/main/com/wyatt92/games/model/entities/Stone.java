@@ -11,21 +11,18 @@ import java.awt.*;
  * Spawns sometimes an Item if it gets destroyed.
  */
 public class Stone extends StaticEntity {
-    private Animation animStone;
 
     public Stone(float x, float y) {
         super(x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
-        animStone = new Animation(1000, Assets.stone);
+
     }
 
     @Override
     public void update() {
-        animStone.update();
     }
 
-    @Override
+
     public void draw(Graphics g) {
-        g.drawImage(animStone.getCurrentFrame(), (int) x, (int) y, width, height, null);
     }
 
 }

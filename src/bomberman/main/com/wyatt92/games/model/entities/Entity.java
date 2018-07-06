@@ -49,8 +49,6 @@ public abstract class Entity
 
     public abstract void update();
 
-    public abstract void draw(Graphics g);
-
     public void hurt(int amount) {
         health -= amount;
         if(health <= 0) {

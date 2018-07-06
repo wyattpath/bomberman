@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class Item extends StaticEntity
 {
     public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
-    private ArrayList<BufferedImage[]> images;
+
     private int id;
 
-    protected Animation animation;
+
     protected Rectangle bounds;
     protected boolean pickedUp = false;
 
@@ -28,21 +28,16 @@ public class Item extends StaticEntity
     public Item(float x, float y ,int id){
         super((int)x, (int)y, ITEMWIDTH, ITEMHEIGHT);
         this.id = id;
-        images = new ArrayList<>();
-        images.add(Assets.bombStrength);
-        images.add(Assets.playerSpeed);
-        images.add(Assets.bombCount);
 
-        this.animation = new Animation(500,images.get(id));
+
         bounds = new Rectangle((int)x,(int) y, ITEMWIDTH, ITEMHEIGHT);
     }
 
     public void update() {
-        animation.update();
+
     }
 
     public void draw(Graphics g){
-            g.drawImage(animation.getCurrentFrame(),(int)x, (int)y, ITEMWIDTH, ITEMHEIGHT, null);
     }
 
     // GETTERS and SETTERS
@@ -77,4 +72,5 @@ public class Item extends StaticEntity
     {
         this.bounds = bounds;
     }
+
 }

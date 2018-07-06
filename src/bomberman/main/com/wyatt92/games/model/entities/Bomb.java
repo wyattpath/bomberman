@@ -15,7 +15,7 @@ public class Bomb extends StaticEntity{
     private long lastTime;
     private float countdown;
     private static float waitTime;
-    private static Animation animBomb;
+
 
 //    protected static World world;
     protected Rectangle bounds;
@@ -40,15 +40,14 @@ public class Bomb extends StaticEntity{
         waitTime = 2000f;
         countdown = waitTime;
 
-        animBomb = new Animation(500, Assets.bomb);
+
 
     }
 
 
     public void update()
     {
-        //Animation
-        animBomb.update();
+
 
         countdown -= System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
@@ -61,7 +60,6 @@ public class Bomb extends StaticEntity{
 
     public void draw(Graphics g)
     {
-        g.drawImage(animBomb.getCurrentFrame(), (int)super.x - BOMBWIDTH/2, (int)super.y-BOMBHEIGHT/2, BOMBWIDTH, BOMBHEIGHT, null);
     }
 
 

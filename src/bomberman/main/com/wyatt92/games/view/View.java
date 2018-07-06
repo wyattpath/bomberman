@@ -20,6 +20,7 @@ public class View
         frame.setPreferredSize(new Dimension(FRAMEWIDTH, FRAMEHEIGHT));
     }
 
+
     public void repaint(){
         frame.repaint();
     }

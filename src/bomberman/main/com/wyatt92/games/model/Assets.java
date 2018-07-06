@@ -68,10 +68,10 @@ public class Assets {
         bomb[0] = bombSheet.crop(0, 0, width*8, height*8);
         bomb[1] = bombSheet.crop(width*8, 0, width*8, height*8);
 
-        blast = new BufferedImage[3];
-        blast[0] = blastSheet.crop(0,0,width,height);
-        blast[1] = blastSheet.crop(width,0,width,height);
-        blast[2] = blastSheet.crop(0,height,width,height);
+        blast = new BufferedImage[2];
+//        blast[0] = blastSheet.crop(0,0,width,height);
+        blast[0] = blastSheet.crop(width,0,width,height);
+        blast[1] = blastSheet.crop(0,height,width,height);
 
         btn_start = new BufferedImage[2];
         btn_start[0] = menuSheet.crop(0, 0, 228, 32);
@@ -107,7 +107,7 @@ public class Assets {
             logo[i] = logoSheet.crop(0,0,logoSheet.getWidth(), logoSheet.getHeight());
         }
 
-        gameOverCount = 7;
+        gameOverCount = 6;
         gameOver = new BufferedImage[gameOverCount];
         for(int i = 0; i < gameOverCount; i++){
             SpriteSheet logoSheet = new SpriteSheet(ImageLoader.loadImage("/gameover/go"+i+".png"));

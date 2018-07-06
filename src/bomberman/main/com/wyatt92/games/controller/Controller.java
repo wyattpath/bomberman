@@ -234,14 +234,6 @@ public class Controller implements Runnable
                     playing = false;
                     switchPanel(gameOverPanel);
                 }
-            } else {
-//                gameOverTimer += System.currentTimeMillis() - gameOverLastTime;
-//                gameOverLastTime = System.currentTimeMillis();
-//                if(gameOverTimer > 5000f)
-//                {
-//
-//                }
-
             }
         }
     }

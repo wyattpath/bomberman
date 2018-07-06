@@ -1,6 +1,5 @@
 package com.wyatt92.games.controller;
 
-import com.wyatt92.games.view.UIManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -40,6 +39,7 @@ public class GameMouseListener implements MouseListener, MouseMotionListener
     public Point getMousePosition() {
         return new Point(mouseX, mouseY);
     }
+
     // Implemented methods
 
     @Override

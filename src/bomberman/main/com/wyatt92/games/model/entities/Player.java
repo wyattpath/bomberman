@@ -112,7 +112,7 @@ public class Player extends DynamicEntity
 
     }
 
-    @Override
+
     public void draw(Graphics g)
     {
         g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
