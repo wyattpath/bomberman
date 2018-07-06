@@ -49,7 +49,7 @@ public class Bomb extends StaticEntity{
         countdown -= System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
 
-        if(countdown < 0) {
+        if(countdown < 0 || health <=0) {
             setActive(false);
             countdown = waitTime;
         }

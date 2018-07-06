@@ -2,7 +2,6 @@ package com.wyatt92.games.model;
 
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.entities.Item;
-import com.wyatt92.games.model.tiles.Tile;
 import com.wyatt92.games.view.Sound;
 
 import java.awt.*;
@@ -17,10 +16,11 @@ public class Model
     private int width, height;
     private int playerCount;
     private int[][] tiles;
+    private ArrayList<Tile> tileArrayList;
+
     private static Map<Integer, Point> spawnMap;
     private String path;
     private boolean playing, gameOver, pausing;
-    private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? -1 : 1;
 
     //Entities
     private ArrayList<Entity> entities;
@@ -31,6 +31,10 @@ public class Model
     private ArrayList<Stone> stones;
 
     public void resetWorld() {
+        tileArrayList = new ArrayList<>();
+        tileArrayList.add(new Tile(0));
+        tileArrayList.add(new Tile(1));
+        tileArrayList.add(new Tile(2));
         stones = new ArrayList<>();
         entities = new ArrayList<>();
         items = new ArrayList<>();
@@ -106,18 +110,17 @@ public class Model
         }
     }
     private boolean collisionWithTile(int x, int y) {
-        return getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).isSolid();
+        return getTile(x/Tile.TILEWIDTH,y/Tile.TILEHEIGHT).getID() == 2;
     }
 
     private void checkItemPickUp()
     {
-        Iterator<Item> it = items.iterator();
-        while(it.hasNext()){
-            Item i = it.next();
-            Iterator<Player> itp = players.iterator();
-            while(itp.hasNext()) {
-                Player p = itp.next();
-                if(p.getCollisionBounds(0f,0f).intersects(i.getBounds())){
+        for (Item i : items)
+        {
+            for (Player p : players)
+            {
+                if (p.getCollisionBounds(0f, 0f).intersects(i.getBounds()))
+                {
                     Sound.playSound("item_get.wav");
                     i.setPickedUp(true);
                     System.out.println(i.getId());
@@ -132,13 +135,13 @@ public class Model
     public Tile getTile(int x, int y)
     {
         if(x < 0 || y < 0 || x >= width || y >= height){
-            return Tile.grassTile;
+            return tileArrayList.get(0); // dirtTile
         }
         Tile t = Tile.tiles[tiles[x][y]];
         if (t == null){
-            return Tile.dirtTile;
+            return tileArrayList.get(1); // grassTile
         }
-        return t;
+        return t; // wallTile
     }
 
     public void loadWorld(String path)
@@ -270,7 +273,7 @@ public class Model
         {
             for (int x = 0; x < width; x++)
             {
-                if(!getTile(x,y).isSolid())
+                if(getTile(x,y).getID() != 2)
                 {
                     if(
                             (x*Tile.TILEWIDTH > Tile.TILEWIDTH*2 || y *Tile.TILEHEIGHT > Tile.TILEHEIGHT*2) &&
@@ -299,11 +302,8 @@ public class Model
                     e.hurt(3);
                 }
             }
-        }
-        for(Blast b : blasts) {
+
             for(Bomb bomb : bombs) {
-                if(bomb.equals(b))
-                    continue;
                 if(bomb.getCollisionBounds(0,0).intersects(b.getBounds())){
                     bomb.hurt(3);
                 }
@@ -451,7 +451,6 @@ public class Model
                 entityIterator.remove();
             }
         }
-        entities.sort(drawSorter);
     }
 
 

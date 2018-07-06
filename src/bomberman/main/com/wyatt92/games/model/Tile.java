@@ -1,4 +1,4 @@
-package com.wyatt92.games.model.tiles;
+package com.wyatt92.games.model;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,15 +7,11 @@ import java.awt.image.BufferedImage;
  * A square where the players can walk on if it is not solid.
  * They can not be destroyed.
  */
-public abstract class Tile
+public class Tile
 {
     public static Tile[] tiles = new Tile[128];
-    public static Tile grassTile = new GrassTile(0);
-    public static Tile dirtTile = new DirtTile(1);
-    public static Tile wallTile = new WallTile(2);
     private int x, y;
 
-    protected BufferedImage texture;
     protected final int id;
 
     public static final int TILEHEIGHT = 64;
@@ -23,17 +19,11 @@ public abstract class Tile
 
     /**
      *
-     * @param texture
      * @param id
-     * @param x
-     * @param y
      */
-    public Tile(BufferedImage texture, int id, int x, int y) {
+    public Tile(int id) {
 
-        this.texture = texture;
         this.id = id;
-        this.x = x;
-        this.y = y;
 
         tiles[id] = this;
 
@@ -41,17 +31,6 @@ public abstract class Tile
 
     }
 
-    public Tile(BufferedImage texture, int id)
-    {
-        this.texture = texture;
-        this.id = id;
-        tiles[id] = this;
-    }
-
-
-    public void draw(Graphics g){
-        g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
-    }
 
     public void setPosition(int x, int y){
         this.x = x;
@@ -70,5 +49,23 @@ public abstract class Tile
         return new Point(x, y);
     }
 
+    public int getX()
+    {
+        return x;
+    }
 
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+
+    public int getY()
+    {
+        return y;
+    }
+
+    public void setY(int y)
+    {
+        this.y = y;
+    }
 }

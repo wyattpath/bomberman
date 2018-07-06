@@ -16,8 +16,7 @@ public class Assets {
     private static final int width = 32, height = 32;
     private static int bgCount, bgMusicCount, goMusicCount, gMusicCount, logoCount, gameOverCount;
 
-    public static BufferedImage dirt, grass, wall, tree;
-    public static BufferedImage[] stone;
+    public static BufferedImage dirt, grass, wall, tree, stone;
     public static BufferedImage[] bombStrength, bombCount, playerSpeed;
     public static BufferedImage[] btn_start,btn_quit;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
@@ -44,6 +43,9 @@ public class Assets {
         grass = sheet.crop(width * 2, 0, width, height);
         wall = sheet.crop(width * 3, 0, width, height);
         tree = sheet.crop(0, height, width, height);
+        stone = sheet.crop(0, height * 2, width-1, height-1);
+//        stone[1] = sheet.crop(1, height * 2+1, width-1, height-1);
+
 
         //Animation
         player_down = new BufferedImage[2];
@@ -60,9 +62,7 @@ public class Assets {
         player_left[0] = sheet.crop(width * 6, height, width, height);
         player_left[1] = sheet.crop(width * 7, height, width, height);
 
-        stone = new BufferedImage[2];
-        stone[0] = sheet.crop(0, height * 2, width-1, height-1);
-        stone[1] = sheet.crop(1, height * 2+1, width-1, height-1);
+
 
 
         bomb = new BufferedImage[2];
