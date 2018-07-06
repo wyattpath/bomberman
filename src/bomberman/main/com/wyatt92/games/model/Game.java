@@ -306,6 +306,15 @@ public class Game implements Model
                 }
             }
         }
+        for(Blast b : blasts) {
+            for(Bomb bomb : bombs) {
+                if(bomb.equals(b))
+                    continue;
+                if(bomb.getCollisionBounds(32,32).intersects(b.getBounds())){
+                    bomb.hurt(3);
+                }
+            }
+        }
     }
 
     private void checkPlayerEntityCollisions()
