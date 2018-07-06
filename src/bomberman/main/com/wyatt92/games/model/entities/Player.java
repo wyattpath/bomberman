@@ -13,7 +13,7 @@ public class Player extends DynamicEntity
 
 //    private boolean isMoving = false;
 
-    private Animation animDown, animUp, animLeft, animRight;
+
     private int maxBombs = 1;
     private int bombCount = 1;
     private int bombStrength = 1;
@@ -41,10 +41,13 @@ public class Player extends DynamicEntity
         bounds.width = 32;
         bounds.height = 32;
 
-        animDown = new Animation(200, Assets.player_down);
-        animUp = new Animation(200, Assets.player_up);
-        animLeft = new Animation(200, Assets.player_left);
-        animRight = new Animation(200, Assets.player_right);
+
+    }
+
+    @Override
+    public void update()
+    {
+        updateBombCount();
     }
 
     private void updateBombCount()
@@ -63,7 +66,6 @@ public class Player extends DynamicEntity
             timer = 0;
         }
     }
-
 
     public void addMaxBombs()
     {
@@ -99,44 +101,7 @@ public class Player extends DynamicEntity
         xMove = speed;
     }
 
-    @Override
-    public void update()
-    {
 
-        animDown.update();
-        animUp.update();
-        animRight.update();
-        animLeft.update();
-
-        updateBombCount();
-
-    }
-
-
-    public void draw(Graphics g)
-    {
-        g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, width, height, null);
-    }
-
-    private BufferedImage getCurrentAnimationFrame()
-    {
-        if (xMove < 0)
-        {
-            return animLeft.getCurrentFrame();
-        } else if (xMove > 0)
-        {
-            return animRight.getCurrentFrame();
-        } else if (yMove < 0)
-        {
-            return animUp.getCurrentFrame();
-        } else if (yMove > 0)
-        {
-            return animDown.getCurrentFrame();
-        } else
-        {
-            return animDown.getCurrentFrame();
-        }
-    }
 
     public Point getCenterPoint()
     {
