@@ -8,13 +8,11 @@ import java.awt.*;
  */
 public class Item extends StaticEntity
 {
-    public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
+    private static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 
     private int id;
-
-
-    protected Rectangle bounds;
-    protected boolean pickedUp = false;
+    private Rectangle bounds;
+    private boolean pickedUp = false;
 
     /**
      * Constructor
@@ -30,9 +28,6 @@ public class Item extends StaticEntity
 
     public void update() {
 
-    }
-
-    public void draw(Graphics g){
     }
 
     // GETTERS and SETTERS

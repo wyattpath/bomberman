@@ -1,18 +1,15 @@
 package com.wyatt92.games.view;
 
-
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class MenuPanel extends JPanel
 {
     private Animation animBG;
     private Animation animLogo;
     private JButton startButton, optionsButton, quitButton;
-    private Icon  quitIcon, quitIconEntered;
-    private int r;
+
+
 
     public MenuPanel() {
 
@@ -23,18 +20,9 @@ public class MenuPanel extends JPanel
 
 
         startButton = new StartButton();
-//        startButton.addActionListener(e -> setupActionButton());
         optionsButton = new JButton("Options");
+        quitButton = new QuitButton();
 
-        quitButton = new JButton();
-        quitIcon = new ImageIcon(Assets.btn_quit[0]);
-        quitIconEntered = new ImageIcon(Assets.btn_quit[1]);
-        quitButton.setRolloverIcon(quitIconEntered);
-        quitButton.setIcon(quitIcon);
-        quitButton.setBorderPainted(false);
-        quitButton.setContentAreaFilled(false);
-        quitButton.setFocusPainted(false);
-        quitButton.setOpaque(false);
 
         this.add(startButton);
 //        this.add(optionsButton);
@@ -68,13 +56,7 @@ public class MenuPanel extends JPanel
 
 
 
-    public void setQuitEntered(){
-        quitButton.setIcon(quitIconEntered);
-    }
 
-    public void setQuitExited() {
-        quitButton.setIcon(quitIcon);
-    }
 
     public JButton getStartButton()
     {
