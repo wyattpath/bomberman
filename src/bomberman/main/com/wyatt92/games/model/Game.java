@@ -3,6 +3,7 @@ package com.wyatt92.games.model;
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.entities.Item;
 import com.wyatt92.games.model.tiles.Tile;
+import com.wyatt92.games.view.Sound;
 
 import java.awt.*;
 import java.util.*;
@@ -17,8 +18,8 @@ public class Game implements Model
     private int playerCount;
     private int[][] tiles;
     private static Map<Integer, Point> spawnMap;
-    private boolean gameOver;
     private String path;
+    private boolean playing, gameOver, pausing;
     private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? -1 : 1;
 
     //Entities
@@ -130,6 +131,7 @@ public class Game implements Model
         }
     }
 
+    @Override
     public Tile getTile(int x, int y)
     {
         if(x < 0 || y < 0 || x >= width || y >= height){
@@ -142,6 +144,7 @@ public class Game implements Model
         return t;
     }
 
+    @Override
     public void loadWorld(String path)
     {
         this.path = path;
@@ -159,7 +162,7 @@ public class Game implements Model
         }
     }
 
-    public boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
+    private boolean checkEntityCollisions(Entity e1, float xOffset, float yOffset) {
         for(Entity e : entities){
             if(e.equals(e1)){
                 continue;
@@ -171,9 +174,6 @@ public class Game implements Model
         return false;
     }
 
-
-
-
     private void addPlayers() {
         for (int i = 1; i <= playerCount; i++) {
             final Point startingPoint = spawnMap.get(i);
@@ -182,8 +182,6 @@ public class Game implements Model
             entities.add(player);
         }
     }
-
-
 
     private void moveX(Player p)
     {
@@ -310,7 +308,7 @@ public class Game implements Model
             for(Bomb bomb : bombs) {
                 if(bomb.equals(b))
                     continue;
-                if(bomb.getCollisionBounds(32,32).intersects(b.getBounds())){
+                if(bomb.getCollisionBounds(0,0).intersects(b.getBounds())){
                     bomb.hurt(3);
                 }
             }
@@ -332,6 +330,7 @@ public class Game implements Model
         }
 
     }
+
     private void updateStones()
     {
         Iterator<Stone> stoneIterator = stones.iterator();
@@ -558,9 +557,34 @@ public class Game implements Model
         return stones;
     }
 
+    @Override
     public ArrayList<Blast> getBlasts()
     {
         return blasts;
+    }
+
+    @Override
+    public boolean isPlaying()
+    {
+        return playing;
+    }
+
+    @Override
+    public void setPlaying(boolean playing)
+    {
+        this.playing = playing;
+    }
+
+    @Override
+    public boolean isPausing()
+    {
+        return pausing;
+    }
+
+    @Override
+    public void setPausing(boolean pausing)
+    {
+        this.pausing = pausing;
     }
 }
 
