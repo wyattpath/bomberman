@@ -1,18 +1,18 @@
 package com.wyatt92.games.view;
 
-import com.wyatt92.games.model.Animation;
-import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.Model;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class MenuPanel extends JPanel
 {
     private Animation animBG;
     private Animation animLogo;
     private JButton startButton, optionsButton, quitButton;
-    Icon startIcon, startIconEntered, quitIcon, quitIconEntered;
+    private Icon  quitIcon, quitIconEntered;
+    private int r;
 
     public MenuPanel() {
 
@@ -21,16 +21,9 @@ public class MenuPanel extends JPanel
         animBG = new Animation(5000, Assets.bg);
         animBG.setRandomized(true);
 
-        startButton = new JButton();
-        startIcon = new ImageIcon(Assets.btn_start[0]);
-        startIconEntered = new ImageIcon(Assets.btn_start[1]);
-        startButton.setIcon(startIcon);
-        startButton.setRolloverIcon(startIconEntered);
-        startButton.setBorderPainted(false);
-        startButton.setContentAreaFilled(false);
-        startButton.setFocusPainted(false);
-        startButton.setOpaque(false);
 
+        startButton = new StartButton();
+//        startButton.addActionListener(e -> setupActionButton());
         optionsButton = new JButton("Options");
 
         quitButton = new JButton();
@@ -52,6 +45,8 @@ public class MenuPanel extends JPanel
 
     }
 
+
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -69,13 +64,9 @@ public class MenuPanel extends JPanel
     }
 
 
-    public void setStartEntered(){
-        startButton.setIcon(startIconEntered);
-    }
 
-    public void setStartExited() {
-        startButton.setIcon(startIcon);
-    }
+
+
 
     public void setQuitEntered(){
         quitButton.setIcon(quitIconEntered);

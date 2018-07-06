@@ -1,6 +1,7 @@
-package com.wyatt92.games.model;
+package com.wyatt92.games.view;
 
 import com.wyatt92.games.view.ImageLoader;
+import com.wyatt92.games.view.Sound;
 import com.wyatt92.games.view.SpriteSheet;
 
 import javax.sound.sampled.Clip;

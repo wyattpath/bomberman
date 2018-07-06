@@ -1,6 +1,6 @@
 package com.wyatt92.games.view;
 
-import com.wyatt92.games.model.*;
+import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.entities.*;
 import com.wyatt92.games.model.entities.Item;
 import com.wyatt92.games.model.tiles.Tile;

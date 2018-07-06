@@ -1,9 +1,6 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.Animation;
-import com.wyatt92.games.model.Assets;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * A Player can be controlled by an AI or a Human.

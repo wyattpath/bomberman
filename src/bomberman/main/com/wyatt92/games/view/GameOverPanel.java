@@ -1,7 +1,6 @@
 package com.wyatt92.games.view;
 
-import com.wyatt92.games.model.Animation;
-import com.wyatt92.games.model.Assets;
+
 import com.wyatt92.games.model.Model;
 
 import javax.swing.*;
@@ -11,8 +10,6 @@ public class GameOverPanel extends JPanel
 {
     private Animation animGameOver;
 
-
-
     private JButton startButton;
     private JButton optionsButton;
     private Model model;
@@ -20,23 +17,14 @@ public class GameOverPanel extends JPanel
 
 
     private JButton quitButton;
-    Icon startIcon, startIconEntered, quitIcon, quitIconEntered;
+    Icon  quitIcon, quitIconEntered;
 
     public GameOverPanel(Model model) {
         this.model = model;
         animGameOver = new Animation(10000, Assets.gameOver);
         animGameOver.setRandomized(true);
 
-        startButton = new JButton();
-        startIcon = new ImageIcon(Assets.btn_start[0]);
-        startIconEntered = new ImageIcon(Assets.btn_start[1]);
-        startButton.setIcon(startIcon);
-        startButton.setRolloverIcon(startIconEntered);
-        startButton.setBorderPainted(false);
-        startButton.setContentAreaFilled(false);
-        startButton.setFocusPainted(false);
-        startButton.setOpaque(false);
-
+        startButton = new StartButton();
         optionsButton = new JButton("Options");
 
         quitButton = new JButton();

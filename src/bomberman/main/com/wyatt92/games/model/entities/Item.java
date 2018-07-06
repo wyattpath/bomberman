@@ -1,12 +1,7 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.Assets;
-import com.wyatt92.games.model.Animation;
-
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 /**
  * Grants a player additional abilities when picked up.

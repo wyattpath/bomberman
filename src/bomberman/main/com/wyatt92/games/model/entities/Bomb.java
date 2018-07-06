@@ -1,8 +1,5 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.Animation;
-import com.wyatt92.games.model.Assets;
-
 import java.awt.*;
 
 /**
@@ -56,10 +53,6 @@ public class Bomb extends StaticEntity{
             setActive(false);
             countdown = waitTime;
         }
-    }
-
-    public void draw(Graphics g)
-    {
     }
 
 

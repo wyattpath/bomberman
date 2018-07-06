@@ -1,7 +1,5 @@
 package com.wyatt92.games.model.tiles;
 
-import com.wyatt92.games.model.Model;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -11,7 +9,7 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Tile
 {
-    public static Tile[] tiles = new Tile[256];
+    public static Tile[] tiles = new Tile[128];
     public static Tile grassTile = new GrassTile(0);
     public static Tile dirtTile = new DirtTile(1);
     public static Tile wallTile = new WallTile(2);

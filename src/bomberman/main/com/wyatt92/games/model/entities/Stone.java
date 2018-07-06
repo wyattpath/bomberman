@@ -1,8 +1,6 @@
 package com.wyatt92.games.model.entities;
 
-import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.tiles.Tile;
-import com.wyatt92.games.model.Animation;
 
 import java.awt.*;
 

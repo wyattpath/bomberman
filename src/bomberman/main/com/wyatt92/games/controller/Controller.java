@@ -1,16 +1,7 @@
 package com.wyatt92.games.controller;
 
-import com.wyatt92.games.model.Assets;
 import com.wyatt92.games.model.Model;
-import com.wyatt92.games.model.Sound;
-import com.wyatt92.games.model.entities.Player;
 import com.wyatt92.games.view.*;
-
-import javax.sound.sampled.Clip;
-import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Random;
 
 
 /**
@@ -20,18 +11,11 @@ import java.util.Random;
 public class Controller implements Runnable
 {
 
-    private static GamePanel gamePanel;
-    private static MenuPanel menuPanel;
-    private static GameOverPanel gameOverPanel;
-    private final MenuOptionsPanel menuOptionsPanel;
+
     private boolean running = false;
-    private boolean paused = false;
-    private boolean playing = false;
-    private boolean gameOver = false;
     private Thread thread1;
     private View view;
     private Model model;
-    private JPanel currentPanel;
 
     private int r;
 //    private long gameOverTimer;
@@ -39,118 +23,22 @@ public class Controller implements Runnable
 
     // Input
     private GameKeyListener gameKeyListener;
-    private GameMouseListener gameMouseListener;
 
 
     Controller(View view, Model model)
     {
         this.model = model;
         this.view = view;
-        Assets.init();
+
         gameKeyListener = new GameKeyListener();
-        gameMouseListener = new GameMouseListener();
-
-        gamePanel = new GamePanel(model);
-        menuPanel = new MenuPanel();
-        gameOverPanel = new GameOverPanel(model);
-        menuOptionsPanel = new MenuOptionsPanel();
-
-        switchPanel(menuPanel);
-
-        addActionListener();
-        view.makeVisible();
-
-        r = new Random().nextInt(Assets.menu_bgMusic.length);
-        Assets.menu_bgMusic[r].start();
-        Assets.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
-
-//        gameOverTimer = 0;
-//        gameOverLastTime = System.currentTimeMillis();
-
-        run();
-        this.start();
-    }
-
-    private void addActionListener()
-    {
-        menuPanel.getStartButton().addActionListener(e -> setUpActionButton());
-        menuPanel.getStartButton().addMouseListener(addEnterSound());
-        menuPanel.getOptionsButton().addActionListener(e -> switchPanel(menuOptionsPanel));
-        menuPanel.getQuitButton().addActionListener(e -> System.exit(0));
-        menuPanel.getQuitButton().addMouseListener(addEnterSound());
-
-        gameOverPanel.getStartButton().addActionListener(e -> setUpActionButton());
-        gameOverPanel.getStartButton().addMouseListener(addEnterSound());
-        gameOverPanel.getQuitButton().addActionListener(e -> System.exit(0));
-        gameOverPanel.getQuitButton().addMouseListener(addEnterSound());
-
         view.getFrame().addKeyListener(gameKeyListener);
-        view.getFrame().addMouseListener(gameMouseListener);
-        view.getFrame().addMouseMotionListener(gameMouseListener);
+        run();
+
+
     }
+
 
     // METHODS
-
-    public void setUpActionButton()
-    {
-        model.loadWorld("world1.txt");
-        model.resetWorld();
-        playMusic();
-        switchPanel(gamePanel);
-        gameOver = false;
-        playing = true;
-        view.getFrame().addKeyListener(gameKeyListener);
-//        gamePanel.addKeyListener(gameKeyListener);
-    }
-
-    private MouseAdapter addEnterSound()
-    {
-        return new MouseAdapter()
-        {
-            @Override
-            public void mouseEntered(MouseEvent e)
-            {
-                super.mouseEntered(e);
-                Sound.playSound("cursor_move.wav");
-            }
-        };
-    }
-
-    private void playMusic()
-    {
-
-        if (currentPanel == gamePanel)
-        {
-            Assets.game_bgMusic[r].stop();
-            r = new Random().nextInt(Assets.gameOver_bgMusic.length);
-            Assets.gameOver_bgMusic[r].setFramePosition(0);
-            Assets.gameOver_bgMusic[r].start();
-            Assets.gameOver_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
-        } else if (currentPanel == menuPanel)
-        {
-            Assets.menu_bgMusic[r].stop();
-            r = new Random().nextInt(Assets.game_bgMusic.length);
-            Assets.game_bgMusic[r].setFramePosition(0);
-            Assets.game_bgMusic[r].start();
-            Assets.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
-        } else
-        {
-            Assets.gameOver_bgMusic[r].stop();
-            r = new Random().nextInt(Assets.game_bgMusic.length);
-            Assets.game_bgMusic[r].setFramePosition(0);
-            Assets.game_bgMusic[r].start();
-            Assets.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
-    }
-
-    private void switchPanel(JPanel panel)
-    {
-        view.setPanel(panel);
-        currentPanel = panel;
-        gameKeyListener = new GameKeyListener();
-        view.getFrame().addKeyListener(gameKeyListener);
-    }
 
     @Override
     public void run()
@@ -196,14 +84,16 @@ public class Controller implements Runnable
 
     private void update()
     {
-        if (playing)
+        if (model.isPlaying())
         {
             gameKeyListener.update();
             model.update();
-            if (!gameOver)
+
+            if (!model.isGameOver())
             {
                 if (model.getPlayersAlive() > 1)
                 {
+
                     if (gameKeyListener.W)
                         model.moveUp(0);
                     if (gameKeyListener.S)
@@ -227,12 +117,7 @@ public class Controller implements Runnable
                         model.placeBomb(1);
 
                 } else{
-                        gameOver = true;
-//                        gameOverTimer = 0;
-//                    gameOverLastTime = System.currentTimeMillis();
-                    playMusic();
-                    playing = false;
-                    switchPanel(gameOverPanel);
+                    view.switchPanel();
                 }
             }
         }
