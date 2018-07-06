@@ -9,10 +9,10 @@ import java.awt.image.BufferedImage;
  */
 public class Tile
 {
-    public static Tile[] tiles = new Tile[128];
+    static Tile[] tiles = new Tile[128];
     private int x, y;
 
-    protected final int id;
+    private final int id;
 
     public static final int TILEHEIGHT = 64;
     public static final int TILEWIDTH = 64;

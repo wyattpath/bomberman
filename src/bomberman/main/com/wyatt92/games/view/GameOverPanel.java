@@ -6,7 +6,7 @@ import com.wyatt92.games.model.Model;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameOverPanel extends JPanel
+class GameOverPanel extends JPanel
 {
     private Animation animGameOver;
 
@@ -17,7 +17,7 @@ public class GameOverPanel extends JPanel
 
 
     private JButton quitButton;
-    Icon  quitIcon, quitIconEntered;
+    private Icon  quitIcon, quitIconEntered;
 
     public GameOverPanel(Model model) {
         this.model = model;

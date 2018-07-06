@@ -15,7 +15,7 @@ import java.util.Comparator;
  * Creates a GameFrame and a GamePanel. Configures the GamePanel
  * Represents the visualization of the data that model contains.
  */
-public class GamePanel extends JPanel
+class GamePanel extends JPanel
 {
     private Model model;
     private static Animation animBlast;

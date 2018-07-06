@@ -12,11 +12,7 @@ public class Bomb extends StaticEntity{
     private long lastTime;
     private float countdown;
     private static float waitTime;
-
-
-//    protected static World world;
-    protected Rectangle bounds;
-    protected int bombStrength;
+    private final int bombStrength;
 
     public static final int BOMBWIDTH = 64, BOMBHEIGHT = 64;
 
@@ -32,7 +28,6 @@ public class Bomb extends StaticEntity{
     {
         super(x, y, BOMBWIDTH, BOMBHEIGHT);
         this.bombStrength = bombStrength;
-        bounds = new Rectangle((int) x,(int) y, BOMBWIDTH, BOMBHEIGHT);
         lastTime = System.currentTimeMillis();
         waitTime = 2000f;
         countdown = waitTime;

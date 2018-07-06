@@ -6,15 +6,15 @@ package com.wyatt92.games.model.entities;
  */
 public abstract class DynamicEntity extends Entity
 {
-    public static final float DEFAULT_SPEED = 3.0f;
-    public static final int DEFAULT_CHARACTER_WIDTH = 64;
-    public static final int DEFAULT_CHARACTER_HEIGHT = 64;
+    static final float DEFAULT_SPEED = 3.0f;
+    static final int DEFAULT_CHARACTER_WIDTH = 64;
+    static final int DEFAULT_CHARACTER_HEIGHT = 64;
 
-    protected float speed;
-    protected float xMove, yMove;
+    float speed;
+    float xMove, yMove;
 
 
-    public DynamicEntity(float x, float y, int width, int height) {
+    DynamicEntity(float x, float y, int width, int height) {
         super( x, y, width, height);
         speed = DEFAULT_SPEED;
     }

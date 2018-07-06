@@ -2,7 +2,7 @@ package com.wyatt92.games.view;
 
 import javax.swing.*;
 
-public class QuitButton extends JButton
+class QuitButton extends JButton
 {
     private Icon  quitIcon, quitIconEntered;
 

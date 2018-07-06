@@ -10,7 +10,7 @@ class ImageLoaderTest {
     private BufferedImage testbImg;
 
     @Test
-    public void testLoadImage() {
+    void testLoadImage() {
         testbImg = ImageLoader.loadImage("test.png");
         assert testbImg != null : "There was a problem loading your image.";
     }

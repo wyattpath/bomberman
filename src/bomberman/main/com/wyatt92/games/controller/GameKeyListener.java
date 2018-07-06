@@ -8,7 +8,7 @@ import java.security.Key;
 /**
  * Registers Keys.
  */
-public class GameKeyListener extends KeyAdapter{
+class GameKeyListener extends KeyAdapter{
 
     private boolean[] keys, justPressed, cantPress;
     public boolean W, S, A, D;
@@ -26,7 +26,7 @@ public class GameKeyListener extends KeyAdapter{
     }
 
 
-    public boolean keyJustPressed(int keyCode){
+    private boolean keyJustPressed(int keyCode){
         if(keyCode >= 0 && keyCode < keys.length){
             return justPressed[keyCode];
         }

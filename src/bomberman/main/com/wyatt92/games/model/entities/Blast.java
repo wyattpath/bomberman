@@ -10,7 +10,7 @@ public class Blast extends StaticEntity
 {
     private long lastTime;
     private float countdown;
-    private float waitTime;
+    private final float waitTime;
 
     private Rectangle bounds;
 

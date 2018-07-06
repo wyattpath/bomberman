@@ -4,7 +4,7 @@ import javax.swing.*;
 
 
 
-public class StartButton extends JButton
+class StartButton extends JButton
 {
     private Icon startIcon, startIconEntered;
 

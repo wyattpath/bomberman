@@ -8,21 +8,21 @@ import com.wyatt92.games.view.*;
  * Controls and updates the view.
  * Keeps View and Model separated.
  */
-public class Controller implements Runnable
+class Controller implements Runnable
 {
 
 
     private boolean running = false;
     private Thread thread1;
-    private View view;
-    private Model model;
+    private final View view;
+    private final Model model;
 
     private int r;
 //    private long gameOverTimer;
 //    private long gameOverLastTime;
 
     // Input
-    private GameKeyListener gameKeyListener;
+    private final GameKeyListener gameKeyListener;
 
 
     Controller(View view, Model model)

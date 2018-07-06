@@ -5,7 +5,7 @@ import com.wyatt92.games.view.View;
 
 import java.awt.*;
 
-public class Launcher {
+class Launcher {
     private static final int WIDTH = 13 * 64 + 642;
     private static final int HEIGHT = 13 * 64 + 32;
     private static final String TITLE = "Bomberman";

@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 /**
  * Sets a GameFrame up.
  */
-public class GameFrame extends JFrame {
+class GameFrame extends JFrame {
 
 //    private JPanel contentPane;
     private BorderLayout borderLayout1 = new BorderLayout();

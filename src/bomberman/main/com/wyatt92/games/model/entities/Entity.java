@@ -14,7 +14,7 @@ import java.awt.*;
  */
 public abstract class Entity
 {
-    public static final int DEFAULT_HEALTH = 3;
+    protected static final int DEFAULT_HEALTH = 3;
     protected Model model;
     protected float x,y,xOffset, yOffset;
     protected int width, height;
@@ -32,7 +32,7 @@ public abstract class Entity
      * @param width width of entity
      * @param height height of entity
      */
-    public Entity(float x, float y, int width, int height) {
+    Entity(float x, float y, int width, int height) {
 
         this.x = x;
         this.y = y;

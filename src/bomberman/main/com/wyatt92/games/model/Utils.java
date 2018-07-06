@@ -8,9 +8,9 @@ import java.io.IOException;
  * Loads Strings from files.
  * Parses Strings to Integers
  */
-public class Utils
+class Utils
 {
-    public static String loadFileAsString(String path) {
+    static String loadFileAsString(String path) {
         StringBuilder builder = new StringBuilder();
 
         try{
@@ -27,7 +27,7 @@ public class Utils
         return builder.toString();
     }
 
-    public static int parseInt(String number){
+    static int parseInt(String number){
         try{
             return Integer.parseInt(number);
         } catch(NumberFormatException e) {

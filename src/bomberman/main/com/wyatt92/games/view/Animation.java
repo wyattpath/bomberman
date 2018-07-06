@@ -11,7 +11,7 @@ public class Animation
 {
     private int animSpeed, index;
     private long lastTime, timer;
-    private BufferedImage[] frames;
+    private final BufferedImage[] frames;
     private boolean randomized;
 
     /**

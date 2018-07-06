@@ -64,21 +64,19 @@ public class Player extends DynamicEntity
         }
     }
 
-    public void addMaxBombs()
+    public void addEffect(int id)
     {
-        maxBombs++;
-        System.out.println(id + ": maxBombs " + maxBombs);
-    }
-
-    public void addBombStrength()
-    {
-        bombStrength++;
-        System.out.println(id + ": bombStrength " + bombStrength);
-    }
-
-    public void addPlayerSpeed() {
-        speed+=1.0f;
-        System.out.println(id + ": playerSpeed " + speed);
+        switch(id){
+            case 0 :
+                bombStrength++;
+                break;
+            case 1 :
+                speed+=1.0f;
+                break;
+            case 2:
+                maxBombs++;
+                break;
+        }
     }
 
 
@@ -146,18 +144,5 @@ public class Player extends DynamicEntity
     }
 
 
-    public void addEffect(int id)
-    {
-        switch(id){
-            case 0 :
-                addBombStrength();
-                break;
-            case 1 :
-                addPlayerSpeed();
-                break;
-            case 2:
-                addMaxBombs();
-                break;
-        }
-    }
+
 }

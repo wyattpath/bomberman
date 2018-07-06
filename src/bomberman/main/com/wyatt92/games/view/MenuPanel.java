@@ -3,7 +3,7 @@ package com.wyatt92.games.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class MenuPanel extends JPanel
+class MenuPanel extends JPanel
 {
     private Animation animBG;
     private Animation animLogo;

@@ -11,26 +11,26 @@ import java.awt.image.BufferedImage;
  * An asset is the representation of any object that can be used.
  * It can come from outside sources such as audio files or images.
  */
-public class Assets {
+class Assets {
 
     private static final int width = 32, height = 32;
     private static int bgCount, bgMusicCount, goMusicCount, gMusicCount, logoCount, gameOverCount;
 
-    public static BufferedImage dirt, grass, wall, tree, stone;
-    public static BufferedImage[] bombStrength, bombCount, playerSpeed;
-    public static BufferedImage[] btn_start,btn_quit;
-    public static BufferedImage[] player_down, player_up, player_left, player_right;
-    public static BufferedImage[] bomb;
-    public static BufferedImage[] blast;
-    public static BufferedImage[] bg;
-    public static BufferedImage[] logo;
-    public static BufferedImage[] gameOver;
+    static BufferedImage dirt, grass, wall, tree, stone;
+    static BufferedImage[] bombStrength, bombCount, playerSpeed;
+    static BufferedImage[] btn_start,btn_quit;
+    static BufferedImage[] player_down, player_up, player_left, player_right;
+    static BufferedImage[] bomb;
+    static BufferedImage[] blast;
+    static BufferedImage[] bg;
+    static BufferedImage[] logo;
+    static BufferedImage[] gameOver;
 
 
-    public static Clip menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
-    public static Clip[] menu_bgMusic,game_bgMusic, gameOver_bgMusic;
+    private static Clip menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
+    static Clip[] menu_bgMusic,game_bgMusic, gameOver_bgMusic;
 
-    public static void init() {
+    static void init() {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("sheet.png"));
         SpriteSheet blastSheet = new SpriteSheet((ImageLoader.loadImage("blast_anim.png")));
         SpriteSheet bombSheet = new SpriteSheet((ImageLoader.loadImage("bomb_anim.png")));
