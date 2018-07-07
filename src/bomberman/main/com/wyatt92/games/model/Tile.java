@@ -1,7 +1,6 @@
 package com.wyatt92.games.model;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * A square where the players can walk on if it is not solid.
@@ -9,7 +8,7 @@ import java.awt.image.BufferedImage;
  */
 public class Tile
 {
-    static Tile[] tiles = new Tile[128];
+    static final Tile[] tiles = new Tile[128];
     private int x, y;
 
     private final int id;
@@ -19,9 +18,9 @@ public class Tile
 
     /**
      *
-     * @param id
+     * @param id tile id
      */
-    public Tile(int id) {
+    Tile(int id) {
 
         this.id = id;
 
@@ -31,22 +30,15 @@ public class Tile
 
     }
 
+    // GETTERS and SETTERS
 
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
     }
 
-    // GETTERS and SETTERS
     public int getID() {
         return id;
-    }
-    public boolean isSolid() {
-        return false;
-    }
-
-    public Point getPosition(){
-        return new Point(x, y);
     }
 
     public int getX()

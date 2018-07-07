@@ -16,7 +16,7 @@ class Assets {
     private static final int width = 32, height = 32;
     private static int bgCount, bgMusicCount, goMusicCount, gMusicCount, logoCount, gameOverCount;
 
-    static BufferedImage dirt, grass, wall, tree, stone;
+    static BufferedImage dirt, grass, wall, stone;
     static BufferedImage[] bombStrength, bombCount, playerSpeed;
     static BufferedImage[] btn_start,btn_quit;
     static BufferedImage[] player_down, player_up, player_left, player_right;
@@ -42,7 +42,6 @@ class Assets {
         dirt = sheet.crop(width, 0, width, height);
         grass = sheet.crop(width * 2, 0, width, height);
         wall = sheet.crop(width * 3, 0, width, height);
-        tree = sheet.crop(0, height, width, height);
         stone = sheet.crop(0, height * 2, width-1, height-1);
 //        stone[1] = sheet.crop(1, height * 2+1, width-1, height-1);
 

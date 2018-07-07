@@ -2,7 +2,6 @@ package com.wyatt92.games.view;
 
 import com.wyatt92.games.model.Model;
 import com.wyatt92.games.model.entities.*;
-import com.wyatt92.games.model.entities.Item;
 import com.wyatt92.games.model.Tile;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ import java.util.Comparator;
  */
 class GamePanel extends JPanel
 {
-    private Model model;
+    private final Model model;
     private static Animation animBlast;
     private static Animation animBomb;
     private Animation animItemBombStrength;
@@ -25,7 +24,7 @@ class GamePanel extends JPanel
     private Animation animItemBombCount;
     private ArrayList<Animation> itemAnimations;
     private Animation animDown, animUp, animLeft, animRight;
-    private Comparator<Entity> drawSorter = (a, b) -> (a.getY() + a.getHeight() < b.getY() + b.getHeight())? -1 : 1;
+
 
     private ArrayList<BufferedImage> tileImages;
     /**
@@ -83,11 +82,10 @@ class GamePanel extends JPanel
         super.paintComponent(g);
 
         updateAnimation();
-        model.getEntities().sort(drawSorter);
 
-        for (int x = 0; x < model.getTileRows(); x++)
+        for (int y = 0; y < model.getTileColumns(); y++)
         {
-            for (int y = 0; y < model.getTileColumns(); y++)
+            for (int x = 0; x < model.getTileRows(); x++)
             {
                 model.getTile(x, y).setPosition(x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT);
                 int id = model.getTile(x, y).getID();

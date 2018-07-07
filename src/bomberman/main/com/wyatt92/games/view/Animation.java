@@ -43,6 +43,8 @@ public class Animation
     }
 
 
+    // GETTERS and SETTERS
+
     public BufferedImage getCurrentFrame() {
     return frames[index];
     }

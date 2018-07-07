@@ -4,7 +4,8 @@ import javax.swing.*;
 
 class QuitButton extends JButton
 {
-    private Icon  quitIcon, quitIconEntered;
+    private final Icon  quitIcon;
+    private final Icon quitIconEntered;
 
     QuitButton(){
         quitIcon = new ImageIcon(Assets.btn_quit[0]);

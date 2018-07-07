@@ -14,11 +14,13 @@ public class Player extends DynamicEntity
     private int maxBombs = 1;
     private int bombCount = 1;
     private int bombStrength = 1;
-    private int id;
+    private final int id;
 
     // AttackTimer
-    private long lastTime, attackCooldown = 400, timer = attackCooldown;
-    private long bombCooldown = 2000;
+    private long lastTime;
+    private final long attackCooldown = 400;
+    private long timer = attackCooldown;
+    private final long bombCooldown = 2000;
 
 
 
@@ -31,7 +33,7 @@ public class Player extends DynamicEntity
      */
     public Player(float x, float y, int id)
     {
-        super(x, y, DynamicEntity.DEFAULT_CHARACTER_WIDTH, DynamicEntity.DEFAULT_CHARACTER_HEIGHT);
+        super(x, y, DynamicEntity.DEFAULT_WIDTH, DynamicEntity.DEFAULT_HEIGHT);
         this.id = id;
         bounds.x = 16;
         bounds.y = 32;

@@ -6,7 +6,8 @@ import javax.swing.*;
 
 class StartButton extends JButton
 {
-    private Icon startIcon, startIconEntered;
+    private final Icon startIcon;
+    private final Icon startIconEntered;
 
     StartButton(){
         startIcon = new ImageIcon(Assets.btn_start[0]);

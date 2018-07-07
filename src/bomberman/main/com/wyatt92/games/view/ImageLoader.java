@@ -10,8 +10,13 @@ import java.io.IOException;
  */
 public class ImageLoader {
     public static BufferedImage loadImage(String path) {
+        String tempPath = ImageLoader.class.getClassLoader().getResource("./images/" + path).getPath();
+
+        assert tempPath != null : "Path is invalid!";
+
         try {
-            return ImageIO.read(new FileInputStream(ImageLoader.class.getClassLoader().getResource("./images/" + path).getPath()));
+
+            return ImageIO.read(new FileInputStream(tempPath));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,9 +5,11 @@ import java.awt.*;
 
 class MenuPanel extends JPanel
 {
-    private Animation animBG;
-    private Animation animLogo;
-    private JButton startButton, optionsButton, quitButton;
+    private final Animation animBG;
+    private final Animation animLogo;
+    private final JButton startButton;
+    private final JButton optionsButton;
+    private final JButton quitButton;
 
 
 

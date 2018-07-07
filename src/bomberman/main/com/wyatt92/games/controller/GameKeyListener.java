@@ -2,15 +2,15 @@ package com.wyatt92.games.controller;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.security.Key;
 
 /**
  * Registers Keys.
  */
 class GameKeyListener extends KeyAdapter{
 
-    private boolean[] keys, justPressed, cantPress;
+    private final boolean[] keys;
+    private boolean[] justPressed;
+    private boolean[] cantPress;
     public boolean W, S, A, D;
     public boolean SPACE;
     public boolean UP, DOWN, LEFT, RIGHT;

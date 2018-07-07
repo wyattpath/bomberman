@@ -11,8 +11,9 @@ class GameFrame extends JFrame {
 
 //    private JPanel contentPane;
     private BorderLayout borderLayout1 = new BorderLayout();
-    private String title;
-    private int width, height;
+    private final String title;
+    private final int width;
+    private final int height;
 
     public GameFrame(String title, int width, int height) {
         this.title = title;
@@ -36,7 +37,7 @@ class GameFrame extends JFrame {
         this.setResizable(false);
         this.setPreferredSize(new Dimension(width, height));
         this.setMinimumSize(new Dimension(width, height));
-        this.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 

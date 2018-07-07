@@ -1,7 +1,5 @@
 package com.wyatt92.games.model.entities;
 
-import java.awt.*;
-
 /**
  * A Bomb can be placed by a player in the world.
  * After a specific time the bomb explodes and places blasts depending on the strength of the bomb in the four directions.

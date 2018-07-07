@@ -10,27 +10,26 @@ public class Sound
 	//for individual wav sounds (not looped)
 	//http://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java
 	public static synchronized void playSound(final String strPath) {
-	    new Thread(new Runnable() { 
-	      public void run() {
-	        try {
-	          Clip clp = AudioSystem.getClip();
+	    new Thread(() ->
+		{
+		  try {
+			Clip clp = AudioSystem.getClip();
 
-	          AudioInputStream aisStream =
-	        		  AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource("./sounds/fx/" + strPath));
+			AudioInputStream aisStream =
+					AudioSystem.getAudioInputStream(Sound.class.getClassLoader().getResource("./sounds/fx/" + strPath));
 
-	          clp.open(aisStream);
-	          clp.start(); 
-	        } catch (Exception e) {
-	          System.err.println(e.getMessage());
-	        }
-	      }
-	    }).start();
+			clp.open(aisStream);
+			clp.start();
+		  } catch (Exception e) {
+			System.err.println(e.getMessage());
+		  }
+		}).start();
 	  }
 	
 	
 	//for looping wav clips
 	//http://stackoverflow.com/questions/4875080/music-loop-in-java
-	public static Clip clipForLoopFactory(String strPath){
+	static Clip clipForLoopFactory(String strPath){
 		
 		Clip clp = null;
 		
@@ -48,14 +47,11 @@ public class Sound
 
             exp.printStackTrace();
 
-        } catch (IOException exp)
-        {
-            System.out.println("error");
-        } catch (UnsupportedAudioFileException exp)
+        } catch (IOException | UnsupportedAudioFileException exp)
         {
             System.out.println("error");
         }
-		
+
 		return clp;
 		
 	}

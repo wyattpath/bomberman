@@ -12,12 +12,14 @@ class Utils
 {
     static String loadFileAsString(String path) {
         StringBuilder builder = new StringBuilder();
+        String tempPath = Utils.class.getClassLoader().getResource("./worlds/" + path).getPath();
+        assert tempPath != null : "Path is invalid!";
 
         try{
-            BufferedReader br = new BufferedReader(new FileReader(Utils.class.getClassLoader().getResource("./worlds/" + path).getPath()));
+            BufferedReader br = new BufferedReader(new FileReader(tempPath));
             String line;
             while((line = br.readLine()) != null)
-                builder.append(line + "\n");
+                builder.append(line).append("\n");
 
             br.close();
         } catch(IOException e){

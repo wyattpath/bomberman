@@ -22,7 +22,7 @@ public class View
     private static final int FRAMEWIDTH = 13 * 64 + 32;
     private static final int FRAMEHEIGHT = 13 * 64 + 32;
     private static final String TITLE = "Bomberman";
-    private Model model;
+    private final Model model;
     private int r;
 
     public View(Model model) {
@@ -131,7 +131,7 @@ public class View
     }
 
     private void makeVisible() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setFocusable(true);

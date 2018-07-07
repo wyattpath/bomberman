@@ -4,7 +4,8 @@ import com.wyatt92.games.model.Tile;
 import java.awt.*;
 
 /**
- * This class
+ * A Blast is placed after the countdown of a bomb reaches 0.
+ * It damages all entities on the same tile.
  */
 public class Blast extends StaticEntity
 {
@@ -16,8 +17,8 @@ public class Blast extends StaticEntity
 
     /**
      *
-     * @param x
-     * @param y
+     * @param x x-coordinate in float
+     * @param y y-coordinate in float
      */
     public Blast(float x, float y)
     {
@@ -44,20 +45,6 @@ public class Blast extends StaticEntity
         }
     }
 
-
-
-
-    // GETTERS and SETTERS
-
-    public Rectangle getBounds()
-    {
-        return bounds;
-    }
-
-    public void setBounds(Rectangle bounds)
-    {
-        this.bounds = bounds;
-    }
 
 
 

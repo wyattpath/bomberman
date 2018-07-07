@@ -8,16 +8,17 @@ import java.awt.*;
 
 class GameOverPanel extends JPanel
 {
-    private Animation animGameOver;
+    private final Animation animGameOver;
 
-    private JButton startButton;
-    private JButton optionsButton;
-    private Model model;
+    private final JButton startButton;
+    private final JButton optionsButton;
+    private final Model model;
 
 
 
-    private JButton quitButton;
-    private Icon  quitIcon, quitIconEntered;
+    private final JButton quitButton;
+    private final Icon  quitIcon;
+    private final Icon quitIconEntered;
 
     public GameOverPanel(Model model) {
         this.model = model;

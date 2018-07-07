@@ -14,16 +14,15 @@ class Launcher {
 
 
         // uses the Event dispatch thread by default -> higher priority thread that handles key events
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Model model = new Model();
-                    View view = new View(model);
-                    Controller controller = new Controller(view, model);
-                    controller.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() ->
+        {
+            try {
+                Model model = new Model();
+                View view = new View(model);
+                Controller controller = new Controller(view, model);
+                controller.start();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

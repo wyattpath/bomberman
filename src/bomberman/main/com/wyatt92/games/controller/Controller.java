@@ -33,8 +33,6 @@ class Controller implements Runnable
         gameKeyListener = new GameKeyListener();
         view.getFrame().addKeyListener(gameKeyListener);
         run();
-
-
     }
 
 
