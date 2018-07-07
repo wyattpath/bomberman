@@ -439,11 +439,11 @@ public class Model
         //checkCollision
         for (Blast b : blasts)
         {
-            for (Entity e : entities)
+            for (Stone e : stones)
             {
                 if (e.equals(b))
                     continue;
-                if (e.getCollisionBounds(32, 32).intersects(b.getBounds()))
+                if (e.getCollisionBounds(64f,64f).intersects(b.getCollisionBounds(0f,0f)))
                 {
                     e.hurt(3);
                 }
@@ -451,7 +451,7 @@ public class Model
 
             for (Bomb bomb : bombs)
             {
-                if (bomb.getCollisionBounds(0, 0).intersects(b.getCollisionBounds(0f,0f)))
+                if (bomb.getCollisionBounds(0f, 0f).intersects(b.getCollisionBounds(0f,0f)))
                 {
                     bomb.hurt(3);
                 }

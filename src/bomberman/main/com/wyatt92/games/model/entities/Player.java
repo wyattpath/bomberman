@@ -99,14 +99,6 @@ public class Player extends DynamicEntity
     }
 
 
-
-    public Point getCenterPoint()
-    {
-
-        return new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);
-    }
-
-
     public int getId()
     {
         return id;

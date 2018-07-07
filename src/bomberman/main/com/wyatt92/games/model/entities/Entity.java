@@ -26,7 +26,6 @@ public abstract class Entity
     /**
      * Constructor
      *
-
      * @param x x-coordinate of entity
      * @param y y-coordinate of entity
      * @param width width of entity
@@ -41,7 +40,7 @@ public abstract class Entity
         xOffset = width/2;
         yOffset = height/2;
         health = DEFAULT_HEALTH;
-        centerPoint = new Point((int)x/width * width + width/2,(int) y/height * height + height/2);
+        centerPoint = new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);
 
         bounds = new Rectangle(0,0, width, height);
     }
@@ -120,12 +119,53 @@ public abstract class Entity
         this.active = active;
     }
 
+    // TODO change center-point
     public Point getCenterPoint(){
         return new Point((int)(x+xOffset)/width * width + width/2,(int) (y+yOffset)/height * height + height/2);
+    }
+
+    public void setCenterPoint(Point centerPoint)
+    {
+        this.centerPoint = centerPoint;
     }
 
     public Rectangle getBounds()
     {
         return bounds;
+    }
+
+    public void setBounds(Rectangle bounds)
+    {
+        this.bounds = bounds;
+    }
+
+    public float getxOffset()
+    {
+        return xOffset;
+    }
+
+    public void setxOffset(float xOffset)
+    {
+        this.xOffset = xOffset;
+    }
+
+    public float getyOffset()
+    {
+        return yOffset;
+    }
+
+    public void setyOffset(float yOffset)
+    {
+        this.yOffset = yOffset;
+    }
+
+    public int getHealth()
+    {
+        return health;
+    }
+
+    public void setHealth(int health)
+    {
+        this.health = health;
     }
 }

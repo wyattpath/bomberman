@@ -13,8 +13,6 @@ public class Blast extends StaticEntity
     private float countdown;
     private final float waitTime;
 
-    private Rectangle bounds;
-
     /**
      *
      * @param x x-coordinate in float
@@ -23,12 +21,9 @@ public class Blast extends StaticEntity
     public Blast(float x, float y)
     {
         super( x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
-        bounds = getCollisionBounds(0f,0f);
         lastTime = System.currentTimeMillis();
         waitTime = 2000f;
         countdown = waitTime;
-
-
     }
 
     @Override
