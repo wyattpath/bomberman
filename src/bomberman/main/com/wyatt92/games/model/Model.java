@@ -131,7 +131,7 @@ public class Model
         if (p.getBombCount() > 0)
         {
             Sound.playSound("bomb_Set.wav");
-            Bomb b = new Bomb(p.getCenterPoint().x, p.getCenterPoint().y, p.getBombStrength());
+            Bomb b = new Bomb(p.getCenterPoint().x, p.getCenterPoint().y, p.getBombRadius());
             bombs.add(b);
             p.decrementBombCount();
             p.setTimer(0);
@@ -443,7 +443,7 @@ public class Model
             {
                 if (e.equals(b))
                     continue;
-                if (e.getCollisionBounds(64f,64f).intersects(b.getCollisionBounds(0f,0f)))
+                if (e.getCollisionBounds(32f,32f).intersects(b.getCollisionBounds(0f,0f)))
                 {
                     e.hurt(3);
                 }

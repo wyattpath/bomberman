@@ -1,7 +1,5 @@
 package com.wyatt92.games.model.entities;
 
-import java.awt.*;
-
 /**
  * A Player can be controlled by an AI or a Human.
  */
@@ -13,7 +11,7 @@ public class Player extends DynamicEntity
 
     private int maxBombs = 1;
     private int bombCount = 1;
-    private int bombStrength = 1;
+    private int bombRadius = 1;
     private final int id;
 
     // AttackTimer
@@ -70,7 +68,7 @@ public class Player extends DynamicEntity
     {
         switch(id){
             case 0 :
-                bombStrength++;
+                bombRadius++;
                 break;
             case 1 :
                 speed+=1.0f;
@@ -119,9 +117,9 @@ public class Player extends DynamicEntity
         return bombCount;
     }
 
-    public int getBombStrength()
+    public int getBombRadius()
     {
-        return bombStrength;
+        return bombRadius;
     }
 
     public void decrementBombCount(){
