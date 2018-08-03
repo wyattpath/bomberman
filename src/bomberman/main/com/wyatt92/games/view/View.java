@@ -17,7 +17,7 @@ public class View
     private static GamePanel gamePanel;
     private static MenuPanel menuPanel;
     private static GameOverPanel gameOverPanel;
-    private static MenuOptionsPanel menuOptionsPanel;
+    private static OptionsPanel optionsPanel;
 
     private static final int FRAMEWIDTH = 13 * 64 + 32;
     private static final int FRAMEHEIGHT = 13 * 64 + 32;
@@ -29,19 +29,19 @@ public class View
         this.model = model;
         frame = new JFrame();
         frame.setPreferredSize(new Dimension(FRAMEWIDTH, FRAMEHEIGHT));
-        Assets.init();
+        SpriteLibrary.init();
         gamePanel = new GamePanel(model);
         menuPanel = new MenuPanel();
         gameOverPanel = new GameOverPanel(model);
-        menuOptionsPanel = new MenuOptionsPanel();
+        optionsPanel = new OptionsPanel();
         addActionListeners();
         setPanel(menuPanel);
 
         //startMusic()
-        r = new Random().nextInt(Assets.menu_bgMusic.length);
-        Assets.menu_bgMusic[r].setFramePosition(0);
-        Assets.menu_bgMusic[r].start();
-        Assets.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+        r = new Random().nextInt(SpriteLibrary.menu_bgMusic.length);
+        SpriteLibrary.menu_bgMusic[r].setFramePosition(0);
+        SpriteLibrary.menu_bgMusic[r].start();
+        SpriteLibrary.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
 
         makeVisible();
     }
@@ -50,7 +50,7 @@ public class View
     {
         menuPanel.getStartButton().addActionListener(e -> setUpActionButton());
         menuPanel.getStartButton().addMouseListener(addEnterSound());
-        menuPanel.getOptionsButton().addActionListener(e -> setPanel(menuOptionsPanel));
+        menuPanel.getOptionsButton().addActionListener(e -> setPanel(optionsPanel));
         menuPanel.getQuitButton().addActionListener(e -> System.exit(0));
         menuPanel.getQuitButton().addMouseListener(addEnterSound());
 
@@ -74,25 +74,25 @@ public class View
 
         if (panel == gamePanel)
         {
-            Assets.game_bgMusic[r].stop();
-            r = new Random().nextInt(Assets.gameOver_bgMusic.length);
-            Assets.gameOver_bgMusic[r].setFramePosition(0);
-            Assets.gameOver_bgMusic[r].start();
-            Assets.gameOver_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+            SpriteLibrary.game_bgMusic[r].stop();
+            r = new Random().nextInt(SpriteLibrary.gameOver_bgMusic.length);
+            SpriteLibrary.gameOver_bgMusic[r].setFramePosition(0);
+            SpriteLibrary.gameOver_bgMusic[r].start();
+            SpriteLibrary.gameOver_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
         } else if (panel == menuPanel)
         {
-            Assets.menu_bgMusic[r].stop();
-            r = new Random().nextInt(Assets.game_bgMusic.length);
-            Assets.game_bgMusic[r].setFramePosition(0);
-            Assets.game_bgMusic[r].start();
-            Assets.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+            SpriteLibrary.menu_bgMusic[r].stop();
+            r = new Random().nextInt(SpriteLibrary.game_bgMusic.length);
+            SpriteLibrary.game_bgMusic[r].setFramePosition(0);
+            SpriteLibrary.game_bgMusic[r].start();
+            SpriteLibrary.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
         } else
         {
-            Assets.gameOver_bgMusic[r].stop();
-            r = new Random().nextInt(Assets.game_bgMusic.length);
-            Assets.game_bgMusic[r].setFramePosition(0);
-            Assets.game_bgMusic[r].start();
-            Assets.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+            SpriteLibrary.gameOver_bgMusic[r].stop();
+            r = new Random().nextInt(SpriteLibrary.game_bgMusic.length);
+            SpriteLibrary.game_bgMusic[r].setFramePosition(0);
+            SpriteLibrary.game_bgMusic[r].start();
+            SpriteLibrary.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
         }
 
     }
@@ -105,7 +105,7 @@ public class View
             public void mouseEntered(MouseEvent e)
             {
                 super.mouseEntered(e);
-                Sound.playSound("cursor_move.wav");
+                SoundLibrary.playSound("cursor_move.wav");
             }
         };
     }

@@ -10,8 +10,8 @@ class StartButton extends JButton
     private final Icon startIconEntered;
 
     StartButton(){
-        startIcon = new ImageIcon(Assets.btn_start[0]);
-        startIconEntered = new ImageIcon(Assets.btn_start[1]);
+        startIcon = new ImageIcon(SpriteLibrary.btn_start[0]);
+        startIconEntered = new ImageIcon(SpriteLibrary.btn_start[1]);
         setIcon(startIcon);
         setRolloverIcon(startIconEntered);
         setBorderPainted(false);

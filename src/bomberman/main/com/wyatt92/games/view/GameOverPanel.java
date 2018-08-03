@@ -6,7 +6,7 @@ import com.wyatt92.games.model.Model;
 import javax.swing.*;
 import java.awt.*;
 
-class GameOverPanel extends JPanel
+public class GameOverPanel extends JPanel
 {
     private final Animation animGameOver;
 
@@ -22,15 +22,15 @@ class GameOverPanel extends JPanel
 
     public GameOverPanel(Model model) {
         this.model = model;
-        animGameOver = new Animation(10000, Assets.gameOver);
+        animGameOver = new Animation(10000, SpriteLibrary.gameOver);
         animGameOver.setRandomized(true);
 
         startButton = new StartButton();
         optionsButton = new JButton("Options");
 
         quitButton = new JButton();
-        quitIcon = new ImageIcon(Assets.btn_quit[0]);
-        quitIconEntered = new ImageIcon(Assets.btn_quit[1]);
+        quitIcon = new ImageIcon(SpriteLibrary.btn_quit[0]);
+        quitIconEntered = new ImageIcon(SpriteLibrary.btn_quit[1]);
         quitButton.setRolloverIcon(quitIconEntered);
         quitButton.setIcon(quitIcon);
         quitButton.setBorderPainted(false);

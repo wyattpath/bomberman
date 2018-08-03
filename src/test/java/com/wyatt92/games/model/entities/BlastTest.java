@@ -24,7 +24,7 @@ class BlastTest
     @Test
     void getCollisionBounds()
     {
-        assertEquals(new Rectangle(32,64,64,64), b.getCollisionBounds(0,0));
+        assertEquals(new Rectangle(16,32,64,64), b.getCollisionBounds(0,0));
     }
 
     @Test
@@ -116,7 +116,7 @@ class BlastTest
     @Test
     void getBounds()
     {
-        assertEquals(new Rectangle(16,32,64,64), b.getBounds());
+        assertEquals(new Rectangle(0,0,64,64), b.getBounds());
     }
 
     @Test

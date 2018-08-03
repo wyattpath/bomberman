@@ -8,13 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Creates a GameFrame and a GamePanel. Configures the GamePanel
  * Represents the visualization of the data that model contains.
  */
-class GamePanel extends JPanel
+public class GamePanel extends JPanel
 {
     private final Model model;
     private static Animation animBlast;
@@ -41,29 +40,29 @@ class GamePanel extends JPanel
     private void setupImages()
     {
         tileImages = new ArrayList<>();
-        tileImages.add(0, Assets.grass);
-        tileImages.add(1, Assets.dirt);
-        tileImages.add(2, Assets.wall);
+        tileImages.add(0, SpriteLibrary.grass);
+        tileImages.add(1, SpriteLibrary.dirt);
+        tileImages.add(2, SpriteLibrary.wall);
     }
 
     private void setupAnimation()
     {
-        animBlast = new Animation(200, Assets.blast);
-        animBomb = new Animation(500, Assets.bomb);
+        animBlast = new Animation(200, SpriteLibrary.blast);
+        animBomb = new Animation(500, SpriteLibrary.bomb);
 
         itemAnimations = new ArrayList<>();
 
-        animItemBombStrength = new Animation(500, Assets.bombStrength);
-        animItemPlayerSpeed = new Animation(500, Assets.playerSpeed);
-        animItemBombCount = new Animation(500, Assets.bombCount);
+        animItemBombStrength = new Animation(500, SpriteLibrary.bombStrength);
+        animItemPlayerSpeed = new Animation(500, SpriteLibrary.playerSpeed);
+        animItemBombCount = new Animation(500, SpriteLibrary.bombCount);
         itemAnimations.add(animItemBombStrength);
         itemAnimations.add(animItemPlayerSpeed );
         itemAnimations.add(animItemBombCount);
 
-        animDown = new Animation(200, Assets.player_down);
-        animUp = new Animation(200, Assets.player_up);
-        animLeft = new Animation(200, Assets.player_left);
-        animRight = new Animation(200, Assets.player_right);
+        animDown = new Animation(200, SpriteLibrary.player_down);
+        animUp = new Animation(200, SpriteLibrary.player_up);
+        animLeft = new Animation(200, SpriteLibrary.player_left);
+        animRight = new Animation(200, SpriteLibrary.player_right);
 
     }
 
@@ -106,7 +105,7 @@ class GamePanel extends JPanel
 
 
         for (Stone stone : model.getStones())
-            g.drawImage(Assets.stone, (int) stone.getX(), (int) stone.getY(), stone.getWidth(), stone.getHeight(), null);
+            g.drawImage(SpriteLibrary.stone, (int) stone.getX(), (int) stone.getY(), stone.getWidth(), stone.getHeight(), null);
 
 
         for (Item i : model.getItems())

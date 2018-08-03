@@ -1,7 +1,7 @@
 package com.wyatt92.games.model;
 
 import com.wyatt92.games.model.entities.*;
-import com.wyatt92.games.view.Sound;
+import com.wyatt92.games.view.SoundLibrary;
 
 import java.awt.*;
 import java.util.*;
@@ -130,7 +130,7 @@ public class Model
 
         if (p.getBombCount() > 0)
         {
-            Sound.playSound("bomb_Set.wav");
+            SoundLibrary.playSound("bomb_Set.wav");
             Bomb b = new Bomb(p.getCenterPoint().x, p.getCenterPoint().y, p.getBombRadius());
             bombs.add(b);
             p.decrementBombCount();
@@ -161,7 +161,7 @@ public class Model
             {
                 if (p.getCollisionBounds(0f, 0f).intersects(i.getBounds()))
                 {
-                    Sound.playSound("item_get.wav");
+                    SoundLibrary.playSound("item_get.wav");
                     i.setPickedUp(true);
                     System.out.println(i.getId());
                     p.addEffect(i.getId());
@@ -575,7 +575,7 @@ public class Model
             if (!b.isActive())
             {
                 String sound = (b.getBombStrength() > 5) ? "boom_L.wav" : (b.getBombStrength() > 3) ? "boom_M.wav" : "boom_S.wav";
-                Sound.playSound(sound);
+                SoundLibrary.playSound(sound);
 
                 placeBlast(b, 0, 0);
                 placeBlast(b, Tile.TILEWIDTH, 0); // nextTile on the right

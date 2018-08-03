@@ -3,7 +3,7 @@ package com.wyatt92.games.view;
 import javax.swing.*;
 import java.awt.*;
 
-class MenuPanel extends JPanel
+public class MenuPanel extends JPanel
 {
     private final Animation animBG;
     private final Animation animLogo;
@@ -15,9 +15,9 @@ class MenuPanel extends JPanel
 
     public MenuPanel() {
 
-        animLogo = new Animation(10000, Assets.logo);
+        animLogo = new Animation(10000, SpriteLibrary.logo);
         animLogo.setRandomized(true);
-        animBG = new Animation(5000, Assets.bg);
+        animBG = new Animation(5000, SpriteLibrary.bg);
         animBG.setRandomized(true);
 
 
