@@ -6,6 +6,33 @@ import java.io.IOException;
 
 public class SoundLibrary
 {
+	private static Clip menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
+	static Clip[] menu_bgMusic,game_bgMusic, gameOver_bgMusic;
+
+	static {
+		//Sounds
+
+		final int bgMusicCount, goMusicCount, gMusicCount;
+
+		menu_selectFX = SoundLibrary.clipForLoopFactory("select.wav");
+		menu_cursorMoveFX = SoundLibrary.clipForLoopFactory("cursor_move.wav");
+
+		bgMusicCount = 2;
+		menu_bgMusic = new Clip[bgMusicCount];
+		for(int i = 0 ; i < bgMusicCount;i++)
+			menu_bgMusic[i] = SoundLibrary.clipForLoopFactory("Undertale00"+ i +".wav");
+
+		gMusicCount = 9;
+		game_bgMusic = new Clip[gMusicCount];
+		for(int i = 0 ; i < gMusicCount;i++)
+			game_bgMusic[i] = SoundLibrary.clipForLoopFactory("music0"+ i +".wav");
+
+		goMusicCount = 2;
+		gameOver_bgMusic = new Clip[goMusicCount];
+		for(int i = 0 ; i < goMusicCount;i++)
+			gameOver_bgMusic[i]  = SoundLibrary.clipForLoopFactory("gomusic0"+ i +".wav");
+
+	}
 
 	//for individual wav sounds (not looped)
 	//http://stackoverflow.com/questions/26305/how-can-i-play-sound-in-java

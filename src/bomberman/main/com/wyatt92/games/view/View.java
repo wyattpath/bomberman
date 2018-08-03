@@ -38,10 +38,10 @@ public class View
         setPanel(menuPanel);
 
         //startMusic()
-        r = new Random().nextInt(SpriteLibrary.menu_bgMusic.length);
-        SpriteLibrary.menu_bgMusic[r].setFramePosition(0);
-        SpriteLibrary.menu_bgMusic[r].start();
-        SpriteLibrary.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+        r = new Random().nextInt(SoundLibrary.menu_bgMusic.length);
+        SoundLibrary.menu_bgMusic[r].setFramePosition(0);
+        SoundLibrary.menu_bgMusic[r].start();
+        SoundLibrary.menu_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
 
         makeVisible();
     }
@@ -74,25 +74,25 @@ public class View
 
         if (panel == gamePanel)
         {
-            SpriteLibrary.game_bgMusic[r].stop();
-            r = new Random().nextInt(SpriteLibrary.gameOver_bgMusic.length);
-            SpriteLibrary.gameOver_bgMusic[r].setFramePosition(0);
-            SpriteLibrary.gameOver_bgMusic[r].start();
-            SpriteLibrary.gameOver_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+            SoundLibrary.game_bgMusic[r].stop();
+            r = new Random().nextInt(SoundLibrary.gameOver_bgMusic.length);
+            SoundLibrary.gameOver_bgMusic[r].setFramePosition(0);
+            SoundLibrary.gameOver_bgMusic[r].start();
+            SoundLibrary.gameOver_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
         } else if (panel == menuPanel)
         {
-            SpriteLibrary.menu_bgMusic[r].stop();
-            r = new Random().nextInt(SpriteLibrary.game_bgMusic.length);
-            SpriteLibrary.game_bgMusic[r].setFramePosition(0);
-            SpriteLibrary.game_bgMusic[r].start();
-            SpriteLibrary.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+            SoundLibrary.menu_bgMusic[r].stop();
+            r = new Random().nextInt(SoundLibrary.game_bgMusic.length);
+            SoundLibrary.game_bgMusic[r].setFramePosition(0);
+            SoundLibrary.game_bgMusic[r].start();
+            SoundLibrary.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
         } else
         {
-            SpriteLibrary.gameOver_bgMusic[r].stop();
-            r = new Random().nextInt(SpriteLibrary.game_bgMusic.length);
-            SpriteLibrary.game_bgMusic[r].setFramePosition(0);
-            SpriteLibrary.game_bgMusic[r].start();
-            SpriteLibrary.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
+            SoundLibrary.gameOver_bgMusic[r].stop();
+            r = new Random().nextInt(SoundLibrary.game_bgMusic.length);
+            SoundLibrary.game_bgMusic[r].setFramePosition(0);
+            SoundLibrary.game_bgMusic[r].start();
+            SoundLibrary.game_bgMusic[r].loop(Clip.LOOP_CONTINUOUSLY);
         }
 
     }

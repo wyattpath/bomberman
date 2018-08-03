@@ -15,7 +15,7 @@ public class SpriteLibrary
 {
 
     private static final int width = 32, height = 32;
-    private static int bgCount, bgMusicCount, goMusicCount, gMusicCount, logoCount, gameOverCount;
+    private static int bgCount, logoCount, gameOverCount;
 
     static BufferedImage dirt, grass, wall, stone;
     static BufferedImage[] bombStrength, bombCount, playerSpeed;
@@ -26,10 +26,6 @@ public class SpriteLibrary
     static BufferedImage[] bg;
     static BufferedImage[] logo;
     static BufferedImage[] gameOver;
-
-
-    private static Clip menu_pauseFX, menu_selectFX, menu_cursorMoveFX;
-    static Clip[] menu_bgMusic,game_bgMusic, gameOver_bgMusic;
 
     static void init() {
         BufferedImage sheet = loadImage("sheet.png");
@@ -115,25 +111,6 @@ public class SpriteLibrary
             gameOver[i] = logoSheet.getSubimage(0,0,logoSheet.getWidth(), logoSheet.getHeight());
         }
 
-
-        //Sounds
-        menu_selectFX = SoundLibrary.clipForLoopFactory("select.wav");
-        menu_cursorMoveFX = SoundLibrary.clipForLoopFactory("cursor_move.wav");
-
-        bgMusicCount = 2;
-        menu_bgMusic = new Clip[bgMusicCount];
-        for(int i = 0 ; i < bgMusicCount;i++)
-            menu_bgMusic[i] = SoundLibrary.clipForLoopFactory("Undertale00"+ i +".wav");
-
-        gMusicCount = 9;
-        game_bgMusic = new Clip[gMusicCount];
-        for(int i = 0 ; i < gMusicCount;i++)
-            game_bgMusic[i] = SoundLibrary.clipForLoopFactory("music0"+ i +".wav");
-
-        goMusicCount = 2;
-        gameOver_bgMusic = new Clip[goMusicCount];
-        for(int i = 0 ; i < goMusicCount;i++)
-            gameOver_bgMusic[i]  = SoundLibrary.clipForLoopFactory("gomusic0"+ i +".wav");
 
 
     }
