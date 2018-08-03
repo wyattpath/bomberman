@@ -29,7 +29,6 @@ public class View
         this.model = model;
         frame = new JFrame();
         frame.setPreferredSize(new Dimension(FRAMEWIDTH, FRAMEHEIGHT));
-        SpriteLibrary.init();
         gamePanel = new GamePanel(model);
         menuPanel = new MenuPanel();
         gameOverPanel = new GameOverPanel(model);

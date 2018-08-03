@@ -1,11 +1,8 @@
 package com.wyatt92.games.view;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.Buffer;
 
 /**
  * An asset is the representation of any object that can be used.
@@ -20,14 +17,15 @@ public class SpriteLibrary
     static BufferedImage dirt, grass, wall, stone;
     static BufferedImage[] bombStrength, bombCount, playerSpeed;
     static BufferedImage[] btn_start,btn_quit;
-    static BufferedImage[] player_down, player_up, player_left, player_right;
+    static BufferedImage[] p1_down, p1_up, p1_left, p1_right;
+    static BufferedImage[] p2_down, p2_up, p2_left, p2_right;
     static BufferedImage[] bomb;
     static BufferedImage[] blast;
     static BufferedImage[] bg;
     static BufferedImage[] logo;
     static BufferedImage[] gameOver;
 
-    static void init() {
+    static {
         BufferedImage sheet = loadImage("sheet.png");
         BufferedImage sheetBW = loadImage("sheetBW.png");
         BufferedImage blastSheet = loadImage("blast_anim.png");
@@ -42,20 +40,34 @@ public class SpriteLibrary
         wall = sheet.getSubimage(width * 3, 0, width, height);
         stone = sheet.getSubimage(0, height * 2, width-1, height-1);
 
-        //Animation
-        player_down = new BufferedImage[2];
-        player_up = new BufferedImage[2];
-        player_left = new BufferedImage[2];
-        player_right = new BufferedImage[2];
+        //Player 1
+        p1_down = new BufferedImage[2];
+        p1_up = new BufferedImage[2];
+        p1_left = new BufferedImage[2];
+        p1_right = new BufferedImage[2];
 
-        player_down[0] = sheet.getSubimage(width * 4, 0, width, height);
-        player_down[1] = sheet.getSubimage(width * 5, 0, width, height);
-        player_up[0] = sheet.getSubimage(width * 6, 0, width, height);
-        player_up[1] = sheet.getSubimage(width * 7, 0, width, height);
-        player_right[0] = sheet.getSubimage(width * 4, height, width, height);
-        player_right[1] = sheet.getSubimage(width * 5, height, width, height);
-        player_left[0] = sheet.getSubimage(width * 6, height, width, height);
-        player_left[1] = sheet.getSubimage(width * 7, height, width, height);
+        p1_down[0] = sheet.getSubimage(width * 4, 0, width, height);
+        p1_down[1] = sheet.getSubimage(width * 5, 0, width, height);
+        p1_up[0] = sheet.getSubimage(width * 6, 0, width, height);
+        p1_up[1] = sheet.getSubimage(width * 7, 0, width, height);
+        p1_right[0] = sheet.getSubimage(width * 4, height, width, height);
+        p1_right[1] = sheet.getSubimage(width * 5, height, width, height);
+        p1_left[0] = sheet.getSubimage(width * 6, height, width, height);
+        p1_left[1] = sheet.getSubimage(width * 7, height, width, height);
+
+        p2_down = new BufferedImage[2];
+        p2_up = new BufferedImage[2];
+        p2_left = new BufferedImage[2];
+        p2_right = new BufferedImage[2];
+
+        p2_down[0] = sheet.getSubimage(width * 4, height * 2, width, height);
+        p2_down[1] = sheet.getSubimage(width * 5, height * 2, width, height);
+        p2_up[0] = sheet.getSubimage(width * 6, height * 2, width, height);
+        p2_up[1] = sheet.getSubimage(width * 7, height * 2, width, height);
+        p2_right[0] = sheet.getSubimage(width * 4, height * 3, width, height);
+        p2_right[1] = sheet.getSubimage(width * 5, height * 3, width, height);
+        p2_left[0] = sheet.getSubimage(width * 6, height * 3, width, height);
+        p2_left[1] = sheet.getSubimage(width * 7, height * 3, width, height);
 
 //        stone = new BufferedImage[2];
 //        stone[1] = sheetBW.crop(0, height * 2, width-1, height-1);
